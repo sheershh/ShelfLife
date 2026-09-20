@@ -1,4 +1,4 @@
-import { CATEGORIES } from '../models/Food.js'
+import { CATEGORIES } from '../store/foodStore.js'
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const SLUG_PATTERN = /^[a-z0-9-]{1,40}$/

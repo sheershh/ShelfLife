@@ -1,24 +1,23 @@
-import { MongoMemoryServer } from 'mongodb-memory-server'
-import mongoose from 'mongoose'
+import { mkdtemp, rm } from 'node:fs/promises'
+import os from 'node:os'
+import path from 'node:path'
 import request from 'supertest'
 import { createApp } from '../app.js'
-import { seedFoods } from '../seed/seedFoods.js'
+import { loadUsers } from '../store/userStore.js'
 
-// Starts an in-memory MongoDB so tests never touch a real database.
+// Each test file gets its own temporary users file, so tests never touch real data.
 export async function startTestApp() {
   process.env.JWT_SECRET = 'test-secret-test-secret-test-secret-123'
   process.env.NODE_ENV = 'test'
-  const mongod = await MongoMemoryServer.create()
-  await mongoose.connect(mongod.getUri())
-  await seedFoods()
+  const dir = await mkdtemp(path.join(os.tmpdir(), 'shelflife-test-'))
+  const usersFile = path.join(dir, 'users.json')
+  await loadUsers(usersFile)
   const app = createApp()
   return {
     app,
+    usersFile,
     api: () => request(app),
     agent: () => request.agent(app), // keeps cookies between requests, like a browser
-    async stop() {
-      await mongoose.disconnect()
-      await mongod.stop()
-    },
+    stop: () => rm(dir, { recursive: true, force: true }),
   }
 }

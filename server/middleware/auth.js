@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import User from '../models/User.js'
+import { findUserById } from '../store/userStore.js'
 import AppError from '../utils/AppError.js'
 
 export const COOKIE_NAME = 'shelflife_token'
@@ -25,7 +25,7 @@ async function findUserFromCookie(req) {
   if (!token) return null
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET)
-    return await User.findById(payload.sub)
+    return findUserById(payload.sub)
   } catch {
     return null
   }

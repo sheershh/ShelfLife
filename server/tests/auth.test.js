@@ -1,6 +1,6 @@
 import { after, before, describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import User from '../models/User.js'
+import { findUserByEmail } from '../store/userStore.js'
 import { startTestApp } from './helpers.js'
 
 let t
@@ -22,7 +22,7 @@ describe('POST /api/auth/register', () => {
   })
 
   it('stores a bcrypt hash, not the password', async () => {
-    const user = await User.findOne({ email: 'asha@example.com' }).select('+passwordHash')
+    const user = findUserByEmail('asha@example.com')
     assert.notEqual(user.passwordHash, validUser.password)
     assert.match(user.passwordHash, /^\$2[aby]\$12\$/)
   })

@@ -1,5 +1,5 @@
 // Keeps track of who is logged in and which foods they have saved.
-// The truth lives on the server (MongoDB); this is just a copy for the current page.
+// The truth lives on the server; this is just a copy for the current page.
 
 import { api, ApiError } from './api.js'
 

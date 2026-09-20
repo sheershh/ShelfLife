@@ -3,27 +3,22 @@
 A food shelf-life guide. Users can browse foods, see estimated shelf life and storage advice, create an account, and save foods to their own list.
 
 - **Frontend:** plain HTML, CSS and vanilla JavaScript (`client/`)
-- **Backend:** Node.js, Express, MongoDB with Mongoose (`server/`)
+- **Backend:** Node.js and Express (`server/`). Foods are read from `server/data/foods.json`; accounts and saved foods are stored in `server/data/users.json` (created automatically).
 
 ## Run it
 
-1. Have a MongoDB database ready: a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster, or MongoDB installed locally.
-2. Install packages and create your settings file:
+1. Install packages and create your settings file:
    ```
    npm install
    cp .env.example .env
    ```
-3. Edit `.env`: set `MONGODB_URI` to your connection string and `JWT_SECRET` to a long random string.
-4. Load the food data (safe to run more than once):
-   ```
-   npm run seed
-   ```
-5. Start the server and open http://localhost:3000:
+2. Edit `.env` and set `JWT_SECRET` to a long random string (the file explains how to generate one).
+3. Start the server and open http://localhost:3000:
    ```
    npm start        # or: npm run dev  (restarts on file changes)
    ```
 
-`npm test` runs the API tests. They use a temporary in-memory database, so they never touch your real data.
+`npm test` runs the API tests. They use a temporary users file, so they never touch your real data.
 
 ## API
 
@@ -45,5 +40,5 @@ Errors are always JSON: `{ "message": "...", "errors": { "field": "..." } }`.
 
 ```
 client/   pages (*.html), css/, js/ (api, session, layout, ui, pages/), images/
-server/   app.js, server.js, config/, models/, routes/, controllers/, middleware/, utils/, seed/, tests/
+server/   app.js, server.js, routes/, controllers/, middleware/, store/, data/, utils/, tests/
 ```

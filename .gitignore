@@ -1,6 +1,9 @@
 node_modules
 .env
 *.log
+# Accounts and saved foods (contains password hashes)
+server/data/users.json
+server/data/users.json.tmp
 .DS_Store
 
 # Editor / assistant tooling, not part of the project
