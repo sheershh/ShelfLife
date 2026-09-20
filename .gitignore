@@ -1,0 +1,10 @@
+node_modules
+.env
+*.log
+.DS_Store
+
+# Editor / assistant tooling, not part of the project
+.claude
+.agents
+.playwright
+skills-lock.json

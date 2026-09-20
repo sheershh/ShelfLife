@@ -1,0 +1,628 @@
+[
+  {
+    "slug": "banana",
+    "name": "Banana",
+    "category": "Fruits",
+    "image": "/images/banana.jpg",
+    "shortDescription": "A fast-ripening fruit that changes quickly from green to spotted brown.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Keep bananas at room temperature away from direct sunlight. Once ripe, they can be moved to the refrigerator to slow further ripening, although the peel will darken.",
+    "shelfLifePreview": "Room temp: about 3–5 days",
+    "shelfLife": {
+      "roomTemperature": "About 3–5 days once ripe (green bananas need a few extra days to ripen)",
+      "refrigerator": "About 3–4 extra days once ripe (the peel darkens, but the fruit inside usually stays fine)",
+      "freezer": "Peeled: about 3 months for best quality"
+    },
+    "storageTips": [
+      "Separate bananas from the bunch to slow ripening slightly.",
+      "Keep them away from other fruit if you want to avoid speeding up ripening.",
+      "Peel and freeze overripe bananas in pieces for smoothies or baking."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Underripe",
+        "description": "Green or very firm. Needs a few days at room temperature."
+      },
+      {
+        "label": "Ripe",
+        "description": "Yellow and firm-soft. Sweet and easy to peel."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Brown spots and softer texture. Great for smoothies and baking."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Very dark, leaking or mushy. Look closely for mold or a sour smell."
+      }
+    ],
+    "freshnessSigns": [
+      "Yellow peel with a few small spots",
+      "Firm-soft flesh",
+      "Mild sweet smell"
+    ],
+    "spoilageSigns": [
+      "Visible mold on the peel or the flesh",
+      "Sour, fermented or alcohol-like smell",
+      "Leaking liquid or very slimy texture"
+    ],
+    "usageIdeas": [
+      "Banana smoothie",
+      "Banana bread or pancakes",
+      "Frozen banana slices",
+      "Oatmeal topping"
+    ]
+  },
+  {
+    "slug": "apple",
+    "name": "Apple",
+    "category": "Fruits",
+    "image": "/images/apple.jpg",
+    "shortDescription": "A crisp fruit that stores well when kept cool.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Apples keep their crispness longest in the refrigerator, ideally in the crisper drawer. At room temperature they soften faster.",
+    "shelfLifePreview": "Fridge: about 4 weeks",
+    "shelfLife": {
+      "roomTemperature": "About 1 week",
+      "refrigerator": "About 4 weeks in the crisper drawer",
+      "freezer": "Sliced or cooked: about 8 months for best quality (texture becomes soft)"
+    },
+    "storageTips": [
+      "Store apples away from strongly scented foods.",
+      "Keep bruised apples separate so they do not affect the others.",
+      "Wash just before eating rather than before storing."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, crisp and smooth-skinned."
+      },
+      {
+        "label": "Softening",
+        "description": "Slightly soft or wrinkled. Better cooked than eaten raw."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Soft spots or bruises. Cut away small bruises or bake."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Mushy, leaking or moldy. Inspect carefully."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm flesh",
+      "Smooth, shiny skin",
+      "Fresh apple smell"
+    ],
+    "spoilageSigns": [
+      "Visible mold or fuzzy patches",
+      "Large soft, brown or leaking areas",
+      "Fermented or off smell"
+    ],
+    "usageIdeas": [
+      "Baked apples",
+      "Oatmeal topping",
+      "Apple sauce",
+      "Sliced with peanut butter"
+    ]
+  },
+  {
+    "slug": "strawberry",
+    "name": "Strawberry",
+    "category": "Fruits",
+    "image": "/images/strawberry.jpg",
+    "shortDescription": "A delicate berry that softens and molds quickly.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Store unwashed strawberries in the refrigerator in a breathable container lined with paper towel. Wash only just before eating.",
+    "shelfLifePreview": "Fridge: about 3–5 days",
+    "shelfLife": {
+      "roomTemperature": "About 1 day at most",
+      "refrigerator": "About 3–5 days",
+      "freezer": "Washed, dried and hulled: about 10 months for best quality (texture becomes soft)"
+    },
+    "storageTips": [
+      "Remove any soft or moldy berries right away so mold does not spread.",
+      "Do not wash until you are ready to eat them.",
+      "Freeze extra berries on a tray first, then move them to a bag."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Bright red, firm, with green leaves."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Slightly soft or darker. Good for smoothies or jam."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Mushy, leaking or with fuzzy patches. Check carefully for mold."
+      }
+    ],
+    "freshnessSigns": [
+      "Deep red colour",
+      "Firm texture",
+      "Sweet fragrance"
+    ],
+    "spoilageSigns": [
+      "White or grey fuzzy mold",
+      "Leaking juice and mushy texture",
+      "Sour or fermented smell"
+    ],
+    "usageIdeas": [
+      "Smoothie",
+      "Yogurt topping",
+      "Quick jam or compote",
+      "Frozen berry mix"
+    ]
+  },
+  {
+    "slug": "tomato",
+    "name": "Tomato",
+    "category": "Vegetables",
+    "image": "/images/tomato.jpg",
+    "shortDescription": "Best ripened on the counter, then used within a few days.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Keep unripe tomatoes at room temperature out of direct sun until they ripen. Ripe tomatoes can go in the refrigerator if you cannot use them in time; bring them to room temperature before eating for better flavour.",
+    "shelfLifePreview": "Room temp: about 2–3 days once ripe",
+    "shelfLife": {
+      "roomTemperature": "Ripe: about 2–3 days. Unripe: about 3–5 days to ripen first",
+      "refrigerator": "About 5 days once ripe (flavour and texture may dull)",
+      "freezer": "Best for cooking: about 2 months (texture becomes soft)"
+    },
+    "storageTips": [
+      "Store stem-side down to reduce bruising.",
+      "Do not stack tomatoes; they bruise easily.",
+      "Freeze soft tomatoes and use them in sauces or soups."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Ripening",
+        "description": "Firm and still pale. Leave at room temperature."
+      },
+      {
+        "label": "Ripe",
+        "description": "Deep colour, slight give and a tomato smell."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Soft and wrinkly skin. Good for sauces and soups."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Leaking, collapsing or moldy. Inspect carefully."
+      }
+    ],
+    "freshnessSigns": [
+      "Even, deep colour",
+      "Slight give when pressed",
+      "Sweet, earthy smell"
+    ],
+    "spoilageSigns": [
+      "Visible mold or fuzzy spots",
+      "Leaking juice or collapsing skin",
+      "Sour or fermented smell"
+    ],
+    "usageIdeas": [
+      "Tomato sauce",
+      "Fresh salad",
+      "Roasted tomato soup",
+      "Bruschetta topping"
+    ]
+  },
+  {
+    "slug": "potato",
+    "name": "Potato",
+    "category": "Vegetables",
+    "image": "/images/potato.jpg",
+    "shortDescription": "A hardy vegetable that lasts weeks in a cool, dark place.",
+    "storageLocation": "Pantry",
+    "storageMethod": "Store potatoes in a cool, dark, well-ventilated place. Avoid sunlight, which can turn them green. Do not keep them next to onions.",
+    "shelfLifePreview": "Pantry: about 3–4 weeks",
+    "shelfLife": {
+      "pantry": "About 3–4 weeks in a cool, dark, ventilated place",
+      "freezer": "Only after cooking or blanching: about 3 months (raw potatoes freeze poorly)"
+    },
+    "storageTips": [
+      "Keep potatoes in a paper bag or basket, not sealed plastic.",
+      "Remove any spoiled potato so the others stay in good condition.",
+      "Avoid washing until you are ready to cook."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, smooth skin with no sprouts."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Small sprouts or slight softening. Use soon and remove sprouts."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Green patches, heavy sprouting, shriveling or softness. When in doubt, avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm feel",
+      "Smooth skin",
+      "No sprouts or green patches"
+    ],
+    "spoilageSigns": [
+      "Green skin or heavy sprouting",
+      "Soft, wet or shriveled texture",
+      "Mold or a musty smell"
+    ],
+    "usageIdeas": [
+      "Mashed potatoes",
+      "Roasted potatoes",
+      "Potato soup",
+      "Aloo curry"
+    ]
+  },
+  {
+    "slug": "spinach",
+    "name": "Spinach",
+    "category": "Vegetables",
+    "image": "/images/spinach.jpg",
+    "shortDescription": "Tender leafy greens that wilt quickly if stored damp.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep spinach in the refrigerator in a container lined with paper towel to absorb moisture. Wash just before using.",
+    "shelfLifePreview": "Fridge: about 5 days",
+    "shelfLife": {
+      "refrigerator": "About 5 days (bagged spinach: follow the product label)",
+      "freezer": "Blanched: about 10 months for best quality (texture becomes soft)"
+    },
+    "storageTips": [
+      "Moisture speeds up spoilage, so keep leaves dry.",
+      "Remove any slimy leaves as soon as you see them.",
+      "Wilted but otherwise fresh spinach is best cooked."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Crisp, bright green leaves."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Slightly wilted. Best cooked in soup or stir-fries."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, yellowing or smelly. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Bright green colour",
+      "Crisp leaves",
+      "Fresh, mild smell"
+    ],
+    "spoilageSigns": [
+      "Slimy or sticky leaves",
+      "Dark, mushy patches",
+      "Unpleasant smell"
+    ],
+    "usageIdeas": [
+      "Spinach soup",
+      "Stir-fry",
+      "Smoothie",
+      "Added to eggs or pasta"
+    ]
+  },
+  {
+    "slug": "milk",
+    "name": "Milk",
+    "category": "Dairy",
+    "image": "/images/milk.jpg",
+    "shortDescription": "A cold-chain dairy staple that should be kept refrigerated.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Store milk in the main body of the refrigerator (not the door) and keep the container closed. Do not leave it out for long periods.",
+    "shelfLifePreview": "Fridge: about 5–7 days once opened",
+    "shelfLife": {
+      "refrigerator": "About 5–7 days after opening; unopened milk: use by the label date",
+      "freezer": "About 3 months (leave space in the container; texture may separate)"
+    },
+    "storageTips": [
+      "Return milk to the refrigerator right after pouring.",
+      "Never pour used milk back into the container.",
+      "Check the product label and storage instructions on the pack."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Cold, sealed or recently opened, with a mild smell."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Nearing the label date or opened for several days."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Sour smell, lumps or unusual look. Do not consume if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Clean, mild smell",
+      "Smooth texture",
+      "Kept cold at all times"
+    ],
+    "spoilageSigns": [
+      "Sour or unusual smell",
+      "Lumps, curdling or thick texture",
+      "Unusual colour"
+    ],
+    "usageIdeas": [
+      "Milk-based sauces",
+      "Pancake batter",
+      "Porridge",
+      "Homemade paneer"
+    ]
+  },
+  {
+    "slug": "yogurt",
+    "name": "Yogurt",
+    "category": "Dairy",
+    "image": "/images/yogurt.jpg",
+    "shortDescription": "A cultured dairy food that keeps well when cold.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep yogurt tightly covered in the refrigerator. Use a clean spoon each time to avoid introducing contamination.",
+    "shelfLifePreview": "Fridge: about 5–7 days once opened",
+    "shelfLife": {
+      "refrigerator": "About 5–7 days after opening; unopened: use by the label date",
+      "freezer": "About 2 months (texture becomes grainy or watery)"
+    },
+    "storageTips": [
+      "Keep the lid on tightly after each use.",
+      "A little watery liquid on top can be normal; stir it in and check smell and appearance.",
+      "Do not leave yogurt out of the refrigerator for long periods."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Smooth, creamy and pleasantly tangy."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Nearing the label date or opened for several days."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Mold, strong sour smell or unusual look. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Smooth, creamy texture",
+      "Mild tangy smell",
+      "Consistent colour"
+    ],
+    "spoilageSigns": [
+      "Any visible mold",
+      "Strong or unusual smell",
+      "Bloated or swollen container"
+    ],
+    "usageIdeas": [
+      "Lassi or smoothie",
+      "Marinade for chicken or vegetables",
+      "Salad dressing",
+      "Baking substitute"
+    ]
+  },
+  {
+    "slug": "cheese",
+    "name": "Cheese",
+    "category": "Dairy",
+    "image": "/images/cheese.jpg",
+    "shortDescription": "Shelf life depends a lot on type, from soft cheeses to hard blocks.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Wrap cheese in wax paper or parchment, then place it in a loose container in the refrigerator. Do not wrap it too tightly in plastic for long periods.",
+    "shelfLifePreview": "Fridge: about 3–4 weeks (hard cheese)",
+    "shelfLife": {
+      "refrigerator": "Hard cheese: about 3–4 weeks after opening. Soft cheese: about 1–2 weeks after opening",
+      "freezer": "About 2 months for best quality (texture becomes crumbly)"
+    },
+    "storageTips": [
+      "Wrap each type of cheese separately.",
+      "Use clean utensils to cut cheese.",
+      "For soft cheese with mold, follow food-safety guidance or avoid it."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Normal colour, smell and texture for its type."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Dry edges, sweating or opened for a while."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Mold, slime or sharp off smell. Avoid soft cheese with mold; check guidance for hard cheese."
+      }
+    ],
+    "freshnessSigns": [
+      "Normal colour for the type",
+      "Clean smell",
+      "Consistent texture"
+    ],
+    "spoilageSigns": [
+      "Visible mold, especially on soft cheese",
+      "Slimy surface",
+      "Sharp, ammonia-like or unusual smell"
+    ],
+    "usageIdeas": [
+      "Grated over pasta or soup",
+      "Grilled cheese sandwich",
+      "Cheese sauce",
+      "Baked dishes"
+    ]
+  },
+  {
+    "slug": "bread",
+    "name": "Bread",
+    "category": "Pantry & Grains",
+    "image": "/images/bread.jpg",
+    "shortDescription": "Goes stale within days, but the freezer extends its life.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Keep bread in a breadbox or sealed bag at room temperature. Freeze slices if you will not finish the loaf within a few days.",
+    "shelfLifePreview": "Room temp: about 4–5 days",
+    "shelfLife": {
+      "roomTemperature": "About 4–5 days for packaged sliced bread; bakery loaves are best within 2–3 days",
+      "freezer": "About 3 months for best quality"
+    },
+    "storageTips": [
+      "The refrigerator can dry bread out faster, so room temperature or freezer is usually better.",
+      "Slice before freezing so you can take out only what you need.",
+      "Stale bread is a quality issue, not necessarily a safety issue, and is good for toast or breadcrumbs."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Soft with a pleasant smell."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Getting dry or stale. Good for toast, croutons or breadcrumbs."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Any visible mold or a musty smell. Avoid the whole loaf."
+      }
+    ],
+    "freshnessSigns": [
+      "Soft crumb",
+      "Pleasant bread smell",
+      "No discolouration"
+    ],
+    "spoilageSigns": [
+      "Green, white or black mold spots",
+      "Musty or sour smell",
+      "Slimy texture"
+    ],
+    "usageIdeas": [
+      "Toast",
+      "Breadcrumbs",
+      "Croutons",
+      "French toast or bread pudding"
+    ]
+  },
+  {
+    "slug": "rice",
+    "name": "Rice",
+    "category": "Pantry & Grains",
+    "image": "/images/rice.jpg",
+    "shortDescription": "Dry rice keeps for a long time; cooked rice needs quick, careful storage.",
+    "storageLocation": "Pantry",
+    "storageMethod": "Keep dry rice in an airtight container in a cool, dry pantry. For cooked rice, cool it quickly, store it in the refrigerator, and reheat until steaming hot.",
+    "shelfLifePreview": "Dry: about 1 year · Cooked: 3–4 days in fridge",
+    "shelfLife": {
+      "pantry": "Dry white rice: about 1 year for best quality. Brown rice: about 6 months",
+      "refrigerator": "Cooked rice: about 3–4 days in a sealed container",
+      "freezer": "Cooked rice: about 1 month for best quality"
+    },
+    "storageTips": [
+      "Do not leave cooked rice at room temperature for long; refrigerate it within about 1–2 hours.",
+      "Store dry rice away from moisture and pests.",
+      "Reheat cooked rice until steaming hot and do it only once."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Dry: Stable",
+        "description": "Uncooked rice kept dry and sealed stays good for a long time."
+      },
+      {
+        "label": "Cooked: Fresh",
+        "description": "Just cooked, cooled quickly and stored in the refrigerator."
+      },
+      {
+        "label": "Cooked: Use Soon",
+        "description": "Second or third day in the refrigerator. Use in fried rice."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, hard or smelly rice. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Dry rice: no moisture or clumping",
+      "Cooked rice: fluffy and neutral smell",
+      "No bugs in dry rice"
+    ],
+    "spoilageSigns": [
+      "Damp clumps, mold or insects in dry rice",
+      "Slimy texture in cooked rice",
+      "Sour or unusual smell"
+    ],
+    "usageIdeas": [
+      "Fried rice",
+      "Rice porridge",
+      "Stuffed peppers",
+      "Rice pudding"
+    ]
+  },
+  {
+    "slug": "pasta",
+    "name": "Pasta",
+    "category": "Pantry & Grains",
+    "image": "/images/pasta.jpg",
+    "shortDescription": "Dry pasta is a long-lasting pantry staple; cooked pasta is short-lived.",
+    "storageLocation": "Pantry",
+    "storageMethod": "Keep dry pasta in a sealed container in a cool, dry pantry. Refrigerate cooked pasta in an airtight container within about 2 hours.",
+    "shelfLifePreview": "Dry: about 2 years · Cooked: 3–4 days in fridge",
+    "shelfLife": {
+      "pantry": "Dry pasta: about 2 years for best quality",
+      "refrigerator": "Cooked pasta: about 3–4 days in a sealed container",
+      "freezer": "Cooked pasta: about 2 months for best quality"
+    },
+    "storageTips": [
+      "Store dry pasta away from moisture and pests.",
+      "Toss cooked pasta with a little oil before storing to prevent sticking.",
+      "Reheat cooked pasta until steaming hot."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Dry: Stable",
+        "description": "Uncooked pasta stays good for a long time when kept dry."
+      },
+      {
+        "label": "Cooked: Fresh",
+        "description": "Freshly cooked or newly refrigerated."
+      },
+      {
+        "label": "Cooked: Use Soon",
+        "description": "Several days in the refrigerator. Use in a bake or stir-fry."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy texture, smell or mold. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Dry pasta: intact, no moisture",
+      "Cooked pasta: firm and neutral smell",
+      "No visible mold"
+    ],
+    "spoilageSigns": [
+      "Moisture, mold or insects in dry pasta",
+      "Slimy or sticky cooked pasta",
+      "Sour or unusual smell"
+    ],
+    "usageIdeas": [
+      "Pasta bake",
+      "Pasta salad",
+      "Stir-fried noodles",
+      "Soup add-in"
+    ]
+  }
+]

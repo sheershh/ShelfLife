@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Food image not available">
+  <rect width="400" height="300" fill="#e9e3d3"/>
+  <circle cx="200" cy="140" r="46" fill="#c9d3bb"/>
+  <path d="M200 100c-4 14 4 24 16 26-2-14-8-22-16-26z" fill="#7a8f6b"/>
+  <text x="200" y="230" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#6b5a4c">Image not available</text>
+</svg>
