@@ -4,7 +4,7 @@
 import { randomUUID } from 'node:crypto'
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
 import path from 'node:path'
-import AppError from '../utils/AppError.js'
+import { AppError } from '../utils/helpers.js'
 
 let users = []
 let filePath = null

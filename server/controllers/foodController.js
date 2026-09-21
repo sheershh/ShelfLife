@@ -1,6 +1,5 @@
 import { findFood, listFoods as searchFoods } from '../store/foodStore.js'
-import AppError from '../utils/AppError.js'
-import { isValidSlug, validateFoodQuery } from '../utils/validators.js'
+import { AppError, isValidSlug, validateFoodQuery } from '../utils/helpers.js'
 
 // GET /api/foods?search=ban&category=Fruits
 export function listFoods(req, res) {

@@ -18,8 +18,6 @@ A food shelf-life guide. Users can browse foods, see estimated shelf life and st
    npm start        # or: npm run dev  (restarts on file changes)
    ```
 
-`npm test` runs the API tests. They use a temporary users file, so they never touch your real data.
-
 ## API
 
 | Method | Route | Login needed | Purpose |
@@ -40,5 +38,5 @@ Errors are always JSON: `{ "message": "...", "errors": { "field": "..." } }`.
 
 ```
 client/   pages (*.html), css/, js/ (api, session, layout, ui, pages/), images/
-server/   app.js, server.js, routes/, controllers/, middleware/, store/, data/, utils/, tests/
+server/   app.js, server.js, routes/index.js, controllers/, middleware/, store/, data/, utils/helpers.js
 ```

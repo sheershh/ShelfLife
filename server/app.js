@@ -3,9 +3,7 @@ import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import authRoutes from './routes/authRoutes.js'
-import foodRoutes from './routes/foodRoutes.js'
-import savedRoutes from './routes/savedRoutes.js'
+import routes from './routes/index.js'
 import { apiNotFound, errorHandler } from './middleware/errorHandler.js'
 
 const clientDir = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'client')
@@ -31,9 +29,7 @@ export function createApp() {
   app.use(express.json({ limit: '10kb' }))
   app.use(cookieParser())
 
-  app.use('/api/auth', authRoutes)
-  app.use('/api/foods', foodRoutes)
-  app.use('/api/saved', savedRoutes)
+  app.use('/api', routes)
   app.use('/api', apiNotFound)
 
   // The frontend: plain HTML, CSS and JavaScript files. "/foods" serves foods.html.

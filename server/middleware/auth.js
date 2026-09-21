@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { findUserById } from '../store/userStore.js'
-import AppError from '../utils/AppError.js'
+import { AppError } from '../utils/helpers.js'
 
 export const COOKIE_NAME = 'shelflife_token'
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000

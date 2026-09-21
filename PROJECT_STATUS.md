@@ -29,9 +29,8 @@ A food shelf-life guide with user accounts. This document describes everything a
 | Data storage | JSON files (`foods.json` for foods, `users.json` for accounts and saved foods) |
 | Password security | bcryptjs (12 rounds) |
 | Sessions | JSON Web Token (JWT) in an httpOnly cookie |
-| Security middleware | Helmet (security headers), express-rate-limit, cookie-parser |
+| Security middleware | Helmet (security headers), cookie-parser |
 | Configuration | dotenv (`.env` file for secrets) |
-| Testing | Node's built-in test runner + supertest |
 
 ---
 
@@ -70,9 +69,9 @@ flowchart LR
 
 ```mermaid
 flowchart TB
-    R["Routes<br/>authRoutes, foodRoutes, savedRoutes"] --> M["Middleware<br/>requireAuth, optionalAuth,<br/>rate limiter, errorHandler"]
+    R["Routes<br/>routes/index.js"] --> M["Middleware<br/>requireAuth, optionalAuth,<br/>errorHandler"]
     M --> C["Controllers<br/>authController, foodController, savedController"]
-    C --> V["Validators<br/>utils/validators.js"]
+    C --> V["Validation<br/>utils/helpers.js"]
     C --> S["Stores<br/>foodStore, userStore"]
     S --> D[("JSON files")]
 ```
@@ -107,13 +106,12 @@ ShelfLife/
 ├── server/                      Backend
 │   ├── server.js                Starts the server
 │   ├── app.js                   Builds the Express app
-│   ├── routes/                  URL to controller mapping
+│   ├── routes/index.js          All API URLs mapped to controllers
 │   ├── controllers/             Request handling logic
 │   ├── middleware/              Auth + error handling
 │   ├── store/                   foodStore.js, userStore.js (data access)
 │   ├── data/foods.json          The food dataset
-│   ├── utils/                   Validators, AppError
-│   └── tests/                   API tests
+│   └── utils/helpers.js         Validation rules + AppError
 ├── .env.example                 Template for secrets (real .env is never committed)
 ├── package.json
 └── README.md
@@ -344,7 +342,6 @@ The design is responsive (laptop, tablet, mobile) with a warm cream, espresso, s
 - Passwords are hashed with **bcrypt** (12 rounds). Plain passwords are never stored or returned.
 - Login uses a **JWT in an httpOnly, SameSite=Lax cookie** (valid 7 days; Secure flag on in production). JavaScript on the page cannot read it, so no token appears in frontend code.
 - Wrong email and wrong password give the **same error message**, and the server does equal work either way, so attackers cannot tell which emails have accounts.
-- **Rate limiting:** 20 login or register attempts per IP every 15 minutes.
 - **Helmet** adds security headers, including a Content Security Policy.
 - Requests over 10 KB are rejected, and all input is validated by type and format.
 - The browser escapes all text before putting it into the page (protection against script injection).
@@ -356,13 +353,7 @@ The design is responsive (laptop, tablet, mobile) with a warm cream, espresso, s
 
 ## 12. Testing
 
-- **31 automated API tests** (`npm test`) covering:
-  - foods: list, search, category, combined filters, not found, bad ids
-  - auth: register, login, logout, duplicates, weak passwords, operator-injection input, tampered cookies
-  - saved foods: login required, add, remove, no duplicates, separate lists per user, persistence after logout
-  - the JSON store: saving to disk, surviving a restart, concurrent duplicate sign-ups, refusing a damaged file
-  Tests use a temporary users file and never touch real data.
-- **Browser checks** were run during development on desktop, tablet and mobile widths: search and filters, navigation, signup and login, save and remove, persistence across browsers, layout without horizontal scrolling, no broken images, no console errors. (That script is not part of the repository.)
+The application was checked by hand and with browser checks on desktop, tablet and mobile widths: search and filters, navigation, signup and login, saving and removing foods, saved foods persisting across browsers and after logout, layout without horizontal scrolling, no broken images, and no console errors. Automated API tests were written during development (foods, auth, saved foods and the file store) and later removed from the project folder; they are still available in the git history.
 
 ---
 
@@ -374,7 +365,7 @@ cp .env.example .env     # then set JWT_SECRET to a long random string
 npm start                # open http://localhost:3000
 ```
 
-`npm run dev` restarts the server on file changes. `npm test` runs the tests.
+`npm run dev` restarts the server on file changes.
 
 ---
 
@@ -396,13 +387,12 @@ npm start                # open http://localhost:3000
 - Per-user saved foods (add, remove, list)
 - Input validation and consistent error handling
 - Full responsive frontend in plain HTML, CSS and JavaScript
-- Automated API tests
 
 **Known limitations**
 - Data is stored in one JSON file that is rewritten on each change. This suits a demo or a few users, not heavy use.
 - No password reset, email verification or account deletion.
 - Recipes ideas and the category list are fixed data in the frontend, not served by the API.
-- The rate limiter keeps its counts in memory, so they reset when the server restarts.
+- There is no limit on repeated login attempts, so a production version should add rate limiting.
 - Shelf-life figures are general estimates written for this project and should be checked against an authoritative source before being relied on.
 - Food photos come from Wikimedia Commons. Individual licences were not recorded.
 

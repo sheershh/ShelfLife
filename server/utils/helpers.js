@@ -1,5 +1,14 @@
 import { CATEGORIES } from '../store/foodStore.js'
 
+// An error that carries an HTTP status code and optional per-field messages.
+export class AppError extends Error {
+  constructor(status, message, errors) {
+    super(message)
+    this.status = status
+    this.errors = errors
+  }
+}
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const SLUG_PATTERN = /^[a-z0-9-]{1,40}$/
 

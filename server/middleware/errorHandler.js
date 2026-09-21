@@ -1,4 +1,4 @@
-import AppError from '../utils/AppError.js'
+import { AppError } from '../utils/helpers.js'
 
 // Unknown /api routes get a JSON 404 instead of an HTML page.
 export function apiNotFound(req, res) {

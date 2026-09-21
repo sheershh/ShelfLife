@@ -1,7 +1,6 @@
 import { findFood } from '../store/foodStore.js'
 import { addSavedFood, removeSavedFood } from '../store/userStore.js'
-import AppError from '../utils/AppError.js'
-import { isValidSlug } from '../utils/validators.js'
+import { AppError, isValidSlug } from '../utils/helpers.js'
 
 // Every handler here runs after requireAuth, so req.user is always the logged-in user.
 

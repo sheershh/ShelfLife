@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { createUser, findUserByEmail, publicUser } from '../store/userStore.js'
-import AppError from '../utils/AppError.js'
-import { validateLogin, validateRegistration } from '../utils/validators.js'
+import { AppError, validateLogin, validateRegistration } from '../utils/helpers.js'
 import { clearAuthCookie, setAuthCookie } from '../middleware/auth.js'
 
 const SALT_ROUNDS = 12
