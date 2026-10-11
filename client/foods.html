@@ -3,38 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ShelfLife: estimated shelf life, storage tips and freshness guidance to help you waste less food." />
-    <title>Explore Foods | ShelfLife</title>
+    <meta name="description" content="Shelf life, storage and spoilage signs for everyday foods." />
+    <meta name="theme-color" content="#f1f4f0" />
+    <title>Food guide | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+  <body class="page-foods">
     <div class="app">
       <div id="navbar"></div>
-      <main class="main">
-        <section class="container page-section">
-          <div class="page-heading">
-            <h1>Explore Foods</h1>
-            <p>
-              Search for a food or browse by category to see estimated shelf life, the best place to store it,
-              and how to recognise freshness.
-            </p>
-          </div>
+      <main class="main" id="main">
+        <div class="container">
+          <header class="page-head">
+            <h1>Food guide</h1>
+            <p>How long everyday foods keep, where to store them, and the signs that they have turned.</p>
+          </header>
 
-          <div class="filters">
-            <div class="search-field">
-              <label for="food-search">Search foods by name</label>
-              <input id="food-search" type="search" placeholder="e.g. banana" autocomplete="off" />
+          <div class="guide-toolbar">
+            <div class="search-input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <label for="food-search" class="visually-hidden">Search foods by name</label>
+              <input id="food-search" type="search" placeholder="Search foods, e.g. banana" autocomplete="off" />
             </div>
-            <div class="category-filter" id="category-filter" role="group" aria-label="Filter by category"></div>
+            <div class="chips" id="category-filter" role="group" aria-label="Filter by category"></div>
           </div>
 
-          <p class="result-count" id="result-count" aria-live="polite"></p>
-          <div id="food-results"><p class="status-text">Loading foods…</p></div>
-        </section>
+          <div class="guide-list-head" aria-hidden="true">
+            <span>Food</span><span>Best kept</span><span>Shelf life</span><span>Keeps for</span>
+          </div>
+          <p class="visually-hidden" id="result-count" aria-live="polite"></p>
+          <div id="food-results"><div class="skeleton guide-skeleton"></div></div>
+          <p class="result-count" id="result-count-visible"></p>
+        </div>
       </main>
       <div id="footer"></div>
     </div>

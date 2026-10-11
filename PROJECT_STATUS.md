@@ -1,401 +1,391 @@
-# ShelfLife: Project Status
+# ShelfLife 2.0: Project Reference
 
-A food shelf-life guide with user accounts. This document describes everything about the project as it stands, so it can be used to prepare UML diagrams, slides and reports.
+Everything about the project as it stands, for UML diagrams, slides, the report and the viva.
+For a guided explanation of the code, see [`docs/VIVA_NOTES.md`](docs/VIVA_NOTES.md).
 
 ---
 
 ## 1. Overview
 
-**ShelfLife** helps people understand how long everyday foods generally last, where to store them, how to recognise freshness and spoilage, and how to use food before it goes to waste. Registered users can save foods to their own list.
+**ShelfLife** helps households waste less food. People photograph fruit or vegetables and get an
+instant freshness reading, look up how long foods keep and how to store them, and find ways to use
+food up before it spoils.
 
 | | |
 | --- | --- |
 | Type | College mini-project (full-stack web application) |
-| Main SDG | **SDG 12**: Responsible Consumption and Production |
+| Main SDG | **SDG 12**: Responsible Consumption and Production (target 12.3: halve food waste) |
 | Supporting SDG | **SDG 2**: Zero Hunger |
-| Core feature | Estimated shelf-life information for each food, per storage condition |
+| Headline feature | AI freshness scanner grounded in our own food database |
 
-**Problem:** good food is thrown away because people are unsure how long it lasts or how to store it.
-**Solution:** a simple website with clear shelf-life estimates, storage advice, freshness stages, warning signs and "use it up" ideas.
+**Problem.** About 1.05 billion tonnes of food were wasted in 2022, 60% of it in households
+(UNEP Food Waste Index Report 2024). Much is thrown out because people are unsure whether it is still good.
+**Solution.** A scanner that gives one clear call (eat / use soon / cook today / throw out), a storage guide, and use-it-up ideas.
+
+### What changed since the mid-semester evaluation
+
+| Feedback / goal | What we built |
+| --- | --- |
+| Add an admin page | Role-based **admin console**: overview charts, food CRUD with photo upload, user role management, scan log |
+| Landing page photos were misleading | **Product-led landing page**: the hero is a live demo of the scanner reading a photo; produce photos appear only as scanner input or as reference in the guide, never as decoration |
+| Add an AI chatbot | **Freshness scanner chat**: upload/take a photo → structured verdict (ripeness, mould, score, days left, recommendation) → follow-up questions |
+| Real database | **MongoDB Atlas** with Mongoose schemas replaces the JSON files |
+| Overall quality | New visual identity, accessibility, rate limiting, NoSQL-injection protection, 39 API tests + 20 browser tests |
 
 ---
 
 ## 2. Technology stack
 
-| Layer | Technology |
-| --- | --- |
-| Frontend | Plain HTML, CSS, vanilla JavaScript (ES modules). No framework, no build step |
-| Backend | Node.js (v20+), Express 5 |
-| Data storage | JSON files (`foods.json` for foods, `users.json` for accounts and saved foods) |
-| Password security | bcryptjs (12 rounds) |
-| Sessions | JSON Web Token (JWT) in an httpOnly cookie |
-| Security middleware | Helmet (security headers), cookie-parser |
-| Configuration | dotenv (`.env` file for secrets) |
+| Layer | Technology | Why |
+| --- | --- | --- |
+| Frontend | HTML, CSS, vanilla JavaScript (ES modules) | No build step; every line is readable and explainable |
+| Backend | Node.js 20+, Express 5 | Express 5 forwards errors from async handlers to the error handler automatically |
+| Database | MongoDB Atlas (free M0) + Mongoose 9 | Documents match our data (a food has nested lists); schemas give validation |
+| AI | Google Gemini `generateContent` REST API (free tier) | Vision + structured JSON output; free; called with native `fetch`, no SDK |
+| Passwords | bcryptjs, 12 rounds | Slow, salted hashing |
+| Sessions | JWT in an httpOnly, SameSite=Lax cookie | Page JavaScript can never read the token |
+| Security headers | Helmet (incl. Content Security Policy) | |
+| Tests | `node:test` + mongodb-memory-server; Playwright | Real database and real browser, no internet or AI quota needed |
+
+Runtime dependencies: `express`, `mongoose`, `bcryptjs`, `jsonwebtoken`, `cookie-parser`, `helmet`, `dotenv`.
+Dev dependencies: `mongodb-memory-server`, `@playwright/test`.
 
 ---
 
-## 3. What the application does (features)
+## 3. Features
 
-**Visitors (no login):**
-- Browse all 12 foods with images, storage-location label, freshness status and a shelf-life preview.
-- Search foods by name and filter by category (both work together).
-- Open a food's details page: estimated shelf life per storage condition, storage method and tips, freshness stages, freshness signs, spoilage signs, and use-it ideas.
-- Read the Recipes / Use It page (6 ideas for using food before it is wasted) and the About page.
+**Visitors**
+- Landing page with an animated scanner demo, freshness stages for any food, guide preview and impact figures.
+- Food guide: search by name + filter by category (combined), storage, shelf life and perishability per food.
+- Food details: shelf life per storage condition (best one marked), stages coloured along the ripeness scale, storage method and tips, fresh vs spoilage signs, use-it ideas, quality-vs-safety disclaimer.
+- Use it up (recipe ideas, served by the API) and About.
 
-**Registered users (after login):**
-- Sign up, log in and log out.
-- Save and unsave foods. The list is stored per user on the server and is available from any browser after login.
-- See saved foods on the **Saved Foods** page, with a count badge in the navbar.
+**Logged-in users**
+- Freshness scanner chat: camera or file upload, drag-and-drop, paste; verdict card; follow-up questions; suggested questions.
+- Save / unsave foods; "Your shelf" with tabs for saved foods and scan history (clearable).
 
-**Rules:**
-- Saving a food while logged out sends the visitor to the login page, then back to where they were.
-- Shelf-life values are always presented as general estimates. The details page shows a disclaimer that separates food *quality* from food *safety*.
+**Admins**
+- Overview: account/food/scan/save totals, scans per day (14 days), scanner recommendations, most-saved foods.
+- Foods: add / edit / delete (deleting also removes it from every user's saved list), photo upload.
+- Users: search, make admin / remove admin, delete (cannot demote or delete yourself).
+- Scans: the 50 most recent scans across all users.
 
 ---
 
-## 4. System architecture
-
-The browser talks to one Express server. Express serves the static frontend files and the JSON API on the same address (`http://localhost:3000`).
+## 4. Architecture
 
 ```mermaid
 flowchart LR
-    B["Browser<br/>HTML + CSS + vanilla JS"] -- "fetch /api/*<br/>(cookie sent automatically)" --> E["Express server"]
-    E -- "static files" --> B
-    E --> F[("foods.json<br/>12 foods, read-only")]
-    E --> U[("users.json<br/>accounts + saved foods")]
+    B["Browser<br/>HTML + CSS + vanilla JS"] -- "fetch /api/* (cookie sent automatically)" --> E["Express server"]
+    E -- "HTML, CSS, JS, images" --> B
+    E -- "Mongoose" --> M[("MongoDB Atlas<br/>users, foods, scans")]
+    E -- "HTTPS + API key (server only)" --> G["Google Gemini API"]
 ```
 
 ### Server layers
 
 ```mermaid
 flowchart TB
-    R["Routes<br/>routes/index.js"] --> M["Middleware<br/>requireAuth, optionalAuth,<br/>errorHandler"]
-    M --> C["Controllers<br/>authController, foodController, savedController"]
-    C --> V["Validation<br/>utils/helpers.js"]
-    C --> S["Stores<br/>foodStore, userStore"]
-    S --> D[("JSON files")]
+    R["routes/index.js"] --> MW["middleware<br/>requireAuth, requireAdmin, rateLimit"]
+    MW --> C["controllers<br/>auth, food, saved, scan, admin"]
+    C --> V["utils/helpers.js<br/>validation, image checks"]
+    C --> S["store/<br/>foodStore, userStore, scanStore"]
+    C --> AI["services/gemini.js"]
+    S --> MO["models/<br/>User, Food, Scan (Mongoose)"]
+    MO --> DB[("MongoDB")]
+    C -. "throw AppError" .-> EH["middleware/errorHandler.js"]
 ```
 
-Request flow: **route → middleware → controller → validation → store → JSON response**. Any error is passed to one central error handler that always returns `{ "message": "...", "errors": { ... } }`.
+Request flow: **route → middleware → controller → validation → store → model → JSON response**. Any thrown
+error reaches one error handler that always answers `{ "message": "...", "errors": { ... } }`.
 
 ---
 
-## 5. Project structure
-
-```
-ShelfLife/
-├── client/                      Frontend (served as static files)
-│   ├── index.html               Home
-│   ├── foods.html               Explore Foods
-│   ├── food.html                Food details (uses ?id=banana)
-│   ├── recipes.html             Recipes / Use It
-│   ├── saved.html               Saved Foods
-│   ├── login.html, signup.html  Account pages
-│   ├── about.html, 404.html
-│   ├── css/style.css            All styling
-│   ├── images/                  Food photos + placeholder
-│   └── js/
-│       ├── api.js               fetch wrapper (talks to the API)
-│       ├── session.js           Current user + saved ids
-│       ├── layout.js            Navbar and footer for every page
-│       ├── ui.js                Card / badge / button HTML helpers
-│       ├── constants.js         Categories, labels, disclaimer text
-│       ├── recipes-data.js      The 6 use-it ideas
-│       ├── auth-form.js         Shared login/signup form helpers
-│       └── pages/               One script per page
-├── server/                      Backend
-│   ├── server.js                Starts the server
-│   ├── app.js                   Builds the Express app
-│   ├── routes/index.js          All API URLs mapped to controllers
-│   ├── controllers/             Request handling logic
-│   ├── middleware/              Auth + error handling
-│   ├── store/                   foodStore.js, userStore.js (data access)
-│   ├── data/foods.json          The food dataset
-│   └── utils/helpers.js         Validation rules + AppError
-├── .env.example                 Template for secrets (real .env is never committed)
-├── package.json
-└── README.md
-```
-
----
-
-## 6. Data model
-
-### Food (from `foods.json`)
-
-| Field | Type | Notes |
-| --- | --- | --- |
-| id (slug) | string | e.g. `banana`, used in URLs |
-| name | string | |
-| category | string | Fruits, Vegetables, Dairy, Pantry & Grains |
-| image | string | Path to photo |
-| shortDescription | string | |
-| storageLocation | string | Refrigerator, Pantry, Room Temperature |
-| storageMethod | string | |
-| shelfLifePreview | string | Short text shown on cards |
-| shelfLife | object | Optional keys: roomTemperature, refrigerator, pantry, freezer (only relevant ones present) |
-| storageTips | string[] | |
-| freshnessStatus | string | Highly Perishable, Moderately Perishable, Longer Lasting |
-| freshnessStages | {label, description}[] | Differs per food |
-| freshnessSigns | string[] | |
-| spoilageSigns | string[] | |
-| usageIdeas | string[] | |
-
-### User (in `users.json`)
-
-| Field | Type | Notes |
-| --- | --- | --- |
-| id | string (UUID) | |
-| name | string | 2–50 characters |
-| email | string | Unique, stored lowercase |
-| passwordHash | string | bcrypt hash, never returned by the API |
-| savedFoods | string[] | List of food ids, e.g. `["banana", "milk"]` |
-| createdAt | ISO date string | |
+## 5. Data model (MongoDB collections)
 
 ```mermaid
 classDiagram
     class User {
-        +String id
+        +ObjectId _id
         +String name
-        +String email
-        -String passwordHash
-        +String[] savedFoods
-        +String createdAt
+        +String email  «unique, lowercase»
+        -String passwordHash  «select: false»
+        +String role  «user | admin»
+        +String[] savedFoods  «food slugs»
+        +Date createdAt
+        +Date updatedAt
     }
     class Food {
-        +String id
+        +ObjectId _id
+        +String slug  «unique, immutable»
         +String name
-        +String category
+        +String category  «enum»
         +String image
         +String shortDescription
-        +String storageLocation
+        +String storageLocation  «enum»
         +String storageMethod
         +String shelfLifePreview
-        +Object shelfLife
+        +ShelfLife shelfLife
         +String[] storageTips
-        +String freshnessStatus
-        +FreshnessStage[] freshnessStages
+        +String freshnessStatus  «enum»
+        +Stage[] freshnessStages
         +String[] freshnessSigns
         +String[] spoilageSigns
         +String[] usageIdeas
     }
-    class FreshnessStage {
+    class Stage {
         +String label
         +String description
     }
-    User "1" --> "0..*" Food : saves
-    Food "1" *-- "1..*" FreshnessStage
+    class ShelfLife {
+        +String roomTemperature
+        +String refrigerator
+        +String pantry
+        +String freezer
+    }
+    class Scan {
+        +ObjectId _id
+        +ObjectId user  «ref User, indexed»
+        +String item
+        +String matchedFood  «food slug or null»
+        +String ripeness  «unripe | ripe | overripe | spoiled | unknown»
+        +Number freshnessScore  «0-100»
+        +Mould mould
+        +String[] visibleSigns
+        +String estimatedDaysLeft
+        +String recommendation  «eat | use-soon | cook-today | discard | unsure»
+        +String confidence  «low | medium | high»
+        +String summary
+        +String thumbnail  «small JPEG data URL»
+        +Date createdAt
+    }
+    class Mould {
+        +Boolean detected
+        +String where
+    }
+    User "1" --> "0..*" Food : saves (by slug)
+    User "1" --> "0..*" Scan : makes
+    Scan "0..*" --> "0..1" Food : matched to
+    Food "1" *-- "1..*" Stage
+    Food "1" *-- "1" ShelfLife
+    Scan "1" *-- "1" Mould
 ```
 
-### The 12 foods
+Enumerations: categories = Fruits, Vegetables, Dairy, Pantry & Grains; storage = Room Temperature, Refrigerator, Pantry;
+freshness status = Highly Perishable, Moderately Perishable, Longer Lasting.
 
-| Food | Category | Best storage | Freshness status | Shelf-life preview |
-| --- | --- | --- | --- | --- |
-| Banana | Fruits | Room Temperature | Highly Perishable | about 3–5 days |
-| Apple | Fruits | Refrigerator | Longer Lasting | about 4 weeks |
-| Strawberry | Fruits | Refrigerator | Highly Perishable | about 3–5 days |
-| Tomato | Vegetables | Room Temperature | Moderately Perishable | about 2–3 days once ripe |
-| Potato | Vegetables | Pantry | Longer Lasting | about 3–4 weeks |
-| Spinach | Vegetables | Refrigerator | Highly Perishable | about 5 days |
-| Milk | Dairy | Refrigerator | Highly Perishable | about 5–7 days once opened |
-| Yogurt | Dairy | Refrigerator | Moderately Perishable | about 5–7 days once opened |
-| Cheese | Dairy | Refrigerator | Longer Lasting | about 3–4 weeks (hard cheese) |
-| Bread | Pantry & Grains | Room Temperature | Moderately Perishable | about 4–5 days |
-| Rice | Pantry & Grains | Pantry | Longer Lasting | dry: about 1 year, cooked: 3–4 days |
-| Pasta | Pantry & Grains | Pantry | Longer Lasting | dry: about 2 years, cooked: 3–4 days |
+**Why saved foods are stored as slugs on the user** (embedding) rather than a separate collection: a user saves a
+handful of foods, we always read them together with the user, and `$addToSet` / `$pull` update them atomically.
 
 ---
 
-## 7. API reference
+## 6. API reference
 
-Base address: `http://localhost:3000`. All bodies are JSON.
+Base address `http://localhost:3000`. JSON in and out. Errors: `{ "message", "errors"? }`.
 
-| Method | Route | Login needed | Purpose | Success | Errors |
-| --- | --- | --- | --- | --- | --- |
-| GET | `/api/foods?search=&category=` | No | List foods, optionally filtered | 200 `{count, foods}` | 400 invalid query |
-| GET | `/api/foods/:id` | No | One food | 200 `{food}` | 400 bad id, 404 not found |
-| POST | `/api/auth/register` | No | Create account and log in | 201 `{user}` | 400 validation, 409 email taken |
-| POST | `/api/auth/login` | No | Log in | 200 `{user}` | 400 validation, 401 wrong credentials |
-| POST | `/api/auth/logout` | No | Log out (clears cookie) | 200 | |
-| GET | `/api/auth/me` | No | Current user, or `{user: null}` | 200 | |
-| GET | `/api/saved` | **Yes** | The user's saved foods | 200 `{count, foods}` | 401 |
-| POST | `/api/saved/:id` | **Yes** | Save a food (repeat is harmless) | 200 `{message, savedIds}` | 400, 401, 404 |
-| DELETE | `/api/saved/:id` | **Yes** | Remove a saved food | 200 `{message, savedIds}` | 400, 401, 404 |
+| Method | Route | Access | Purpose | Success |
+| --- | --- | --- | --- | --- |
+| GET | `/api/health` | Public | Server up? Is the AI configured? | `{ ok, ai }` |
+| GET | `/api/foods?search=&category=` | Public | List / search / filter foods | `{ count, foods }` |
+| GET | `/api/foods/:id` | Public | One food by slug | `{ food }` |
+| GET | `/api/meta` | Public | Categories and recipe ideas | `{ categories, recipes }` |
+| POST | `/api/auth/register` | Public, rate-limited | Create account + log in | 201 `{ user }` + cookie |
+| POST | `/api/auth/login` | Public, rate-limited | Log in | `{ user }` + cookie |
+| POST | `/api/auth/logout` | Public | Clear cookie | `{ message }` |
+| GET | `/api/auth/me` | Public | Current user or `null` | `{ user }` |
+| GET | `/api/saved` | User | Saved foods | `{ count, foods }` |
+| POST | `/api/saved/:id` | User | Save (repeat is harmless) | `{ message, savedIds }` |
+| DELETE | `/api/saved/:id` | User | Unsave | `{ message, savedIds }` |
+| POST | `/api/scans` | User, rate-limited | Analyse a photo `{ image, thumbnail? }` | 201 `{ scan, food }`, or 200 `{ scan: null, message }` if not food |
+| GET | `/api/scans` | User | My last 30 scans | `{ count, scans }` |
+| DELETE | `/api/scans` | User | Clear my scan history | `{ message }` |
+| POST | `/api/assistant` | User, rate-limited | Ask `{ message, history?, scanId? }` | `{ reply }` |
+| GET | `/api/admin/stats` | Admin | Totals and chart data | `{ totals, scansByRecommendation, scansPerDay, mostSaved }` |
+| POST | `/api/admin/foods` | Admin | Create food | 201 `{ food }` |
+| PUT | `/api/admin/foods/:id` | Admin | Update food (slug cannot change) | `{ food }` |
+| DELETE | `/api/admin/foods/:id` | Admin | Delete food (+ remove from saved lists) | `{ message }` |
+| POST | `/api/admin/images` | Admin | Upload a food photo `{ image }` | 201 `{ path }` |
+| GET | `/api/admin/users` | Admin | All users | `{ count, users }` |
+| PATCH | `/api/admin/users/:id` | Admin | Set role `{ role }` | `{ user }` |
+| DELETE | `/api/admin/users/:id` | Admin | Delete user and their scans | `{ message }` |
+| GET | `/api/admin/scans` | Admin | 50 most recent scans | `{ count, scans }` |
 
-Every error response has the same shape: `{ "message": "...", "errors": { "field": "..." } }` (`errors` only when field-specific).
+Status codes used: 400 validation, 401 not logged in, 403 not admin, 404 not found, 409 duplicate,
+413 too large, 422 AI could not answer, 429 rate limit / AI quota, 502/503/504 AI service problems.
+
+**Rate limits:** register + login 20 per 15 minutes per IP; scans + assistant 6 per minute per user.
 
 ### Validation rules
 
 | Input | Rule |
 | --- | --- |
-| Name | Text, 2–50 characters |
-| Email | Valid format, up to 254 characters, case-insensitive and unique |
+| Name | 2–50 characters |
+| Email | valid format, ≤ 254 characters, unique (case-insensitive) |
 | Password | 8–72 characters, at least one letter and one number |
-| Search | Text, up to 50 characters |
-| Category | Must be one of the four categories |
-| Food id | Lowercase letters, digits and hyphens only (up to 40 characters) |
+| Search / category | ≤ 50 characters / one of the four categories |
+| Food id (slug) | `a-z`, `0-9`, `-`, ≤ 40 characters |
+| Food (admin) | every field checked by `validateFood()`: lengths, enums, 1–12 list items, 1–8 stages, image path inside `/images/` |
+| Photo | JPEG/PNG/WebP data URL, ≤ 2.5 MB, and the file's first bytes must really be that image type |
+| Assistant message | 1–500 characters; at most 10 earlier turns are used |
 
 ---
 
-## 8. Key flows (sequence diagrams)
+## 7. Key flows
 
-### Register and login
+### Freshness scan
 
 ```mermaid
 sequenceDiagram
     actor U as User
-    participant B as Browser (signup.js)
-    participant S as Express server
-    participant D as users.json
+    participant B as Browser (scan.js)
+    participant S as Express (scanController)
+    participant DB as MongoDB
+    participant G as Gemini API
 
-    U->>B: Fill form, press Signup
-    B->>B: Check fields in the browser
-    B->>S: POST /api/auth/register
-    S->>S: Validate input
-    S->>D: Email already used?
-    S->>S: Hash password with bcrypt (12 rounds)
-    S->>D: Save new user
-    S-->>B: 201 {user} + httpOnly cookie with JWT
-    B->>U: Redirect to Home (logged in)
+    U->>B: Take or choose a photo
+    B->>B: preparePhoto(): resize to 1024px JPEG + 160px thumbnail (canvas)
+    B->>S: POST /api/scans { image, thumbnail } (cookie)
+    S->>S: requireAuth, rateLimit, parseImageDataUrl (type, size, magic bytes)
+    S->>DB: foodCatalog() (slug, name, category)
+    S->>G: generateContent(photo + instructions + catalog, JSON schema)
+    G-->>S: { isFood, item, matchedFoodId, ripeness, mould, score, ... }
+    S->>S: normaliseVerdict(): keep known values, clamp, mould on soft food => discard
+    S->>DB: save Scan
+    S->>DB: findFood(matchedFood) (grounding)
+    S-->>B: 201 { scan, food }
+    B->>U: Verdict card + "From the ShelfLife guide"
 ```
 
-### Save a food
+### Follow-up question (grounded chat)
 
 ```mermaid
 sequenceDiagram
     actor U as User
     participant B as Browser
-    participant S as Express server
-    participant D as users.json
-
-    U->>B: Click the heart on a food
-    alt not logged in
-        B->>U: Redirect to Login (then back)
-    else logged in
-        B->>S: POST /api/saved/banana (cookie sent)
-        S->>S: requireAuth verifies the JWT
-        S->>S: Check the food id exists
-        S->>D: Add "banana" to the user's savedFoods
-        S-->>B: 200 {savedIds}
-        B->>U: Heart turns red, navbar count updates
-    end
+    participant S as Express (askAssistant)
+    participant DB as MongoDB
+    participant G as Gemini API
+    U->>B: "Can I still bake with it?"
+    B->>S: POST /api/assistant { message, history (last 8), scanId }
+    S->>DB: findScanForUser(scanId, user) (must be the user's own scan)
+    S->>DB: listFoods() and pick records named in the question or matched by the scan
+    S->>G: system rules + scan facts + food records, then the conversation
+    G-->>S: plain-text answer
+    S-->>B: { reply }
 ```
 
-### Search and filter foods
+### Admin request
 
 ```mermaid
 sequenceDiagram
-    actor U as User
-    participant B as Browser (foods.js)
-    participant S as Express server
-
-    U->>B: Type "ban" / choose "Dairy"
-    B->>B: Wait 250 ms after the last keystroke
-    B->>S: GET /api/foods?search=ban&category=Dairy
-    S->>S: Validate query, filter foods
-    S-->>B: 200 {count, foods}
-    B->>U: Show matching cards or the empty state
+    actor A as Admin
+    participant B as Browser (admin.js)
+    participant S as Express
+    participant DB as MongoDB
+    A->>B: Save food form
+    B->>S: POST /api/admin/foods
+    S->>S: requireAuth (cookie -> user from DB) then requireAdmin (role === 'admin')
+    S->>S: validateFood() (per-field errors => 400)
+    S->>DB: Food.create()
+    S-->>B: 201 { food }
 ```
+
+Register/login, save-a-food and search flows are unchanged from version 1 except that data now lives in MongoDB.
 
 ---
 
-## 9. Use cases
+## 8. Use cases
 
 | # | Actor | Use case |
 | --- | --- | --- |
-| 1 | Visitor, User | Browse foods |
-| 2 | Visitor, User | Search foods by name |
-| 3 | Visitor, User | Filter foods by category |
-| 4 | Visitor, User | View a food's shelf life, storage, freshness and spoilage details |
-| 5 | Visitor, User | Read use-it ideas and the About page |
-| 6 | Visitor | Register an account |
-| 7 | Visitor | Log in |
-| 8 | User | Log out |
-| 9 | User | Save a food |
-| 10 | User | Remove a saved food |
-| 11 | User | View Saved Foods |
+| 1 | Visitor, User | Browse, search and filter the food guide |
+| 2 | Visitor, User | View a food's shelf life, storage, stages and signs |
+| 3 | Visitor, User | Read use-it-up ideas and About |
+| 4 | Visitor | Register, log in |
+| 5 | User | Log out |
+| 6 | User | Save / unsave foods, view saved foods |
+| 7 | User | Scan a photo and get a freshness verdict |
+| 8 | User | Ask the assistant follow-up questions |
+| 9 | User | View / clear scan history |
+| 10 | Admin | View overview statistics |
+| 11 | Admin | Add, edit, delete foods (upload photos) |
+| 12 | Admin | Promote / demote / delete users |
+| 13 | Admin | View recent scans |
+| — | Gemini API (external system) | Analyses photos and answers questions for 7 and 8 |
 
-Actors: **Visitor** (not logged in) and **User** (logged in). A User can do everything a Visitor can.
+An Admin can do everything a User can; a User everything a Visitor can.
 
 ---
 
-## 10. Pages (frontend routes)
+## 9. Pages
 
-| URL | Page | Notes |
+| URL | Page | Script |
 | --- | --- | --- |
-| `/` | Home | Hero, 4 featured foods, feature overview |
-| `/foods` | Explore Foods | Search box, category chips, food cards |
-| `/food?id=banana` | Food details | Full shelf-life and storage information |
-| `/recipes` | Recipes / Use It | 6 idea cards |
-| `/saved` | Saved Foods | Needs login; shows saved cards with Remove button |
-| `/login` | Login | Email and password |
-| `/signup` | Signup | Name, email, password, confirm password |
-| `/about` | About | Purpose and why storage awareness matters |
-| any other | 404 page | Links back to Home and Explore Foods |
+| `/` | Home: hero scanner demo, how it works, freshness stages, guide preview, impact | `pages/home.js` |
+| `/scan` | Freshness scanner chat | `pages/scan.js` |
+| `/foods` | Food guide | `pages/foods.js` |
+| `/food?id=banana` | Food details | `pages/food.js` |
+| `/recipes` | Use it up | `pages/recipes.js` |
+| `/saved` | Your shelf: saved foods and scan history tabs | `pages/saved.js` |
+| `/admin` | Admin console (role-gated) | `pages/admin.js` |
+| `/login`, `/signup` | Accounts | `pages/login.js`, `pages/signup.js` |
+| `/about` | About, how the scanner works, limits | `pages/about.js` |
+| anything else | 404 | `pages/notfound.js` |
 
-The design is responsive (laptop, tablet, mobile) with a warm cream, espresso, sage-green and tomato-red palette.
+### Visual design
 
----
-
-## 11. Security measures
-
-- Passwords are hashed with **bcrypt** (12 rounds). Plain passwords are never stored or returned.
-- Login uses a **JWT in an httpOnly, SameSite=Lax cookie** (valid 7 days; Secure flag on in production). JavaScript on the page cannot read it, so no token appears in frontend code.
-- Wrong email and wrong password give the **same error message**, and the server does equal work either way, so attackers cannot tell which emails have accounts.
-- **Helmet** adds security headers, including a Content Security Policy.
-- Requests over 10 KB are rejected, and all input is validated by type and format.
-- The browser escapes all text before putting it into the page (protection against script injection).
-- The `next` redirect after login only accepts paths on the same site.
-- Secrets (`JWT_SECRET`) live in `.env`, which is never committed. `.env.example` is the template.
-- `users.json` is git-ignored and readable only by its owner.
+"Cold storage" identity: cool frost background `#F1F4F0`, chlorophyll ink `#0F2A1F`, one leaf-green action colour `#1E6B47`.
+The **ripeness scale** (green → yellow → amber → brown) is the signature element and is only used for freshness data:
+the hero demo, verdict cards, freshness stages and perishability pips. Type: Bricolage Grotesque (display) and
+Instrument Sans (text). All colours, sizes and spacing are tokens in `client/css/tokens.css`. Responsive from 360px,
+keyboard accessible, and `prefers-reduced-motion` turns animations off.
 
 ---
 
-## 12. Testing
+## 10. Security
 
-The application was checked by hand and with browser checks on desktop, tablet and mobile widths: search and filters, navigation, signup and login, saving and removing foods, saved foods persisting across browsers and after logout, layout without horizontal scrolling, no broken images, and no console errors. Automated API tests were written during development (foods, auth, saved foods and the file store) and later removed from the project folder; they are still available in the git history.
-
----
-
-## 13. How to run
-
-```bash
-npm install
-cp .env.example .env     # then set JWT_SECRET to a long random string
-npm start                # open http://localhost:3000
-```
-
-`npm run dev` restarts the server on file changes.
-
----
-
-## 14. Design decisions
-
-- **One server, one address.** Express serves both the pages and the API, so no cross-site (CORS) setup is needed and cookies work simply.
-- **Vanilla JavaScript, multi-page site.** Each page has its own HTML file and script; shared code (navbar, footer, API calls) is in small modules.
-- **File-based storage instead of a database.** Simple to run and explain for a college project, with nothing extra to install. The stores (`foodStore.js`, `userStore.js`) hide how data is kept, so a database could replace them later without changing controllers or the frontend.
-- **Server-side saved foods** so a user's list follows them across browsers and devices.
-- **Cautious wording.** Shelf-life values are presented as approximate estimates, never as expiry dates or safety guarantees.
+| Threat | Protection | Where |
+| --- | --- | --- |
+| Stolen passwords | bcrypt, 12 rounds; hash never returned (`select: false`) | `authController.js`, `models/User.js` |
+| Token theft by scripts (XSS) | JWT only in an httpOnly cookie | `middleware/auth.js` |
+| Script injection in pages | Every API value escaped with `escapeHtml()`; CSP allows only our own scripts, no inline scripts or styles | `client/js/ui.js`, `server/app.js` |
+| CSRF | `SameSite=Lax` cookie; JSON-only API | `middleware/auth.js` |
+| Account enumeration | Same error and same bcrypt work for unknown email and wrong password | `authController.js` |
+| Password guessing | 20 login/register attempts per 15 min per IP → 429 | `middleware/rateLimit.js` |
+| NoSQL injection (`{"$gt": ""}`) | Type checks in validators + Mongoose `sanitizeFilter` | `utils/helpers.js`, `db.js` |
+| Regex injection in search | User text escaped before `new RegExp` | `store/foodStore.js` |
+| Privilege escalation | Role re-read from the database on every request; `requireAdmin` on all `/api/admin` routes; admins cannot demote/delete themselves | `middleware/auth.js`, `routes/index.js` |
+| Reading others' data | Scans looked up by id **and** owner | `store/scanStore.js` |
+| Malicious uploads | Type whitelist, size limit, magic-byte check, server-chosen random file name | `utils/helpers.js`, `adminController.js` |
+| Large-body DoS | 10 KB body limit, 4 MB only on the two upload routes | `app.js` |
+| AI key leak | Key only in `.env` on the server, sent in a header, never to the browser | `services/gemini.js` |
+| Trusting AI output | Enum whitelist, clamped numbers, trimmed text, our own mould rule | `scanController.js` |
+| AI quota abuse | Login required + 6 requests/min per user | `routes/index.js` |
+| Secrets in git | `.env` is git-ignored; `.env.example` is the template | `.gitignore` |
 
 ---
 
-## 15. Current status
+## 11. Testing
 
-**Completed**
-- Food API with search and category filter
-- Registration, login, logout with hashed passwords and cookie sessions
-- Per-user saved foods (add, remove, list)
-- Input validation and consistent error handling
-- Full responsive frontend in plain HTML, CSS and JavaScript
+| Suite | Command | What it covers |
+| --- | --- | --- |
+| API (39 tests) | `npm test` | Gemini service (low thinking level, fallback model when busy, quota message, hidden thought parts); foods search/filter/regex safety; register/login/logout, duplicates, NoSQL injection, cookie flags; saved foods; scanner with fake AI (grounding, mould rule, cleaning bad AI output, non-food, fake image files, ownership); assistant context; admin 401/403, CRUD, validation, users, uploads; 404 JSON, body limit, security headers; rate limiting |
+| Browser (10 journeys × desktop + mobile = 20) | `npm run test:e2e` | Home demo + stages, guide search/filter/empty state, save-while-logged-out redirect, save/remove, full scanner journey with follow-ups and history, visitor gate, admin gate, admin add/edit/delete food, admin validation errors, mobile navigation without horizontal scroll |
 
-**Known limitations**
-- Data is stored in one JSON file that is rewritten on each change. This suits a demo or a few users, not heavy use.
-- No password reset, email verification or account deletion.
-- Recipes ideas and the category list are fixed data in the frontend, not served by the API.
-- There is no limit on repeated login attempts, so a production version should add rate limiting.
-- Shelf-life figures are general estimates written for this project and should be checked against an authoritative source before being relied on.
-- Food photos come from Wikimedia Commons. Individual licences were not recorded.
+Both suites use an in-memory MongoDB and a fake AI service, so they run offline and never spend Gemini quota.
 
-**Intentionally not included:** AI or machine-learning features, barcode scanning, automatic expiry prediction, notifications or reminders, an admin dashboard, payments, and user image uploads.
+---
 
-**Possible future work:** move storage to a real database, add password reset, per-item purchase dates and reminders, more foods, and moving recipes into the API.
+## 12. Known limitations
+
+- Scanner verdicts come from a general vision model; they can be wrong, especially for blurry photos or foods not in the guide. We show confidence and always frame results as quality, not safety.
+- Gemini's free tier has rate limits; under heavy use the scanner asks people to wait a minute.
+- The rate limiter stores counts in memory, so it resets on restart and would need a shared store (e.g. Redis) for several servers.
+- Uploaded food photos are saved on the server's disk; a hosted deployment would use object storage.
+- No password reset or email verification.
+- Shelf-life figures are general estimates written for this project.
+
+## 13. Future work
+
+Pantry tracker with purchase dates and "use first" reminders; more foods including Indian staples; installable PWA
+so the camera opens straight from the home screen; an accuracy evaluation of the scanner on a labelled fresh/rotten dataset; deployment.

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ShelfLife admin console." />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#f1f4f0" />
+    <title>Admin console | ShelfLife</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="page-admin">
+    <div class="app">
+      <div id="navbar"></div>
+      <main class="main" id="main">
+        <div class="container admin" id="admin">
+          <header class="admin-head">
+            <div>
+              <h1>Admin console</h1>
+              <p>Manage the food guide, user accounts and scanner activity.</p>
+            </div>
+          </header>
+
+          <div id="admin-gate"></div>
+
+          <div id="admin-app" hidden>
+            <div class="tabs" role="tablist" aria-label="Admin sections">
+              <button type="button" class="tab" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true">Overview</button>
+              <button type="button" class="tab" role="tab" id="tab-foods" aria-controls="panel-foods" aria-selected="false" tabindex="-1">Foods</button>
+              <button type="button" class="tab" role="tab" id="tab-users" aria-controls="panel-users" aria-selected="false" tabindex="-1">Users</button>
+              <button type="button" class="tab" role="tab" id="tab-scans" aria-controls="panel-scans" aria-selected="false" tabindex="-1">Scans</button>
+            </div>
+
+            <section class="tab-panel" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview"></section>
+
+            <section class="tab-panel" id="panel-foods" role="tabpanel" aria-labelledby="tab-foods" hidden>
+              <div class="admin-toolbar">
+                <div class="search-input">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                  <label for="food-filter" class="visually-hidden">Filter foods</label>
+                  <input id="food-filter" type="search" placeholder="Filter foods" autocomplete="off" />
+                </div>
+                <button type="button" class="btn btn-primary" id="add-food">Add a food</button>
+              </div>
+              <div id="foods-table"></div>
+            </section>
+
+            <section class="tab-panel" id="panel-users" role="tabpanel" aria-labelledby="tab-users" hidden>
+              <div class="admin-toolbar">
+                <div class="search-input">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                  <label for="user-filter" class="visually-hidden">Filter users</label>
+                  <input id="user-filter" type="search" placeholder="Filter by name or email" autocomplete="off" />
+                </div>
+              </div>
+              <div id="users-table"></div>
+            </section>
+
+            <section class="tab-panel" id="panel-scans" role="tabpanel" aria-labelledby="tab-scans" hidden>
+              <div id="scans-table"></div>
+            </section>
+          </div>
+
+          <!-- Add / edit food form, shown in a native <dialog> -->
+          <dialog class="food-dialog" id="food-dialog" aria-labelledby="food-dialog-title">
+            <form id="food-form" class="food-form" novalidate>
+              <header class="food-form-head">
+                <h2 id="food-dialog-title">Add a food</h2>
+                <button type="button" class="btn btn-ghost btn-sm" data-close-dialog>Close</button>
+              </header>
+              <p class="form-error" role="alert" hidden></p>
+
+              <div class="food-form-body">
+                <fieldset>
+                  <legend>Basics</legend>
+                  <div class="form-grid">
+                    <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" required maxlength="60" /><p class="field-error" hidden></p></div>
+                    <div class="field"><label for="f-slug">Id (used in the URL)</label><input id="f-slug" name="slug" required maxlength="40" pattern="[a-z0-9-]+" aria-describedby="f-slug-hint" /><p class="field-hint" id="f-slug-hint">Lowercase letters, numbers and hyphens. Can't be changed later.</p><p class="field-error" hidden></p></div>
+                    <div class="field"><label for="f-category">Category</label><select id="f-category" name="category"></select><p class="field-error" hidden></p></div>
+                    <div class="field"><label for="f-storageLocation">Best storage</label><select id="f-storageLocation" name="storageLocation"><option>Room Temperature</option><option>Refrigerator</option><option>Pantry</option></select><p class="field-error" hidden></p></div>
+                    <div class="field"><label for="f-freshnessStatus">How long it keeps</label><select id="f-freshnessStatus" name="freshnessStatus"><option>Highly Perishable</option><option>Moderately Perishable</option><option>Longer Lasting</option></select><p class="field-error" hidden></p></div>
+                    <div class="field"><label for="f-shelfLifePreview">Shelf-life summary</label><input id="f-shelfLifePreview" name="shelfLifePreview" maxlength="60" placeholder="Room temp: about 3–5 days" /><p class="field-error" hidden></p></div>
+                  </div>
+                  <div class="field"><label for="f-shortDescription">Short description</label><input id="f-shortDescription" name="shortDescription" maxlength="200" /><p class="field-error" hidden></p></div>
+                  <div class="field image-field">
+                    <span class="field-label">Photo</span>
+                    <div class="image-picker">
+                      <img id="f-image-preview" src="/images/placeholder.svg" alt="" width="72" height="72" />
+                      <div>
+                        <input id="f-image" name="image" aria-label="Image path" placeholder="/images/banana.jpg" />
+                        <button type="button" class="btn btn-secondary btn-sm" id="f-image-upload">Upload a photo</button>
+                        <input type="file" id="f-image-file" accept="image/*" class="visually-hidden" tabindex="-1" />
+                      </div>
+                    </div>
+                    <p class="field-error" hidden></p>
+                  </div>
+                </fieldset>
+
+                <fieldset>
+                  <legend>Shelf life by storage</legend>
+                  <p class="field-hint">Fill in only the ones that apply.</p>
+                  <div class="form-grid">
+                    <div class="field"><label for="f-sl-roomTemperature">Room temperature</label><input id="f-sl-roomTemperature" name="sl-roomTemperature" maxlength="200" /></div>
+                    <div class="field"><label for="f-sl-refrigerator">Refrigerator</label><input id="f-sl-refrigerator" name="sl-refrigerator" maxlength="200" /></div>
+                    <div class="field"><label for="f-sl-pantry">Pantry</label><input id="f-sl-pantry" name="sl-pantry" maxlength="200" /></div>
+                    <div class="field"><label for="f-sl-freezer">Freezer</label><input id="f-sl-freezer" name="sl-freezer" maxlength="200" /></div>
+                  </div>
+                  <p class="field-error" data-error-for="shelfLife" hidden></p>
+                </fieldset>
+
+                <fieldset>
+                  <legend>Storage and freshness</legend>
+                  <div class="field"><label for="f-storageMethod">Storage method</label><textarea id="f-storageMethod" name="storageMethod" maxlength="600"></textarea><p class="field-error" hidden></p></div>
+                  <div class="field"><label for="f-freshnessStages">Freshness stages</label><textarea id="f-freshnessStages" name="freshnessStages" rows="4" aria-describedby="f-stages-hint"></textarea><p class="field-hint" id="f-stages-hint">One per line, as "Label: description", from freshest to oldest.</p><p class="field-error" hidden></p></div>
+                  <div class="form-grid">
+                    <div class="field"><label for="f-storageTips">Storage tips</label><textarea id="f-storageTips" name="storageTips"></textarea><p class="field-hint">One per line.</p><p class="field-error" hidden></p></div>
+                    <div class="field"><label for="f-usageIdeas">Ways to use it up</label><textarea id="f-usageIdeas" name="usageIdeas"></textarea><p class="field-hint">One per line.</p><p class="field-error" hidden></p></div>
+                    <div class="field"><label for="f-freshnessSigns">Signs it's fresh</label><textarea id="f-freshnessSigns" name="freshnessSigns"></textarea><p class="field-hint">One per line.</p><p class="field-error" hidden></p></div>
+                    <div class="field"><label for="f-spoilageSigns">Signs it's spoiling</label><textarea id="f-spoilageSigns" name="spoilageSigns"></textarea><p class="field-hint">One per line.</p><p class="field-error" hidden></p></div>
+                  </div>
+                </fieldset>
+              </div>
+
+              <footer class="food-form-foot">
+                <button type="button" class="btn btn-ghost" data-close-dialog>Cancel</button>
+                <button type="submit" class="btn btn-primary" id="food-submit">Save food</button>
+              </footer>
+            </form>
+          </dialog>
+          <div class="chart-tooltip" id="chart-tooltip" role="status" hidden></div>
+        </div>
+      </main>
+      <div id="footer"></div>
+    </div>
+    <script type="module" src="/js/pages/admin.js"></script>
+  </body>
+</html>

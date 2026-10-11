@@ -3,80 +3,159 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ShelfLife: estimated shelf life, storage tips and freshness guidance to help you waste less food." />
-    <title>ShelfLife | Make Food Last Longer</title>
+    <meta name="description" content="Snap a photo of your fruit or veg. ShelfLife reads its ripeness, spots mould and tells you whether to eat it, cook it today or let it go." />
+    <meta name="theme-color" content="#f1f4f0" />
+    <title>ShelfLife | Know what's still good</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+  <body class="page-home">
     <div class="app">
       <div id="navbar"></div>
-      <main class="main">
+      <main class="main" id="main">
+
+        <!-- Hero: the product itself. The photo is shown only as scanner input, never as decoration. -->
         <section class="hero">
-          <div class="container hero-inner">
-            <div class="hero-text">
-              <p class="eyebrow">Food shelf life guide</p>
-              <h1>Make Food Last Longer. Waste Less.</h1>
+          <div class="container hero-grid">
+            <div class="hero-copy">
+              <h1>Know what's still good.</h1>
               <p class="hero-lead">
-                ShelfLife helps you understand how long everyday foods generally last, where to store them,
-                and how to use them before they go to waste.
+                Take a photo of your fruit or veg. ShelfLife reads its ripeness, looks for mould and tells you
+                whether to eat it, cook it today or let it go, with storage advice to make the next one last longer.
               </p>
               <div class="button-row">
-                <a href="/foods" class="btn btn-primary">Explore Foods</a>
-                <a href="/saved" class="btn btn-outline">Saved Foods</a>
+                <a href="/scan" class="btn btn-primary" id="hero-scan-link">Scan a photo</a>
+                <a href="/foods" class="btn btn-secondary">Browse the food guide</a>
               </div>
+              <p class="hero-note">Free with an account. Works with your phone camera or any photo.</p>
             </div>
-            <img class="hero-image" src="/images/hero.jpg"
-              alt="Baskets of fresh fruit and vegetables including apples, grapes, corn and tomatoes" />
+
+            <figure class="demo" id="scanner-demo" aria-label="Example: ShelfLife scanning a photo of bananas">
+              <div class="demo-frame">
+                <img src="/images/banana.jpg" alt="Spotted yellow bananas on a market stall" width="900" height="598" />
+                <span class="demo-corner demo-corner-tl" aria-hidden="true"></span>
+                <span class="demo-corner demo-corner-tr" aria-hidden="true"></span>
+                <span class="demo-corner demo-corner-bl" aria-hidden="true"></span>
+                <span class="demo-corner demo-corner-br" aria-hidden="true"></span>
+                <span class="demo-sweep" aria-hidden="true"></span>
+                <span class="demo-pin demo-pin-a"><span>Brown spots</span></span>
+                <span class="demo-pin demo-pin-b"><span>Peel intact</span></span>
+                <span class="demo-status" aria-hidden="true"><span class="demo-status-dot"></span><span id="demo-status-text">Reading photo</span></span>
+              </div>
+              <figcaption class="demo-readout">
+                <div class="demo-readout-head">
+                  <div>
+                    <p class="demo-item">Banana</p>
+                    <p class="demo-meta">Matched to the ShelfLife guide, high confidence</p>
+                  </div>
+                  <span class="tag tag-dot tag-cook-today">Cook or blend today</span>
+                </div>
+                <div class="scale" role="img" aria-label="Ripeness: overripe" data-at="66">
+                  <div class="scale-track"><span></span><span></span><span></span><span></span></div>
+                  <span class="scale-marker"></span>
+                  <div class="scale-labels" aria-hidden="true"><span>Unripe</span><span>Ripe</span><span class="is-current">Overripe</span><span>Spoiled</span></div>
+                </div>
+                <dl class="demo-facts">
+                  <div><dt>Freshness</dt><dd class="num">48 / 100</dd></div>
+                  <div><dt>Time left</dt><dd>About a day</dd></div>
+                  <div><dt>Mould</dt><dd>None seen</dd></div>
+                </dl>
+              </figcaption>
+            </figure>
           </div>
         </section>
 
-        <section class="container page-section intro">
-          <h2>Why ShelfLife?</h2>
-          <p>
-            Good food is often thrown away simply because we are unsure how long it lasts or how to store it.
-            ShelfLife is a student project that brings shelf-life estimates, storage advice and freshness
-            signs together in one place, supporting responsible consumption (SDG 12) and reducing waste of
-            food that others could benefit from (SDG 2).
-          </p>
-        </section>
-
-        <section class="container page-section">
-          <div class="section-header">
-            <h2>Featured foods</h2>
-            <a href="/foods" class="text-link">See all foods →</a>
-          </div>
-          <div id="featured-foods"><p class="status-text">Loading foods…</p></div>
-        </section>
-
-        <section class="features-band">
+        <!-- How it works: a real sequence, so the steps are numbered. -->
+        <section class="section steps-section" aria-labelledby="steps-heading">
           <div class="container">
-            <h2>What you can do</h2>
-            <div class="feature-grid">
-              <div class="feature">
-                <span class="feature-number" aria-hidden="true">1</span>
-                <h3>Understand Shelf Life</h3>
-                <p>See general estimates for how long a food lasts at room temperature, in the refrigerator, pantry or freezer.</p>
-              </div>
-              <div class="feature">
-                <span class="feature-number" aria-hidden="true">2</span>
-                <h3>Learn Storage Methods</h3>
-                <p>Find out where each food is best stored and simple tips that help it stay fresh longer.</p>
-              </div>
-              <div class="feature">
-                <span class="feature-number" aria-hidden="true">3</span>
-                <h3>Track Freshness Stages</h3>
-                <p>Learn how foods change over time, from fresh to use soon, and when to check quality carefully.</p>
-              </div>
-              <div class="feature">
-                <span class="feature-number" aria-hidden="true">4</span>
-                <h3>Find Ways to Use Food</h3>
-                <p>Get simple ideas to turn ripe, soft or leftover food into a meal before it goes to waste.</p>
-              </div>
+            <div class="section-intro">
+              <h2 id="steps-heading">From photo to decision in a few seconds</h2>
+              <p>Point your camera at it and get a straight answer, not a page of maybes.</p>
             </div>
+            <ol class="steps">
+              <li class="step">
+                <span class="step-number num" aria-hidden="true">1</span>
+                <h3>Take a photo</h3>
+                <p>One item, in good light. On a phone, the camera opens straight away.</p>
+              </li>
+              <li class="step">
+                <span class="step-number num" aria-hidden="true">2</span>
+                <h3>ShelfLife reads it</h3>
+                <p>Ripeness, bruising and visible mould are checked by Google's Gemini vision model.</p>
+              </li>
+              <li class="step">
+                <span class="step-number num" aria-hidden="true">3</span>
+                <h3>Act on a clear call</h3>
+                <p>Eat it, use it soon, cook it today or throw it out, with storage tips from our food guide.</p>
+              </li>
+              <li class="step">
+                <span class="step-number num" aria-hidden="true">4</span>
+                <h3>Ask what's next</h3>
+                <p>"Can I still bake with it?" The assistant answers using the same guide.</p>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Stages: real data from the API, so people learn to read ripeness themselves. -->
+        <section class="section stages-section" aria-labelledby="stages-heading">
+          <div class="container">
+            <div class="section-intro section-intro-split">
+              <div>
+                <h2 id="stages-heading">Learn to read the signs yourself</h2>
+                <p>Every food in the guide has its own stages, from just bought to past its best.</p>
+              </div>
+              <div class="chips" id="stage-food-picker" role="group" aria-label="Choose a food"></div>
+            </div>
+            <div id="stage-strip" class="stage-strip" aria-live="polite">
+              <div class="skeleton stage-skeleton"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Food guide preview -->
+        <section class="section guide-section" aria-labelledby="guide-heading">
+          <div class="container">
+            <div class="section-intro section-intro-split">
+              <div>
+                <h2 id="guide-heading">A storage guide for everyday food</h2>
+                <p>How long it keeps in the fridge, the pantry or the freezer, and how to tell when it has turned.</p>
+              </div>
+              <a href="/foods" class="btn btn-secondary">Open the food guide</a>
+            </div>
+            <div id="guide-preview"><div class="skeleton guide-skeleton"></div></div>
+          </div>
+        </section>
+
+        <!-- Why it matters -->
+        <section class="impact" aria-labelledby="impact-heading">
+          <div class="container">
+            <h2 id="impact-heading">Most food waste happens at home</h2>
+            <dl class="impact-figures">
+              <div>
+                <dt>food wasted worldwide in 2022</dt>
+                <dd class="num">1.05<span> billion tonnes</span></dd>
+              </div>
+              <div>
+                <dt>of it thrown away by households</dt>
+                <dd class="num">60<span>%</span></dd>
+              </div>
+              <div>
+                <dt>wasted per person every year in Indian homes</dt>
+                <dd class="num">55<span> kg</span></dd>
+              </div>
+            </dl>
+            <p class="impact-source">Source: UNEP Food Waste Index Report 2024. ShelfLife supports UN Sustainable Development Goal 12 (responsible consumption) and Goal 2 (zero hunger).</p>
+          </div>
+        </section>
+
+        <section class="section closing">
+          <div class="container closing-inner">
+            <h2>Something in the fruit bowl you're not sure about?</h2>
+            <a href="/scan" class="btn btn-primary">Check it now</a>
           </div>
         </section>
       </main>

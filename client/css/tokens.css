@@ -1,0 +1,72 @@
+/* Design tokens: every colour, font and size used on the site is defined once here.
+   Visual idea: a cold-storage / produce-grading feel. Cool frost background, deep chlorophyll ink,
+   one leaf-green action colour. The ripeness scale colours are used ONLY for freshness data. */
+
+:root {
+  /* Surfaces and text */
+  --frost: #f1f4f0;          /* page background */
+  --frost-deep: #e4eae3;     /* bands, hover fills */
+  --surface: #ffffff;        /* panels */
+  --ink: #0f2a1f;            /* main text, dark bands */
+  --ink-soft: #4a5d53;       /* secondary text */
+  --ink-faint: #7b8b82;      /* hints, placeholders */
+  --line: #d4ddd5;           /* hairlines and borders */
+  --line-strong: #b9c7bc;
+
+  /* Action colour */
+  --leaf: #1e6b47;
+  --leaf-dark: #154f34;
+  --leaf-tint: #dcebe1;
+
+  /* Ripeness scale: unripe -> ripe -> peak -> overripe -> spoiled, plus mould */
+  --r-unripe: #4c8b3b;
+  --r-ripe: #97b33c;
+  --r-peak: #e3b93c;
+  --r-over: #d3842b;
+  --r-spoiled: #8b5530;
+  --r-mould: #6c7e8a;
+
+  /* Text-safe versions of the scale for small labels on light backgrounds */
+  --r-unripe-text: #2f6a24;
+  --r-peak-text: #7a5a00;
+  --r-over-text: #9a4f0a;
+  --r-spoiled-text: #7a4524;
+
+  --danger: #b23a2a;
+  --danger-tint: #f7e3df;
+
+  /* Type */
+  --font-display: 'Bricolage Grotesque', 'Avenir Next', system-ui, sans-serif;
+  --font-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: clamp(1.5rem, 1.1rem + 1.4vw, 2rem);
+  --text-2xl: clamp(2rem, 1.3rem + 2.6vw, 3rem);
+  --text-hero: clamp(2.75rem, 1.4rem + 5.4vw, 5.25rem);
+
+  /* Spacing (4px grid) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 7rem;
+
+  /* Shape: bigger radius for bigger surfaces */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --shadow-raised: 0 1px 2px rgb(15 42 31 / 0.06), 0 12px 32px -12px rgb(15 42 31 / 0.18);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --container: 1200px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+}

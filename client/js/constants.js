@@ -1,4 +1,4 @@
-export const categories = ['All Foods', 'Fruits', 'Vegetables', 'Dairy', 'Pantry & Grains']
+// Fixed text and labels used by several pages.
 
 export const shelfLifeLabels = {
   roomTemperature: 'Room Temperature',
@@ -8,4 +8,4 @@ export const shelfLifeLabels = {
 }
 
 export const shelfLifeDisclaimer =
-  "These timeframes are only general guides. How long food lasts depends on its freshness, storage temperature, packaging, and handling. Use the signs above along with the product label and food-safety guidance before deciding what to do with food. Quality and safety aren't the same thing: food can lose taste or texture while still being fine, and it can be unsafe without looking spoiled."
+  "These timeframes are general guides. How long food lasts depends on how fresh it was when bought, storage temperature, packaging and handling. Quality and safety aren't the same thing: food can lose taste or texture while still being fine, and it can be unsafe without looking spoiled. Check the label and use your senses, and when in doubt, throw it out."

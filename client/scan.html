@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Take a photo of fruit or vegetables and get a ripeness reading, a mould check and a clear recommendation." />
+    <meta name="theme-color" content="#f1f4f0" />
+    <title>Freshness scanner | ShelfLife</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="page-scan">
+    <div class="app">
+      <div id="navbar"></div>
+      <main class="main" id="main">
+        <div class="container scan-layout">
+          <header class="scan-head">
+            <h1>Freshness scanner</h1>
+            <p>Photograph one item in good light. You'll get a ripeness reading, a mould check and a clear next step, then you can ask follow-up questions.</p>
+          </header>
+
+          <p class="notice scan-setup-notice" id="scan-setup-notice" hidden>
+            The scanner isn't switched on for this server yet (no AI key configured). You can still browse the food guide.
+          </p>
+
+          <section class="chat" id="chat" aria-label="Scanner conversation">
+            <ol class="chat-log" id="chat-log" aria-live="polite" aria-relevant="additions">
+              <li class="msg msg-assistant">
+                <div class="msg-body">
+                  <p>Hi! Send me a photo of a fruit or vegetable and I'll tell you how it's doing. You can also just ask a question.</p>
+                </div>
+              </li>
+            </ol>
+
+            <div class="dropzone" id="dropzone">
+              <div class="dropzone-inner">
+                <span class="dropzone-frame" aria-hidden="true"></span>
+                <p class="dropzone-title">Drop a photo here</p>
+                <p class="dropzone-text">or use your camera. JPEG, PNG or WebP. Photos are shrunk on your device before upload.</p>
+                <div class="button-row">
+                  <button type="button" class="btn btn-primary" data-pick="camera-input">Take a photo</button>
+                  <button type="button" class="btn btn-secondary" data-pick="file-input">Choose a photo</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="suggestions" id="suggestions" role="group" aria-label="Suggested questions"></div>
+
+            <div class="composer-wrap" id="composer-wrap">
+              <form class="composer" id="composer" novalidate>
+                <button type="button" class="composer-attach" data-pick="file-input" title="Add a photo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+                  <span class="visually-hidden">Add a photo</span>
+                </button>
+                <label for="composer-input" class="visually-hidden">Ask a question</label>
+                <input id="composer-input" name="message" type="text" maxlength="500" autocomplete="off"
+                  placeholder="Ask about ripeness, storage or using it up" />
+                <button type="submit" class="composer-send" id="composer-send" aria-label="Send question">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13m0 0-5-5m5 5-5 5"/></svg>
+                </button>
+              </form>
+              <p class="composer-note">ShelfLife judges how food looks, not whether it's safe. When in doubt, throw it out.</p>
+            </div>
+
+            <div class="scan-login" id="scan-login" hidden>
+              <h2>Log in to start scanning</h2>
+              <p>The scanner is free with an account, and keeps a history of everything you check.</p>
+              <div class="button-row">
+                <a href="/login?reason=scan&amp;next=/scan" class="btn btn-primary">Log in</a>
+                <a href="/signup?next=/scan" class="btn btn-secondary">Create account</a>
+              </div>
+            </div>
+
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/*" class="visually-hidden" tabindex="-1" />
+            <input type="file" id="camera-input" accept="image/*" capture="environment" class="visually-hidden" tabindex="-1" />
+          </section>
+        </div>
+      </main>
+      <div id="footer"></div>
+    </div>
+    <script type="module" src="/js/pages/scan.js"></script>
+  </body>
+</html>

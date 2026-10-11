@@ -3,43 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ShelfLife: estimated shelf life, storage tips and freshness guidance to help you waste less food." />
-    <title>Login | ShelfLife</title>
+    <meta name="description" content="Log in to ShelfLife." />
+    <meta name="theme-color" content="#f1f4f0" />
+    <title>Log in | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+  <body class="page-auth">
     <div class="app">
       <div id="navbar"></div>
-      <main class="main">
-        <section class="container page-section auth-page">
-          <form class="auth-card" id="login-form" novalidate>
-            <h1>Login</h1>
-            <p class="auth-intro">Welcome back to ShelfLife.</p>
-            <p class="notice" id="login-note" hidden>Log in to save foods to your account.</p>
+      <main class="main" id="main">
+        <div class="container auth-layout">
+          <form class="auth-form" id="login-form" novalidate>
+            <h1>Welcome back</h1>
+            <p class="auth-intro">Log in to scan photos, save foods and see your scan history.</p>
+            <p class="notice" id="login-note" hidden></p>
             <p class="form-error" role="alert" hidden></p>
 
             <div class="field">
               <label for="login-email">Email</label>
-              <input id="login-email" name="email" type="email" autocomplete="email" />
+              <input id="login-email" name="email" type="email" autocomplete="email" required />
               <p class="field-error" hidden></p>
             </div>
-
             <div class="field">
               <label for="login-password">Password</label>
-              <input id="login-password" name="password" type="password" autocomplete="current-password" />
+              <input id="login-password" name="password" type="password" autocomplete="current-password" required />
               <p class="field-error" hidden></p>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-
-            <p class="auth-links">New here? <a href="/signup">Create an account</a></p>
-            <p class="auth-links"><a href="/">← Back to Home</a></p>
+            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            <p class="auth-switch">New to ShelfLife? <a href="/signup" id="signup-link">Create an account</a></p>
           </form>
-        </section>
+          <aside class="auth-aside" aria-hidden="true">
+            <p class="auth-aside-quote">“Cook or blend today.”</p>
+            <p class="auth-aside-text">That's the kind of answer you get: one clear call for the food in front of you.</p>
+            <div class="scale" data-at="66">
+              <div class="scale-track"><span></span><span></span><span></span><span></span></div>
+              <span class="scale-marker"></span>
+              <div class="scale-labels"><span>Unripe</span><span>Ripe</span><span class="is-current">Overripe</span><span>Spoiled</span></div>
+            </div>
+          </aside>
+        </div>
       </main>
       <div id="footer"></div>
     </div>

@@ -3,55 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ShelfLife: estimated shelf life, storage tips and freshness guidance to help you waste less food." />
-    <title>Signup | ShelfLife</title>
+    <meta name="description" content="Create a free ShelfLife account." />
+    <meta name="theme-color" content="#f1f4f0" />
+    <title>Create an account | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+  <body class="page-auth">
     <div class="app">
       <div id="navbar"></div>
-      <main class="main">
-        <section class="container page-section auth-page">
-          <form class="auth-card" id="signup-form" novalidate>
-            <h1>Signup</h1>
-            <p class="auth-intro">Create your ShelfLife account.</p>
+      <main class="main" id="main">
+        <div class="container auth-layout">
+          <form class="auth-form" id="signup-form" novalidate>
+            <h1>Create your account</h1>
+            <p class="auth-intro">Free. Lets you scan photos, save foods and keep a history of your scans.</p>
             <p class="form-error" role="alert" hidden></p>
 
             <div class="field">
               <label for="signup-name">Name</label>
-              <input id="signup-name" name="name" type="text" autocomplete="name" />
+              <input id="signup-name" name="name" type="text" autocomplete="name" required />
               <p class="field-error" hidden></p>
             </div>
-
             <div class="field">
               <label for="signup-email">Email</label>
-              <input id="signup-email" name="email" type="email" autocomplete="email" />
+              <input id="signup-email" name="email" type="email" autocomplete="email" required />
               <p class="field-error" hidden></p>
             </div>
-
             <div class="field">
               <label for="signup-password">Password</label>
-              <input id="signup-password" name="password" type="password" autocomplete="new-password" />
-              <p class="field-hint">At least 8 characters, with a letter and a number.</p>
+              <input id="signup-password" name="password" type="password" autocomplete="new-password" aria-describedby="password-hint" required />
+              <p class="field-hint" id="password-hint">At least 8 characters, with a letter and a number.</p>
               <p class="field-error" hidden></p>
             </div>
-
             <div class="field">
               <label for="signup-confirm">Confirm password</label>
-              <input id="signup-confirm" name="confirm" type="password" autocomplete="new-password" />
+              <input id="signup-confirm" name="confirm" type="password" autocomplete="new-password" required />
               <p class="field-error" hidden></p>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Signup</button>
-
-            <p class="auth-links">Already have an account? <a href="/login">Login</a></p>
-            <p class="auth-links"><a href="/">← Back to Home</a></p>
+            <button type="submit" class="btn btn-primary btn-block">Create account</button>
+            <p class="auth-switch">Already have an account? <a href="/login" id="login-link">Log in</a></p>
           </form>
-        </section>
+          <aside class="auth-aside" aria-hidden="true">
+            <p class="auth-aside-quote">“Good to eat.”</p>
+            <p class="auth-aside-text">Check fruit and vegetables before you cook, and learn how to store them so they last.</p>
+            <div class="scale" data-at="30">
+              <div class="scale-track"><span></span><span></span><span></span><span></span></div>
+              <span class="scale-marker"></span>
+              <div class="scale-labels"><span>Unripe</span><span class="is-current">Ripe</span><span>Overripe</span><span>Spoiled</span></div>
+            </div>
+          </aside>
+        </div>
       </main>
       <div id="footer"></div>
     </div>

@@ -2,15 +2,29 @@ import { api, ApiError } from '../api.js'
 import { EMAIL_PATTERN, safeNextUrl, showFieldErrors, showFormError } from '../auth-form.js'
 import { initLayout } from '../layout.js'
 import { session } from '../session.js'
+import { applyDataStyles } from '../ui.js'
 
 const form = document.getElementById('login-form')
 
-await initLayout()
-if (session.user) window.location.replace('/')
-
-if (new URLSearchParams(window.location.search).get('reason') === 'save') {
-  document.getElementById('login-note').hidden = false
+// Why the visitor was sent here (e.g. they tried to save a food while logged out).
+const reasons = {
+  save: 'Log in to save foods to your shelf.',
+  scan: 'Log in to use the freshness scanner. It keeps a history of your scans.',
+  admin: 'Log in with an admin account to open the admin console.',
 }
+
+await initLayout()
+applyDataStyles()
+if (session.user) window.location.replace(safeNextUrl())
+
+const params = new URLSearchParams(window.location.search)
+const note = document.getElementById('login-note')
+if (reasons[params.get('reason')]) {
+  note.textContent = reasons[params.get('reason')]
+  note.hidden = false
+}
+// Keep the "next" page when switching to sign up.
+if (params.get('next')) document.getElementById('signup-link').href = `/signup?next=${encodeURIComponent(params.get('next'))}`
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault()
@@ -26,6 +40,7 @@ form.addEventListener('submit', async (event) => {
 
   const button = form.querySelector('button[type="submit"]')
   button.disabled = true
+  button.textContent = 'Logging in…'
   try {
     await api.post('/api/auth/login', { email, password })
     window.location.assign(safeNextUrl())
@@ -33,5 +48,6 @@ form.addEventListener('submit', async (event) => {
     if (error instanceof ApiError && error.errors) showFieldErrors(form, error.errors)
     showFormError(form, error.message)
     button.disabled = false
+    button.textContent = 'Log in'
   }
 })

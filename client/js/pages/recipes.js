@@ -1,33 +1,37 @@
+// "Use it up" page: recipe ideas come from GET /api/meta, matched with foods from the guide.
+
 import { api } from '../api.js'
 import { initLayout } from '../layout.js'
-import { recipeIdeas } from '../recipes-data.js'
-import { escapeHtml, messageBoxHtml } from '../ui.js'
+import { emptyStateHtml, escapeHtml, listHtml } from '../ui.js'
 
-const grid = document.getElementById('recipe-grid')
+const list = document.getElementById('recipe-list')
 
-function recipeCardHtml(idea, food) {
+function recipeHtml(idea, food) {
   return `
-    <article class="recipe-card">
-      <img class="recipe-image" src="${escapeHtml(food.image)}" alt="${escapeHtml(food.name)}" loading="lazy">
+    <article class="recipe">
+      <div class="recipe-when">
+        <img src="${escapeHtml(food.image)}" alt="" loading="lazy" width="96" height="96">
+        <p>${escapeHtml(idea.useWhen)}</p>
+      </div>
       <div class="recipe-body">
-        <p class="food-card-category">${escapeHtml(idea.useWhen)}</p>
         <h2>${escapeHtml(idea.title)}</h2>
         <p>${escapeHtml(idea.description)}</p>
-        <ul class="check-list">${idea.ideas.map((step) => `<li>${escapeHtml(step)}</li>`).join('')}</ul>
-        <a href="/food?id=${encodeURIComponent(food.id)}" class="text-link">About ${escapeHtml(food.name)} storage →</a>
+        <ul class="tick-list">${listHtml(idea.ideas)}</ul>
       </div>
+      <a href="/food?id=${encodeURIComponent(food.id)}" class="text-link recipe-link">How to store ${escapeHtml(food.name.toLowerCase())}</a>
     </article>`
 }
 
 await initLayout()
 
 try {
-  const { foods } = await api.get('/api/foods')
-  const cards = recipeIdeas
+  const [{ recipes }, { foods }] = await Promise.all([api.get('/api/meta'), api.get('/api/foods')])
+  const items = recipes
     .map((idea) => ({ idea, food: foods.find((food) => food.id === idea.foodId) }))
     .filter(({ food }) => food)
-    .map(({ idea, food }) => recipeCardHtml(idea, food))
-  grid.innerHTML = cards.join('')
+  list.innerHTML = items.length
+    ? `<div class="recipes">${items.map(({ idea, food }) => recipeHtml(idea, food)).join('')}</div>`
+    : emptyStateHtml('No ideas yet', 'Ideas appear here when their foods are in the guide.')
 } catch (error) {
-  grid.innerHTML = messageBoxHtml('Could not load ideas', error.message)
+  list.innerHTML = emptyStateHtml('Could not load ideas', error.message)
 }

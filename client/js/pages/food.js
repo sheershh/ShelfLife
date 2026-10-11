@@ -1,101 +1,117 @@
+// Food details page (/food?id=banana): everything the guide knows about one food.
+
 import { api, ApiError } from '../api.js'
 import { shelfLifeDisclaimer, shelfLifeLabels } from '../constants.js'
+import { icon } from '../icons.js'
 import { initLayout } from '../layout.js'
 import { session } from '../session.js'
 import {
-  escapeHtml, favoriteButtonHtml, freshnessBadgeHtml, handleSaveButtons, messageBoxHtml, storageLabelHtml,
+  emptyStateHtml, escapeHtml, handleSaveButtons, lastingHtml, listHtml, saveButtonHtml, storageHtml,
 } from '../ui.js'
 
 const page = document.getElementById('food-details')
-const listHtml = (items) => items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
+const backLink = `<a href="/foods" class="back-link">${icon('back')}Food guide</a>`
 const notFoundHtml = (title, text) =>
-  messageBoxHtml(title, text, '<a href="/foods" class="btn btn-primary">Back to Explore Foods</a>')
+  backLink + emptyStateHtml(title, text, '<a href="/foods" class="btn btn-primary">Open the food guide</a>')
+
+function shelfTableHtml(food) {
+  const rows = Object.entries(shelfLifeLabels)
+    .filter(([condition]) => food.shelfLife?.[condition])
+    .map(([condition, label]) => {
+      const best = food.storageLocation === label
+      return `
+        <tr class="${best ? 'is-best' : ''}">
+          <th scope="row">${storageHtml(label)}${best ? '<span class="tag tag-eat">Best</span>' : ''}</th>
+          <td>${escapeHtml(food.shelfLife[condition])}</td>
+        </tr>`
+    }).join('')
+  return `<table class="shelf-table"><caption class="visually-hidden">Estimated shelf life by storage</caption><tbody>${rows}</tbody></table>`
+}
+
+function stagesHtml(food) {
+  const count = food.freshnessStages.length
+  return `<ol class="stage-list">${food.freshnessStages.map((stage, index) => `
+    <li class="stage-cell" data-tone="${Math.round((index / Math.max(1, count - 1)) * 3)}">
+      <span class="stage-bar" aria-hidden="true"></span>
+      <h3>${escapeHtml(stage.label)}</h3>
+      <p>${escapeHtml(stage.description)}</p>
+    </li>`).join('')}</ol>`
+}
 
 function detailsHtml(food) {
   const name = escapeHtml(food.name)
-  const shelfCards = Object.entries(food.shelfLife)
-    .filter(([, estimate]) => estimate)
-    .map(([condition, estimate]) => `
-      <div class="shelf-card ${food.storageLocation === shelfLifeLabels[condition] ? 'is-recommended' : ''}">
-        ${storageLabelHtml(shelfLifeLabels[condition])}
-        <p class="shelf-card-value">${escapeHtml(estimate)}</p>
-      </div>`)
-    .join('')
-
-  const stages = food.freshnessStages.map((stage, index) => `
-    <li class="stage">
-      <span class="stage-number" aria-hidden="true">${index + 1}</span>
-      <div><h3>${escapeHtml(stage.label)}</h3><p>${escapeHtml(stage.description)}</p></div>
-    </li>`).join('')
-
   return `
-    <a href="/foods" class="text-link">← Back to Explore Foods</a>
-
-    <header class="details-header">
-      <img class="details-image" src="${escapeHtml(food.image)}" alt="${name}">
-      <div class="details-summary">
-        <p class="food-card-category">${escapeHtml(food.category)}</p>
+    ${backLink}
+    <header class="detail-head">
+      <div class="detail-photo"><img src="${escapeHtml(food.image)}" alt="${name}" width="640" height="480"></div>
+      <div class="detail-summary">
+        <p class="detail-category"><a href="/foods?category=${encodeURIComponent(food.category)}">${escapeHtml(food.category)}</a></p>
         <h1>${name}</h1>
-        <p class="details-lead">${escapeHtml(food.shortDescription)}</p>
-        <div class="details-meta">
-          <div><p class="meta-label">Best storage location</p>${storageLabelHtml(food.storageLocation)}</div>
-          <div><p class="meta-label">Freshness status</p>${freshnessBadgeHtml(food.freshnessStatus)}</div>
+        <p class="detail-lead">${escapeHtml(food.shortDescription)}</p>
+        <dl class="detail-facts">
+          <div><dt>Best kept</dt><dd>${storageHtml(food.storageLocation)}</dd></div>
+          <div><dt>Keeps for</dt><dd>${lastingHtml(food.freshnessStatus)}</dd></div>
+          <div><dt>Shelf life</dt><dd class="num">${escapeHtml(food.shelfLifePreview)}</dd></div>
+        </dl>
+        <div class="button-row">
+          ${saveButtonHtml(food, session.savedIds.has(food.id), true)}
+          <a href="/scan" class="btn btn-primary">${icon('camera')}Check yours with the scanner</a>
         </div>
-        ${favoriteButtonHtml(food, session.savedIds.has(food.id), true)}
       </div>
     </header>
 
-    <section class="details-section" aria-labelledby="shelf-life-heading">
-      <h2 id="shelf-life-heading">Estimated shelf life</h2>
-      <div class="shelf-grid">${shelfCards}</div>
+    <section class="detail-section" aria-labelledby="shelf-heading">
+      <h2 id="shelf-heading">How long it keeps</h2>
+      ${shelfTableHtml(food)}
     </section>
 
-    <section class="details-section two-column">
-      <div><h2>Storage method</h2><p>${escapeHtml(food.storageMethod)}</p></div>
-      <div><h2>Storage tips</h2><ul class="check-list">${listHtml(food.storageTips)}</ul></div>
+    <section class="detail-section" aria-labelledby="stages-heading">
+      <h2 id="stages-heading">Freshness stages</h2>
+      ${stagesHtml(food)}
     </section>
 
-    <section class="details-section">
-      <h2>Freshness stages</h2>
-      <ol class="stages">${stages}</ol>
-    </section>
-
-    <section class="details-section two-column">
-      <div class="panel panel-good">
-        <h2>Freshness signs</h2>
-        <ul class="check-list">${listHtml(food.freshnessSigns)}</ul>
+    <section class="detail-section detail-columns">
+      <div>
+        <h2>How to store it</h2>
+        <p>${escapeHtml(food.storageMethod)}</p>
+        <ul class="tick-list">${listHtml(food.storageTips)}</ul>
       </div>
-      <div class="panel panel-warn">
-        <h2>Possible spoilage signs</h2>
-        <ul class="warn-list">${listHtml(food.spoilageSigns)}</ul>
-        <p class="fine-print">Also watch for an unusual smell, visible mold, unusual texture or appearance. When in doubt, do not consume it.</p>
+      <div class="signs">
+        <div class="signs-block signs-good">
+          <h3>Signs it's fresh</h3>
+          <ul>${listHtml(food.freshnessSigns)}</ul>
+        </div>
+        <div class="signs-block signs-bad">
+          <h3>Signs it may be spoiling</h3>
+          <ul>${listHtml(food.spoilageSigns)}</ul>
+        </div>
       </div>
     </section>
 
-    <p class="notice">${escapeHtml(shelfLifeDisclaimer)}</p>
+    <section class="detail-section" aria-labelledby="use-heading">
+      <h2 id="use-heading">Use it before you lose it</h2>
+      <ul class="idea-chips">${listHtml(food.usageIdeas)}</ul>
+      <a href="/recipes" class="text-link">More ideas in Use it up</a>
+    </section>
 
-    <section class="details-section">
-      <h2>Use it before you lose it</h2>
-      <ul class="idea-list">${listHtml(food.usageIdeas)}</ul>
-      <a href="/recipes" class="text-link">More ideas on the Recipes page →</a>
-    </section>`
+    <p class="notice">${escapeHtml(shelfLifeDisclaimer)}</p>`
 }
 
 async function loadFood() {
   const id = new URLSearchParams(window.location.search).get('id')
   if (!id) {
-    page.innerHTML = notFoundHtml('Food not found', 'No food was selected.')
+    page.innerHTML = notFoundHtml('No food selected', 'Choose a food from the guide to see its details.')
     return
   }
 
   try {
     const { food } = await api.get(`/api/foods/${encodeURIComponent(id)}`)
-    document.title = `${food.name} | ShelfLife`
+    document.title = `${food.name}: shelf life and storage | ShelfLife`
     page.innerHTML = detailsHtml(food)
   } catch (error) {
     const missing = error instanceof ApiError && (error.status === 404 || error.status === 400)
     page.innerHTML = missing
-      ? notFoundHtml('Food not found', 'We could not find a food with that ID.')
+      ? notFoundHtml('Food not found', "We couldn't find that food. It may have been removed from the guide.")
       : notFoundHtml('Could not load this food', error.message)
   }
 }

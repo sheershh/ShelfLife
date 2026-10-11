@@ -17,6 +17,10 @@ export function errorHandler(err, req, res, next) {
   if (err.type === 'entity.too.large') {
     return res.status(413).json({ message: 'Request body is too large.' })
   }
+  // Mongoose rejected a value (should be rare: we validate before saving).
+  if (err.name === 'ValidationError' || err.name === 'CastError') {
+    return res.status(400).json({ message: 'Some of the data was not valid.' })
+  }
 
   console.error(err)
   res.status(500).json({ message: 'Something went wrong on the server.' })

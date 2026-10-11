@@ -15,7 +15,7 @@ export async function register(req, res) {
   if (Object.keys(errors).length > 0) throw new AppError(400, 'Please fix the highlighted fields.', errors)
 
   const email = req.body.email.trim().toLowerCase()
-  if (findUserByEmail(email)) {
+  if (await findUserByEmail(email)) {
     throw new AppError(409, 'An account with this email already exists.', {
       email: 'An account with this email already exists.',
     })
@@ -24,7 +24,7 @@ export async function register(req, res) {
   const passwordHash = await bcrypt.hash(req.body.password, SALT_ROUNDS)
   const user = await createUser({ name: req.body.name.trim(), email, passwordHash })
 
-  setAuthCookie(res, user.id)
+  setAuthCookie(res, user._id)
   res.status(201).json({ user: publicUser(user) })
 }
 
@@ -34,13 +34,13 @@ export async function login(req, res) {
   if (Object.keys(errors).length > 0) throw new AppError(400, 'Please fix the highlighted fields.', errors)
 
   const email = req.body.email.trim().toLowerCase()
-  const user = findUserByEmail(email)
+  const user = await findUserByEmail(email, { withPassword: true })
   const passwordMatches = await bcrypt.compare(req.body.password, user ? user.passwordHash : DUMMY_HASH)
 
   // Same message for a wrong email and a wrong password.
   if (!user || !passwordMatches) throw new AppError(401, 'Invalid email or password.')
 
-  setAuthCookie(res, user.id)
+  setAuthCookie(res, user._id)
   res.json({ user: publicUser(user) })
 }
 

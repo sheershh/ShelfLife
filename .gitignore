@@ -11,3 +11,12 @@ server/data/users.json.tmp
 .agents
 .playwright
 skills-lock.json
+
+# Food photos uploaded through the admin console
+client/images/uploads/*
+!client/images/uploads/.gitkeep
+test-results
+playwright-report
+
+# Personal Claude Code notes
+CLAUDE.local.md

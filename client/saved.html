@@ -3,24 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ShelfLife: estimated shelf life, storage tips and freshness guidance to help you waste less food." />
-    <title>Saved Foods | ShelfLife</title>
+    <meta name="description" content="Your saved foods and freshness scan history." />
+    <meta name="theme-color" content="#f1f4f0" />
+    <title>Your saved foods and scans | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+  <body class="page-saved">
     <div class="app">
       <div id="navbar"></div>
-      <main class="main">
-        <section class="container page-section">
-          <div class="page-heading">
-            <h1>Saved Foods</h1>
+      <main class="main" id="main">
+        <div class="container">
+          <header class="page-head">
+            <h1>Your shelf</h1>
+            <p>Foods you saved from the guide, and every photo you've checked with the scanner.</p>
+          </header>
+          <div class="tabs" role="tablist" aria-label="Your shelf">
+            <button type="button" class="tab" role="tab" id="tab-saved" aria-controls="panel-saved" aria-selected="true">Saved foods</button>
+            <button type="button" class="tab" role="tab" id="tab-scans" aria-controls="panel-scans" aria-selected="false" tabindex="-1">Scan history</button>
           </div>
-          <div id="saved-results"><p class="status-text">Loading your saved foods…</p></div>
-        </section>
+          <section class="tab-panel" id="panel-saved" role="tabpanel" aria-labelledby="tab-saved">
+            <div id="saved-results"><div class="skeleton guide-skeleton"></div></div>
+          </section>
+          <section class="tab-panel" id="panel-scans" role="tabpanel" aria-labelledby="tab-scans" hidden>
+            <div id="scan-results"></div>
+          </section>
+        </div>
       </main>
       <div id="footer"></div>
     </div>

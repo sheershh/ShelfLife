@@ -3,60 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ShelfLife: estimated shelf life, storage tips and freshness guidance to help you waste less food." />
+    <meta name="description" content="Why ShelfLife exists and how it works." />
+    <meta name="theme-color" content="#f1f4f0" />
     <title>About | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+  <body class="page-about">
     <div class="app">
       <div id="navbar"></div>
-      <main class="main">
-        <section class="container page-section about">
-          <div class="page-heading">
-            <h1>About ShelfLife</h1>
-            <p>A simple guide to how long food lasts and how to make it last longer.</p>
+      <main class="main" id="main">
+        <div class="container">
+          <header class="page-head">
+            <h1>Less guessing, less waste</h1>
+            <p>ShelfLife started as a college mini-project with one question: why do good households throw away good food?</p>
+          </header>
+
+          <div class="about-body">
+            <section class="about-block">
+              <h2>The problem</h2>
+              <p>Most food that is wasted is thrown out at home, and a lot of it is thrown out because people aren't sure.
+                Is a spotty banana still fine? Does spinach last longer in a box or a bag? When the answer isn't clear,
+                the safe-feeling choice is the bin, and the water, land and energy that grew the food go with it.</p>
+            </section>
+
+            <section class="about-block">
+              <h2>What ShelfLife does</h2>
+              <ul class="about-points">
+                <li><strong>Freshness scanner.</strong> Take a photo and get a ripeness reading, a mould check and one clear recommendation.</li>
+                <li><strong>Food guide.</strong> Shelf-life estimates for the room, fridge, pantry and freezer, plus storage tips and spoilage signs.</li>
+                <li><strong>Use it up.</strong> Simple ideas for food that is past its prime but still good to cook with.</li>
+                <li><strong>Your shelf.</strong> Save the foods you buy often and look back at your earlier scans.</li>
+              </ul>
+            </section>
+
+            <section class="about-block">
+              <h2>How the scanner works</h2>
+              <p>Your photo is shrunk in your browser and sent to our server, which asks Google's Gemini vision model to
+                describe what it sees in a fixed format: the food, its ripeness, any mould and a freshness score.
+                Our server then checks that answer, applies its own safety rule (visible mould on soft food always means
+                "throw it out") and adds storage advice from the ShelfLife food guide. The model reads the photo;
+                the advice comes from our own data.</p>
+            </section>
+
+            <section class="about-block">
+              <h2>What it can't do</h2>
+              <p>ShelfLife judges visible quality, not safety. A photo can't show smell, temperature history or bacteria,
+                and food can be unsafe without looking spoiled. Use the scanner and guide alongside the label and your own
+                senses. When in doubt, throw it out.</p>
+            </section>
+
+            <section class="about-block">
+              <h2>Built with</h2>
+              <p>Plain HTML, CSS and JavaScript in the browser; Node.js and Express on the server; MongoDB Atlas for data;
+                Google Gemini for image understanding. ShelfLife supports UN Sustainable Development Goals 12 and 2.</p>
+            </section>
           </div>
 
-          <div class="about-grid">
-            <div class="panel">
-              <h2>What is ShelfLife?</h2>
-              <p>
-                ShelfLife is a website that shows general shelf-life estimates, storage advice, freshness stages
-                and warning signs for everyday foods, along with simple ideas to use food up.
-              </p>
-            </div>
-            <div class="panel">
-              <h2>Why food waste is a problem</h2>
-              <p>
-                Food that is thrown away also wastes the water, energy, land and effort used to grow, transport
-                and store it. Much of it is discarded at home simply because people are unsure about it.
-              </p>
-            </div>
-            <div class="panel">
-              <h2>Why storage awareness matters</h2>
-              <p>
-                Storing food in the right place, at the right temperature and in the right container can keep it
-                fresh for longer, and knowing the warning signs helps people make careful decisions.
-              </p>
-            </div>
-            <div class="panel">
-              <h2>How ShelfLife helps</h2>
-              <p>
-                You can search foods, compare storage conditions, learn freshness stages, save foods
-                you want to keep track of and find ways to use food before it spoils.
-              </p>
-            </div>
+          <div class="button-row about-actions">
+            <a href="/scan" class="btn btn-primary">Try the scanner</a>
+            <a href="/foods" class="btn btn-secondary">Open the food guide</a>
           </div>
-
-          <div class="button-row">
-            <a href="/foods" class="btn btn-primary">Explore Foods</a>
-            <a href="/recipes" class="btn btn-outline">Use It Ideas</a>
-          </div>
-        </section>
+        </div>
       </main>
       <div id="footer"></div>
     </div>
