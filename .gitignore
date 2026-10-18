@@ -6,17 +6,14 @@ server/data/users.json
 server/data/users.json.tmp
 .DS_Store
 
-# Editor / assistant tooling, not part of the project
-.claude
+# Editor tooling, not part of the project
 .agents
 .playwright
 skills-lock.json
+.taste-skill
 
 # Food photos uploaded through the admin console
 client/images/uploads/*
 !client/images/uploads/.gitkeep
 test-results
 playwright-report
-
-# Personal Claude Code notes
-CLAUDE.local.md

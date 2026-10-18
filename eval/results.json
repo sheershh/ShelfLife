@@ -1,0 +1,570 @@
+{
+  "date": "2026-10-18T12:26:24.677Z",
+  "models": {
+    "main": "gemini-3.5-flash",
+    "fallback": "gemini-3.5-flash-lite"
+  },
+  "summary": {
+    "photos": 20,
+    "foodMatch": "100%",
+    "ripeness": "100%",
+    "mould": "100%",
+    "recommendation": "95%",
+    "discardCaught": "2 of 2",
+    "falseDiscard": "0 of 18",
+    "confusion": {
+      "ripe": {
+        "unripe": 0,
+        "ripe": 13,
+        "overripe": 0,
+        "spoiled": 0,
+        "unknown": 0
+      },
+      "unripe": {
+        "unripe": 1,
+        "ripe": 0,
+        "overripe": 0,
+        "spoiled": 0,
+        "unknown": 0
+      },
+      "overripe": {
+        "unripe": 0,
+        "ripe": 1,
+        "overripe": 3,
+        "spoiled": 0,
+        "unknown": 0
+      },
+      "spoiled": {
+        "unripe": 0,
+        "ripe": 0,
+        "overripe": 0,
+        "spoiled": 2,
+        "unknown": 0
+      }
+    }
+  },
+  "failed": [
+    {
+      "file": "eval/photos/apple-rotten-2.jpg",
+      "error": "The free AI quota is used up for the moment. Please try again in a minute."
+    },
+    {
+      "file": "eval/photos/bread-mouldy.jpg",
+      "error": "The free AI quota is used up for the moment. Please try again in a minute."
+    },
+    {
+      "file": "eval/photos/strawberry-mouldy-1.jpg",
+      "error": "The free AI quota is used up for the moment. Please try again in a minute."
+    }
+  ],
+  "rows": [
+    {
+      "file": "client/images/apple.jpg",
+      "expected": {
+        "food": "apple",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "apple",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 90,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/banana-unripe.jpg",
+      "expected": {
+        "food": "banana",
+        "ripeness": "unripe",
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "banana",
+        "ripeness": "unripe",
+        "mould": false,
+        "recommendation": "use-soon",
+        "score": 90,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": false,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/banana-ripe.jpg",
+      "expected": {
+        "food": "banana",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "banana",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 85,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/banana-overripe.jpg",
+      "expected": {
+        "food": "banana",
+        "ripeness": [
+          "overripe",
+          "ripe"
+        ],
+        "mould": false,
+        "recommendation": [
+          "eat",
+          "use-soon"
+        ]
+      },
+      "got": {
+        "food": "banana",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 85,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/banana.jpg",
+      "expected": {
+        "food": "banana",
+        "ripeness": [
+          "ripe",
+          "overripe"
+        ],
+        "mould": false,
+        "recommendation": [
+          "eat",
+          "use-soon"
+        ]
+      },
+      "got": {
+        "food": "banana",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 80,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/bread.jpg",
+      "expected": {
+        "food": "bread",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "bread",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 90,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/cheese.jpg",
+      "expected": {
+        "food": "cheese",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "cheese",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 90,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/milk.jpg",
+      "expected": {
+        "food": "milk",
+        "ripeness": [
+          "ripe",
+          "unknown"
+        ],
+        "mould": false,
+        "recommendation": [
+          "eat",
+          "unsure"
+        ]
+      },
+      "got": {
+        "food": "milk",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 95,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/pasta.jpg",
+      "expected": {
+        "food": "pasta",
+        "ripeness": [
+          "ripe",
+          "unknown"
+        ],
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "pasta",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 100,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/potato.jpg",
+      "expected": {
+        "food": "potato",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "potato",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 90,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/rice.jpg",
+      "expected": {
+        "food": "rice",
+        "ripeness": [
+          "ripe",
+          "unknown"
+        ],
+        "mould": false,
+        "recommendation": [
+          "eat",
+          "use-soon"
+        ]
+      },
+      "got": {
+        "food": "rice",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 85,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/spinach.jpg",
+      "expected": {
+        "food": [
+          "spinach",
+          "none"
+        ],
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "spinach",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 90,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/strawberry.jpg",
+      "expected": {
+        "food": "strawberry",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "strawberry",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 90,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/tomato.jpg",
+      "expected": {
+        "food": "tomato",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat"
+      },
+      "got": {
+        "food": "tomato",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 80,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/yogurt.jpg",
+      "expected": {
+        "food": "yogurt",
+        "ripeness": [
+          "ripe",
+          "unknown"
+        ],
+        "mould": false,
+        "recommendation": [
+          "eat",
+          "unsure"
+        ]
+      },
+      "got": {
+        "food": "yogurt",
+        "ripeness": "ripe",
+        "mould": false,
+        "recommendation": "eat",
+        "score": 90,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "eval/photos/banana-overripe-2.jpg",
+      "expected": {
+        "food": "banana",
+        "ripeness": "overripe",
+        "mould": false,
+        "recommendation": [
+          "use-soon",
+          "cook-today"
+        ]
+      },
+      "got": {
+        "food": "banana",
+        "ripeness": "overripe",
+        "mould": false,
+        "recommendation": "use-soon",
+        "score": 45,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "eval/photos/banana-overripe-3.jpg",
+      "expected": {
+        "food": "banana",
+        "ripeness": "overripe",
+        "mould": false,
+        "recommendation": [
+          "use-soon",
+          "cook-today"
+        ]
+      },
+      "got": {
+        "food": "banana",
+        "ripeness": "overripe",
+        "mould": false,
+        "recommendation": "use-soon",
+        "score": 55,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "eval/photos/banana-very-overripe.jpg",
+      "expected": {
+        "food": "banana",
+        "ripeness": [
+          "overripe",
+          "spoiled"
+        ],
+        "mould": false,
+        "recommendation": [
+          "cook-today",
+          "discard"
+        ]
+      },
+      "got": {
+        "food": "banana",
+        "ripeness": "overripe",
+        "mould": false,
+        "recommendation": "cook-today",
+        "score": 15,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": false,
+      "saidDiscard": false
+    },
+    {
+      "file": "client/images/banana-spoiled.jpg",
+      "expected": {
+        "food": "banana",
+        "ripeness": "spoiled",
+        "mould": null,
+        "recommendation": "discard"
+      },
+      "got": {
+        "food": "banana",
+        "ripeness": "spoiled",
+        "mould": false,
+        "recommendation": "discard",
+        "score": 0,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": null,
+      "recommendationOk": true,
+      "mustDiscard": true,
+      "saidDiscard": true
+    },
+    {
+      "file": "eval/photos/apple-rotten-1.jpg",
+      "expected": {
+        "food": "apple",
+        "ripeness": "spoiled",
+        "mould": false,
+        "recommendation": "discard"
+      },
+      "got": {
+        "food": "apple",
+        "ripeness": "spoiled",
+        "mould": false,
+        "recommendation": "discard",
+        "score": 10,
+        "confidence": "high"
+      },
+      "foodOk": true,
+      "ripenessOk": true,
+      "mouldOk": true,
+      "recommendationOk": true,
+      "mustDiscard": true,
+      "saidDiscard": true
+    }
+  ]
+}

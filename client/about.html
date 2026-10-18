@@ -4,70 +4,66 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Why ShelfLife exists and how it works." />
-    <meta name="theme-color" content="#f1f4f0" />
+    <meta name="theme-color" content="#f5f0e6" />
     <title>About | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body class="page-about">
     <div class="app">
       <div id="navbar"></div>
       <main class="main" id="main">
-        <div class="container">
-          <header class="page-head">
-            <h1>Less guessing, less waste</h1>
-            <p>ShelfLife started as a college mini-project with one question: why do good households throw away good food?</p>
-          </header>
 
-          <div class="about-body">
-            <section class="about-block">
-              <h2>The problem</h2>
-              <p>Most food that is wasted is thrown out at home, and a lot of it is thrown out because people aren't sure.
-                Is a spotty banana still fine? Does spinach last longer in a box or a bag? When the answer isn't clear,
-                the safe-feeling choice is the bin, and the water, land and energy that grew the food go with it.</p>
-            </section>
-
-            <section class="about-block">
-              <h2>What ShelfLife does</h2>
-              <ul class="about-points">
-                <li><strong>Freshness scanner.</strong> Take a photo and get a ripeness reading, a mould check and one clear recommendation.</li>
-                <li><strong>Food guide.</strong> Shelf-life estimates for the room, fridge, pantry and freezer, plus storage tips and spoilage signs.</li>
-                <li><strong>Use it up.</strong> Simple ideas for food that is past its prime but still good to cook with.</li>
-                <li><strong>Your shelf.</strong> Save the foods you buy often and look back at your earlier scans.</li>
-              </ul>
-            </section>
-
-            <section class="about-block">
-              <h2>How the scanner works</h2>
-              <p>Your photo is shrunk in your browser and sent to our server, which asks Google's Gemini vision model to
-                describe what it sees in a fixed format: the food, its ripeness, any mould and a freshness score.
-                Our server then checks that answer, applies its own safety rule (visible mould on soft food always means
-                "throw it out") and adds storage advice from the ShelfLife food guide. The model reads the photo;
-                the advice comes from our own data.</p>
-            </section>
-
-            <section class="about-block">
-              <h2>What it can't do</h2>
-              <p>ShelfLife judges visible quality, not safety. A photo can't show smell, temperature history or bacteria,
-                and food can be unsafe without looking spoiled. Use the scanner and guide alongside the label and your own
-                senses. When in doubt, throw it out.</p>
-            </section>
-
-            <section class="about-block">
-              <h2>Built with</h2>
-              <p>Plain HTML, CSS and JavaScript in the browser; Node.js and Express on the server; MongoDB Atlas for data;
-                Google Gemini for image understanding. ShelfLife supports UN Sustainable Development Goals 12 and 2.</p>
-            </section>
+        <!-- A short brand story: the moment, the product, the limits. -->
+        <section class="about-hero" aria-labelledby="about-title">
+          <div class="container about-hero-inner">
+            <div class="about-hero-text">
+              <h1 id="about-title">Made for the moment before the bin.</h1>
+              <p>A spotty banana. A soft tomato. Spinach that has seen better days. ShelfLife exists for the few seconds when you decide whether food is still good.</p>
+            </div>
+            <div class="about-lens" aria-hidden="true"><img src="/images/foods/strawberry.webp" alt="" width="800" height="800" /></div>
           </div>
+        </section>
 
-          <div class="button-row about-actions">
-            <a href="/scan" class="btn btn-primary">Try the scanner</a>
-            <a href="/foods" class="btn btn-secondary">Open the food guide</a>
+        <section class="about-product" aria-labelledby="product-heading">
+          <div class="container">
+            <h2 id="product-heading">One app, three ways to waste less.</h2>
+            <ul class="about-cards">
+              <li class="about-card about-card-tomato">
+                <span class="food-frame"><img src="/images/foods/tomato.webp" alt="" width="800" height="800" loading="lazy" /></span>
+                <h3>The scanner</h3>
+                <p>Photograph a fruit or vegetable and get one clear call, with the reasons behind it.</p>
+                <a class="text-link" href="/scan">Scan a photo</a>
+              </li>
+              <li class="about-card about-card-green">
+                <span class="food-frame"><img src="/images/foods/broccoli.webp" alt="" width="800" height="800" loading="lazy" /></span>
+                <h3>The food guide</h3>
+                <p>How long everyday foods keep in the room, fridge, pantry and freezer, and how to tell when they've turned.</p>
+                <a class="text-link" href="/foods">Open the guide</a>
+              </li>
+              <li class="about-card about-card-citrus">
+                <span class="food-frame"><img src="/images/foods/milk.webp" alt="" width="800" height="800" loading="lazy" /></span>
+                <h3>Your fridge</h3>
+                <p>Save the foods you buy often and keep their storage advice and your scans one tap away.</p>
+                <a class="text-link" href="/saved">See saved foods</a>
+              </li>
+            </ul>
           </div>
-        </div>
+        </section>
+
+        <section class="about-limits" aria-labelledby="limits-heading">
+          <div class="container about-limits-inner">
+            <h2 id="limits-heading">What it can't do.</h2>
+            <div>
+              <p>ShelfLife judges how food looks, not whether it is safe. A photo can't show smell, temperature history or bacteria, and food can be unsafe without looking spoiled. Use it alongside the label and your own senses. When in doubt, throw it out.</p>
+              <p>Shelf-life figures are general estimates. Visible mould on soft food always means "throw it out", whatever the photo looks like otherwise.</p>
+            </div>
+          </div>
+        </section>
+
       </main>
       <div id="footer"></div>
     </div>

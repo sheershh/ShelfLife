@@ -14,6 +14,7 @@
     "seed": "node scripts/seed.js",
     "make-admin": "node scripts/make-admin.js",
     "migrate-users": "node scripts/migrate-users.js",
+    "eval": "node scripts/evaluate-scanner.js",
     "test:e2e": "playwright test"
   },
   "dependencies": {

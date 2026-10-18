@@ -20,6 +20,7 @@ const paths = {
   home: '<path d="M4 11 12 4l8 7v9H4z"/>',
   box: '<path d="M4 8 12 4l8 4v8l-8 4-8-4z"/><path d="m4 8 8 4 8-4M12 12v8"/>',
   fridge: '<rect x="6" y="3" width="12" height="18" rx="2"/><path d="M6 10h12M9 6v2M9 13v3"/>',
+  arrow: '<path d="M5 12h14m0 0-5-5m5 5-5 5"/>',
   image: '<rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m20 16-5-5-8 8"/>',
 }
 
@@ -28,10 +29,11 @@ export function icon(name, className = '') {
     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths[name]}</svg>`
 }
 
-// The ShelfLife logo mark: a leaf on a dark tile.
+// The ShelfLife logo mark: a lens (a second look) on a tomato-red disc, with a leaf.
 export const brandMark = `
   <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-    <rect width="32" height="32" rx="9" fill="#0f2a1f"/>
-    <path d="M8 24.5C8 14.5 14 8 24.5 7.5 24.5 18 18 24 8 24.5Z" fill="#97b33c"/>
-    <path d="M8 24.5 18.5 14" stroke="#0f2a1f" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="16" cy="16" r="16" fill="#df4328"/>
+    <circle cx="16" cy="17" r="7.5" fill="none" stroke="#f5f0e6" stroke-width="2.6"/>
+    <circle cx="16" cy="17" r="2.4" fill="#f5f0e6"/>
+    <path d="M17 6.2c3.6-1.6 7-.6 8.6 1.6-3 1.8-6.3 1.6-8.6-1.6Z" fill="#1f5a3a"/>
   </svg>`

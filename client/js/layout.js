@@ -1,4 +1,4 @@
-// Builds the shared header (navigation) and footer on every page.
+// Builds the shared header (navigation) and footer on every page, and the scroll-reveal effect.
 // Each HTML page has <div id="navbar"></div> and <div id="footer"></div>; this file fills them.
 
 import { brandMark, icon } from './icons.js'
@@ -33,7 +33,7 @@ function accountHtml() {
       <span class="nav-count num" id="nav-count" ${count ? '' : 'hidden'}>${count}</span></a>
     ${admin}
     <span class="nav-user">${escapeHtml(session.user.name.split(' ')[0])}</span>
-    <button type="button" class="btn btn-secondary btn-sm" id="logout-button">Log out</button>`
+    <button type="button" class="nav-logout" id="logout-button">Log out</button>`
 }
 
 function headerHtml() {
@@ -41,7 +41,7 @@ function headerHtml() {
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="container site-header-inner">
-        <a href="/" class="brand" aria-label="ShelfLife home">${brandMark}<span>ShelfLife</span></a>
+        <a href="/" class="brand" aria-label="ShelfLife home" translate="no">${brandMark}<span>ShelfLife</span></a>
         <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
         <nav class="site-nav" id="site-nav" aria-label="Main">
           <ul class="nav-links">${links.map(linkHtml).join('')}</ul>
@@ -54,30 +54,26 @@ function headerHtml() {
 const footerHtml = `
   <footer class="site-footer">
     <div class="container footer-top">
-      <div>
-        <a href="/" class="brand">${brandMark}<span>ShelfLife</span></a>
-        <p class="footer-statement">Know what's still good, store it well, and waste less of it.</p>
-      </div>
+      <p class="footer-statement">One scan closer to a <span>smarter kitchen.</span></p>
       <div>
         <h2 class="footer-heading">Product</h2>
         <ul class="footer-links">
           <li><a href="/scan">Freshness scanner</a></li>
           <li><a href="/foods">Food guide</a></li>
           <li><a href="/recipes">Use it up</a></li>
+          <li><a href="/saved">Your saved foods</a></li>
         </ul>
       </div>
       <div>
         <h2 class="footer-heading">Project</h2>
         <ul class="footer-links">
           <li><a href="/about">About ShelfLife</a></li>
-          <li><a href="https://sdgs.un.org/goals/goal12" rel="noopener" target="_blank">UN SDG 12</a></li>
-          <li><a href="/saved">Your saved foods</a></li>
         </ul>
       </div>
     </div>
+    <p class="footer-wordmark" aria-hidden="true" translate="no">ShelfLife<span>.</span></p>
     <div class="container footer-bottom">
       <p>Shelf-life figures are general estimates. The scanner judges visible quality, not food safety. When in doubt, throw it out.</p>
-      <p>A college mini-project supporting SDG 12 and SDG 2.</p>
     </div>
   </footer>`
 
@@ -88,8 +84,28 @@ function updateNavCount() {
   badge.hidden = session.savedIds.size === 0
 }
 
+// Sections marked .reveal fade up once when they scroll into view.
+// The class on <html> is only added when JavaScript runs, so nothing stays hidden without it.
+const revealObserver = 'IntersectionObserver' in window
+  ? new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue
+      entry.target.classList.add('is-visible')
+      revealObserver.unobserve(entry.target)
+    }
+  }, { rootMargin: '0px 0px -8% 0px' })
+  : null
+
+export function observeReveals(root = document) {
+  for (const el of root.querySelectorAll('.reveal:not(.is-visible)')) {
+    if (revealObserver) revealObserver.observe(el)
+    else el.classList.add('is-visible')
+  }
+}
+
 // Call once at the top of every page script. Loads the session, then draws header and footer.
 export async function initLayout() {
+  document.documentElement.classList.add('js-reveal')
   await initSession()
   document.getElementById('navbar').innerHTML = headerHtml()
   document.getElementById('footer').innerHTML = footerHtml
@@ -104,6 +120,7 @@ export async function initLayout() {
 
   document.getElementById('logout-button')?.addEventListener('click', logout)
   document.addEventListener('saved-changed', updateNavCount)
+  observeReveals()
 }
 
 export { icon }

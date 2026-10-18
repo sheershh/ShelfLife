@@ -96,7 +96,7 @@ export function foodRowHtml(food, { removable = false } = {}) {
   return `
     <li class="food-row">
       <a class="food-row-link" href="${url}">
-        <img class="food-row-thumb" src="${escapeHtml(food.image)}" alt="" loading="lazy" width="64" height="64">
+        <span class="food-frame food-row-thumb"><img src="${escapeHtml(food.image)}" alt="" loading="lazy" width="80" height="80"></span>
         <span class="food-row-name"><strong>${name}</strong><span>${escapeHtml(food.category)}</span></span>
         <span class="food-row-store">${storageHtml(food.storageLocation)}</span>
         <span class="food-row-life num">${escapeHtml(food.shelfLifePreview)}</span>
@@ -120,15 +120,27 @@ export function emptyStateHtml(title, text, actionsHtml = '') {
     </div>`
 }
 
-// Short message at the bottom of the screen for errors that have no better place to go.
-export function showToast(message) {
+// Short message at the bottom of the screen. An optional action adds one button, e.g. "Undo".
+export function showToast(message, action) {
   document.querySelector('.toast')?.remove()
   const toast = document.createElement('div')
   toast.className = 'toast'
   toast.setAttribute('role', 'status')
-  toast.textContent = message
+  const text = document.createElement('span')
+  text.textContent = message
+  toast.append(text)
+  if (action) {
+    const button = document.createElement('button')
+    button.type = 'button'
+    button.textContent = action.label
+    button.addEventListener('click', () => {
+      toast.remove()
+      action.onClick()
+    })
+    toast.append(button)
+  }
   document.body.append(toast)
-  setTimeout(() => toast.remove(), 4000)
+  setTimeout(() => toast.remove(), action ? 7000 : 4000)
 }
 
 export function goToLogin(reason = 'save') {
@@ -174,15 +186,15 @@ export function handleSaveButtons(container, { onRemoved } = {}) {
   })
 }
 
-// Broken images fall back to a neutral placeholder. (Inline onerror is blocked by our CSP.)
+// Broken images fall back to data-fallback (if given) or a neutral placeholder.
+// (Inline onerror is blocked by our CSP, so one listener on the document handles every image.)
 document.addEventListener(
   'error',
   (event) => {
     const image = event.target
-    if (image.tagName === 'IMG' && !image.dataset.failed) {
-      image.dataset.failed = 'true'
-      image.src = '/images/placeholder.svg'
-    }
+    if (image.tagName !== 'IMG' || image.dataset.failed) return
+    image.dataset.failed = 'true'
+    image.src = image.dataset.fallback || '/images/placeholder.svg'
   },
   true,
 )

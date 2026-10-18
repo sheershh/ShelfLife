@@ -1,38 +1,43 @@
-/* Admin console: KPI row, simple bar charts, tables and the food editor dialog. */
+/* Admin console: a dense working screen. Real metrics in a ruled strip, simple bar charts,
+   readable tables and the food editor dialog. No marketing visuals here. */
 
-.admin { padding-top: var(--space-7); }
-.admin-head { margin-bottom: var(--space-5); }
-.admin-head p { margin: 0; color: var(--ink-soft); }
+.admin { padding-top: var(--space-6); }
+.admin-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); padding-bottom: var(--space-3); border-bottom: 1px solid var(--rule); }
+.admin-head h1 { margin: 0; font-size: var(--text-xl); }
+.admin-head p { margin: 0; font-size: var(--text-sm); color: var(--text-soft); }
 .admin-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); margin-bottom: var(--space-4); }
 .admin-toolbar .search-input { flex: 1 1 240px; max-width: 360px; }
+.admin .tab-panel { padding-top: var(--space-5); }
 
-.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); margin: 0 0 var(--space-5); }
-.kpis div { padding: var(--space-4) var(--space-5); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
-.kpis dt { font-size: var(--text-sm); color: var(--ink-soft); }
-.kpis dd { margin: var(--space-1) 0; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
-.kpis p { margin: 0; font-size: var(--text-xs); color: var(--ink-soft); }
+/* Metrics strip: four real totals, divided by rules */
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 var(--space-5); border-block: 2px solid var(--ink); }
+.kpis div { padding: var(--space-4) var(--space-5); }
+.kpis div + div { border-left: 1px solid var(--rule); }
+.kpis dt { font-size: var(--text-xs); font-weight: 600; color: var(--text-faint); }
+.kpis dd { margin: var(--space-1) 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 800; font-size: clamp(2.2rem, 1.6rem + 1.6vw, 3.2rem); font-weight: 450; letter-spacing: -0.03em; line-height: 1; }
+.kpis p { margin: 0; font-size: var(--text-xs); color: var(--text-soft); }
 
 .chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
-.chart-card { padding: var(--space-5); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
+.chart-card { padding: var(--space-4) var(--space-5) var(--space-5); border-top: 2px solid var(--ink); background: var(--paper); }
 .chart-wide { grid-column: 1 / -1; }
 .chart-card h2 { margin: 0; font-size: var(--text-lg); }
-.chart-sub { margin: 2px 0 var(--space-5); font-size: var(--text-xs); color: var(--ink-soft); }
+.chart-sub { margin: 2px 0 var(--space-5); font-size: var(--text-xs); color: var(--text-soft); }
 
-/* Column chart: one hue, bars <= 24px wide, rounded top, grown from a hairline baseline */
-.columns { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); align-items: end; gap: 2px; height: 180px; border-bottom: 1px solid var(--line); }
+/* Column chart: one hue (forest), bars up to 24px wide, grown from a baseline */
+.columns { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); align-items: end; gap: 2px; height: 180px; border-bottom: 1px solid var(--rule-strong); }
 .col { position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; outline-offset: 0; cursor: default; }
-.col-bar { width: min(24px, 70%); height: var(--value, 0%); min-height: 2px; border-radius: 4px 4px 0 0; background: var(--leaf); transition: height 0.8s var(--ease-out); }
-.col:hover .col-bar, .col:focus-visible .col-bar { background: var(--leaf-dark); }
+.col-bar { width: min(24px, 70%); height: var(--value, 0%); min-height: 2px; background: var(--botanical); transition: height 0.8s var(--ease-out); }
+.col:hover .col-bar, .col:focus-visible .col-bar { background: var(--botanical-deep); }
 .col-value { margin-bottom: 4px; font-size: var(--text-xs); font-weight: 600; color: var(--ink); }
-.columns-axis { display: flex; justify-content: space-between; margin-top: var(--space-2); font-size: var(--text-xs); color: var(--ink-soft); }
+.columns-axis { display: flex; justify-content: space-between; margin-top: var(--space-2); font-size: var(--text-xs); color: var(--text-soft); }
 
 /* Horizontal bars: text label, bar, value at the tip */
 .bar-list { display: grid; gap: var(--space-3); }
 .bar-list li { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr) 36px; align-items: center; gap: var(--space-3); font-size: var(--text-sm); }
 .bar-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.bar-track { height: 14px; }
-.bar-fill { display: block; width: var(--value, 0%); min-width: 2px; height: 100%; border-radius: 0 4px 4px 0; background: var(--leaf); transition: width 0.8s var(--ease-out); }
-.bar-list li:hover .bar-fill { background: var(--leaf-dark); }
+.bar-track { height: 12px; background: var(--ivory-2); }
+.bar-fill { display: block; width: var(--value, 0%); min-width: 2px; height: 100%; background: var(--botanical); transition: width 0.8s var(--ease-out); }
+.bar-list li:hover .bar-fill { background: var(--botanical-deep); }
 .bar-value { font-weight: 600; text-align: right; }
 
 .chart-tooltip {
@@ -40,43 +45,44 @@
   z-index: 60;
   padding: 6px 10px;
   translate: -50% calc(-100% - 10px);
-  border-radius: var(--radius-sm);
   background: var(--ink);
-  color: var(--frost);
+  color: var(--ivory);
   font-size: var(--text-xs);
   font-weight: 600;
   pointer-events: none;
   white-space: nowrap;
 }
 
+.admin .table th, .admin .table td { padding: var(--space-2) var(--space-3); }
 .cell-food { display: flex; align-items: center; gap: var(--space-3); }
-.cell-food img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
+.cell-food img { width: 40px; height: 40px; padding: 3px; object-fit: contain; background: var(--ivory-2); }
 .cell-food div { display: flex; flex-direction: column; }
-.cell-food a { color: inherit; }
-.cell-food span { font-size: var(--text-xs); color: var(--ink-soft); }
+.cell-food a { color: inherit; font-weight: 600; }
+.cell-food span { font-size: var(--text-xs); color: var(--text-soft); }
 .table .btn-sm { min-height: 34px; }
 .table td.actions .btn + .btn { margin-left: var(--space-2); }
 
 /* Food editor dialog */
-.food-dialog { width: min(860px, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); padding: 0; border: 0; border-radius: var(--radius-lg); background: var(--surface); color: var(--ink); box-shadow: 0 30px 80px -20px rgb(15 42 31 / 0.5); }
-.food-dialog::backdrop { background: rgb(15 42 31 / 0.45); }
+.food-dialog { width: min(860px, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); padding: 0; border: 0; background: var(--paper); box-shadow: var(--shadow-dialog); overscroll-behavior: contain; }
 .food-form { display: flex; flex-direction: column; max-height: calc(100vh - 2rem); }
 .food-form-head, .food-form-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-4) var(--space-5); }
-.food-form-head { border-bottom: 1px solid var(--line); }
+.food-form-head { border-bottom: 2px solid var(--ink); }
 .food-form-head h2 { margin: 0; font-size: var(--text-lg); }
-.food-form-foot { justify-content: flex-end; border-top: 1px solid var(--line); }
+.food-form-foot { justify-content: flex-end; border-top: 1px solid var(--rule); }
 .food-form > .form-error { margin: var(--space-4) var(--space-5) 0; }
 .food-form-body { display: grid; gap: var(--space-5); padding: var(--space-5); overflow-y: auto; }
 .food-form fieldset { display: grid; gap: var(--space-4); margin: 0; padding: 0; border: 0; }
-.food-form legend { margin-bottom: var(--space-3); padding: 0; font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; }
+.food-form legend { margin-bottom: var(--space-3); padding: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 800; font-size: var(--text-lg); font-weight: 500; }
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
 .image-picker { display: flex; align-items: center; gap: var(--space-4); }
-.image-picker img { width: 72px; height: 72px; border-radius: var(--radius-sm); object-fit: cover; background: var(--frost-deep); }
+.image-picker img { width: 72px; height: 72px; padding: 4px; object-fit: contain; background: var(--ivory-2); }
 .image-picker > div { display: flex; flex-wrap: wrap; gap: var(--space-2); flex: 1; }
 .image-picker input { flex: 1 1 220px; }
-input:disabled { background: var(--frost); color: var(--ink-soft); }
+input:disabled { background: var(--ivory); color: var(--text-soft); }
 
 @media (max-width: 860px) {
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpis div:nth-child(3) { border-left: 0; }
+  .kpis div:nth-child(n + 3) { border-top: 1px solid var(--rule); }
   .chart-grid, .form-grid { grid-template-columns: 1fr; }
 }

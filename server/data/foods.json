@@ -3,7 +3,7 @@
     "slug": "banana",
     "name": "Banana",
     "category": "Fruits",
-    "image": "/images/banana.jpg",
+    "image": "/images/foods/banana.webp",
     "shortDescription": "A fast-ripening fruit that changes quickly from green to spotted brown.",
     "storageLocation": "Room Temperature",
     "storageMethod": "Keep bananas at room temperature away from direct sunlight. Once ripe, they can be moved to the refrigerator to slow further ripening, although the peel will darken.",
@@ -58,7 +58,7 @@
     "slug": "apple",
     "name": "Apple",
     "category": "Fruits",
-    "image": "/images/apple.jpg",
+    "image": "/images/foods/apple.webp",
     "shortDescription": "A crisp fruit that stores well when kept cool.",
     "storageLocation": "Refrigerator",
     "storageMethod": "Apples keep their crispness longest in the refrigerator, ideally in the crisper drawer. At room temperature they soften faster.",
@@ -113,7 +113,7 @@
     "slug": "strawberry",
     "name": "Strawberry",
     "category": "Fruits",
-    "image": "/images/strawberry.jpg",
+    "image": "/images/foods/strawberry.webp",
     "shortDescription": "A delicate berry that softens and molds quickly.",
     "storageLocation": "Refrigerator",
     "storageMethod": "Store unwashed strawberries in the refrigerator in a breathable container lined with paper towel. Wash only just before eating.",
@@ -164,7 +164,7 @@
     "slug": "tomato",
     "name": "Tomato",
     "category": "Vegetables",
-    "image": "/images/tomato.jpg",
+    "image": "/images/foods/tomato.webp",
     "shortDescription": "Best ripened on the counter, then used within a few days.",
     "storageLocation": "Room Temperature",
     "storageMethod": "Keep unripe tomatoes at room temperature out of direct sun until they ripen. Ripe tomatoes can go in the refrigerator if you cannot use them in time; bring them to room temperature before eating for better flavour.",
@@ -219,7 +219,7 @@
     "slug": "potato",
     "name": "Potato",
     "category": "Vegetables",
-    "image": "/images/potato.jpg",
+    "image": "/images/foods/potato.webp",
     "shortDescription": "A hardy vegetable that lasts weeks in a cool, dark place.",
     "storageLocation": "Pantry",
     "storageMethod": "Store potatoes in a cool, dark, well-ventilated place. Avoid sunlight, which can turn them green. Do not keep them next to onions.",
@@ -269,7 +269,7 @@
     "slug": "spinach",
     "name": "Spinach",
     "category": "Vegetables",
-    "image": "/images/spinach.jpg",
+    "image": "/images/foods/spinach.webp",
     "shortDescription": "Tender leafy greens that wilt quickly if stored damp.",
     "storageLocation": "Refrigerator",
     "storageMethod": "Keep spinach in the refrigerator in a container lined with paper towel to absorb moisture. Wash just before using.",
@@ -319,7 +319,7 @@
     "slug": "milk",
     "name": "Milk",
     "category": "Dairy",
-    "image": "/images/milk.jpg",
+    "image": "/images/foods/milk.webp",
     "shortDescription": "A cold-chain dairy staple that should be kept refrigerated.",
     "storageLocation": "Refrigerator",
     "storageMethod": "Store milk in the main body of the refrigerator (not the door) and keep the container closed. Do not leave it out for long periods.",
@@ -369,7 +369,7 @@
     "slug": "yogurt",
     "name": "Yogurt",
     "category": "Dairy",
-    "image": "/images/yogurt.jpg",
+    "image": "/images/foods/yogurt.webp",
     "shortDescription": "A cultured dairy food that keeps well when cold.",
     "storageLocation": "Refrigerator",
     "storageMethod": "Keep yogurt tightly covered in the refrigerator. Use a clean spoon each time to avoid introducing contamination.",
@@ -419,7 +419,7 @@
     "slug": "cheese",
     "name": "Cheese",
     "category": "Dairy",
-    "image": "/images/cheese.jpg",
+    "image": "/images/foods/cheese.webp",
     "shortDescription": "Shelf life depends a lot on type, from soft cheeses to hard blocks.",
     "storageLocation": "Refrigerator",
     "storageMethod": "Wrap cheese in wax paper or parchment, then place it in a loose container in the refrigerator. Do not wrap it too tightly in plastic for long periods.",
@@ -469,7 +469,7 @@
     "slug": "bread",
     "name": "Bread",
     "category": "Pantry & Grains",
-    "image": "/images/bread.jpg",
+    "image": "/images/foods/bread.webp",
     "shortDescription": "Goes stale within days, but the freezer extends its life.",
     "storageLocation": "Room Temperature",
     "storageMethod": "Keep bread in a breadbox or sealed bag at room temperature. Freeze slices if you will not finish the loaf within a few days.",
@@ -519,7 +519,7 @@
     "slug": "rice",
     "name": "Rice",
     "category": "Pantry & Grains",
-    "image": "/images/rice.jpg",
+    "image": "/images/foods/rice.webp",
     "shortDescription": "Dry rice keeps for a long time; cooked rice needs quick, careful storage.",
     "storageLocation": "Pantry",
     "storageMethod": "Keep dry rice in an airtight container in a cool, dry pantry. For cooked rice, cool it quickly, store it in the refrigerator, and reheat until steaming hot.",
@@ -574,7 +574,7 @@
     "slug": "pasta",
     "name": "Pasta",
     "category": "Pantry & Grains",
-    "image": "/images/pasta.jpg",
+    "image": "/images/foods/pasta.webp",
     "shortDescription": "Dry pasta is a long-lasting pantry staple; cooked pasta is short-lived.",
     "storageLocation": "Pantry",
     "storageMethod": "Keep dry pasta in a sealed container in a cool, dry pantry. Refrigerate cooked pasta in an airtight container within about 2 hours.",
@@ -623,6 +623,1973 @@
       "Pasta salad",
       "Stir-fried noodles",
       "Soup add-in"
+    ]
+  },
+  {
+    "slug": "mango",
+    "name": "Mango",
+    "category": "Fruits",
+    "image": "/images/foods/mango.webp",
+    "shortDescription": "A summer favourite that ripens on the counter and softens fast once ready.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Ripen firm mangoes at room temperature, out of direct sun. Once a mango gives slightly when pressed and smells sweet at the stem, move it to the refrigerator to slow it down.",
+    "shelfLifePreview": "Room temp: 2–5 days to ripen",
+    "shelfLife": {
+      "roomTemperature": "About 2–5 days for a firm mango to ripen",
+      "refrigerator": "Ripe and whole: about 5 days. Cut: about 3 days in a sealed container",
+      "freezer": "Peeled cubes: about 6 months for best quality"
+    },
+    "storageTips": [
+      "Judge ripeness by feel and smell, not colour: some varieties stay green when ripe.",
+      "Do not refrigerate unripe mangoes; cold stops them ripening properly.",
+      "Freeze very ripe mango in cubes for smoothies or lassi."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Unripe",
+        "description": "Hard, little smell. Leave it at room temperature for a few days."
+      },
+      {
+        "label": "Ripe",
+        "description": "Gives slightly when pressed, sweet smell at the stem end."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Very soft with some wrinkling or dark patches on the skin."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Leaking, fermented smell or mould near the stem. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Slight give when gently pressed",
+      "Sweet, fruity smell at the stem",
+      "Smooth, unbroken skin"
+    ],
+    "spoilageSigns": [
+      "Sour or alcohol-like smell",
+      "Mould near the stem or on soft spots",
+      "Mushy, stringy flesh with dark streaks"
+    ],
+    "usageIdeas": [
+      "Mango lassi",
+      "Aamras or mango pulp",
+      "Salsa or chutney",
+      "Frozen mango cubes"
+    ]
+  },
+  {
+    "slug": "papaya",
+    "name": "Papaya",
+    "category": "Fruits",
+    "image": "/images/foods/papaya.webp",
+    "shortDescription": "A soft tropical fruit that turns from green to yellow-orange as it ripens.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Ripen papaya at room temperature until the skin is mostly yellow and gives slightly when pressed. Keep ripe papaya whole in the refrigerator, and store cut pieces in a sealed container.",
+    "shelfLifePreview": "Room temp: 2–4 days to ripen",
+    "shelfLife": {
+      "roomTemperature": "About 2–4 days for a part-yellow papaya to ripen",
+      "refrigerator": "Ripe and whole: about 1 week. Cut: about 2–3 days",
+      "freezer": "Peeled chunks: about 6 months for best quality"
+    },
+    "storageTips": [
+      "A fully green papaya may never ripen well; choose one with some yellow.",
+      "Scoop out the seeds before storing cut papaya.",
+      "Cover cut surfaces so the flesh does not dry out or pick up fridge smells."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Unripe",
+        "description": "Mostly green and firm. Leave it at room temperature."
+      },
+      {
+        "label": "Ripe",
+        "description": "Yellow-orange skin, slight give, sweet smell."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Soft spots and a few dark marks. Eat it today."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Sunken, leaking or mouldy areas. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Mostly yellow skin",
+      "Slight give under the thumb",
+      "Sweet, mild smell"
+    ],
+    "spoilageSigns": [
+      "White or black mould patches",
+      "Sour or fermented smell",
+      "Large sunken, watery spots"
+    ],
+    "usageIdeas": [
+      "Fruit bowl with lime",
+      "Smoothie",
+      "Raw papaya salad (when green)",
+      "Papaya and yogurt breakfast"
+    ]
+  },
+  {
+    "slug": "guava",
+    "name": "Guava",
+    "category": "Fruits",
+    "image": "/images/foods/guava.webp",
+    "shortDescription": "A fragrant fruit that goes from crisp to soft in just a few days.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Keep firm guavas at room temperature until they soften slightly and smell fragrant. Move ripe guavas to the refrigerator and eat them within a few days.",
+    "shelfLifePreview": "Room temp: 2–5 days",
+    "shelfLife": {
+      "roomTemperature": "About 2–5 days, depending on how firm it was when bought",
+      "refrigerator": "Ripe: about 3–4 days",
+      "freezer": "Cut and deseeded: about 6 months for best quality"
+    },
+    "storageTips": [
+      "Keep guavas apart from other fruit; they ripen quickly and give off a strong smell.",
+      "Eat crisp guavas with salt and chilli, or wait for soft ones if you prefer them sweet.",
+      "Check the base for small holes, which can mean fruit-fly damage."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Crisp",
+        "description": "Green and firm. Good for eating with salt and chilli."
+      },
+      {
+        "label": "Ripe",
+        "description": "Pale yellow-green, slight give, strong sweet smell."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Soft with brown patches. Best for juice or jam."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Mushy, leaking or mouldy. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Smooth skin without holes",
+      "Fragrant, sweet smell",
+      "Firm to slightly soft"
+    ],
+    "spoilageSigns": [
+      "Dark, sunken, mushy patches",
+      "Mould at the base or stem",
+      "Fermented smell"
+    ],
+    "usageIdeas": [
+      "Guava with chaat masala",
+      "Guava juice",
+      "Jam or cheese (guava paste)",
+      "Fruit salad"
+    ]
+  },
+  {
+    "slug": "orange",
+    "name": "Orange",
+    "category": "Fruits",
+    "image": "/images/foods/orange.webp",
+    "shortDescription": "A citrus fruit with a protective peel that keeps for weeks when cold.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Keep oranges loose in a cool place for up to a week, or in the refrigerator crisper to keep them much longer. Do not store them in a sealed plastic bag; trapped moisture causes mould.",
+    "shelfLifePreview": "Room temp: about 1 week",
+    "shelfLife": {
+      "roomTemperature": "About 1 week",
+      "refrigerator": "About 3–4 weeks in the crisper drawer",
+      "freezer": "Juice or segments: about 4–6 months for best quality"
+    },
+    "storageTips": [
+      "Check the bag and remove any orange with mould so it does not spread.",
+      "Heavier oranges for their size are usually juicier.",
+      "Bring cold oranges to room temperature for the best flavour."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, heavy for its size, glossy peel."
+      },
+      {
+        "label": "Ripe",
+        "description": "Fully coloured, fragrant, slightly softer."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Soft or dry spots, peel beginning to wrinkle. Juice it."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Blue-green or white mould, or a fermented smell. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm, heavy fruit",
+      "Bright, glossy peel",
+      "Fresh citrus smell"
+    ],
+    "spoilageSigns": [
+      "Blue-green or white fuzzy mould",
+      "Very soft, sunken areas",
+      "Sour, fermented smell"
+    ],
+    "usageIdeas": [
+      "Fresh juice",
+      "Orange and onion salad",
+      "Zest in baking",
+      "Segments with yogurt"
+    ]
+  },
+  {
+    "slug": "lemon",
+    "name": "Lemon",
+    "category": "Fruits",
+    "image": "/images/foods/lemon.webp",
+    "shortDescription": "Keeps for weeks in the fridge and is easy to use up a little at a time.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Store lemons in the refrigerator, ideally in a closed container or bag in the crisper, to stop them drying out. Wrap cut lemons and use them within a few days.",
+    "shelfLifePreview": "Fridge: about 3–4 weeks",
+    "shelfLife": {
+      "roomTemperature": "About 1 week",
+      "refrigerator": "Whole: about 3–4 weeks. Cut: about 3–4 days",
+      "freezer": "Juice in ice-cube trays: about 4 months for best quality"
+    },
+    "storageTips": [
+      "Roll a lemon firmly on the counter before cutting to get more juice.",
+      "Zest lemons before juicing them and freeze the zest.",
+      "Hard, dry lemons still have usable zest even when the juice is gone."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, bright yellow, fragrant peel."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Softening, or hard and drying at the ends."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Mould on the peel, or mushy patches. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Bright, even colour",
+      "Firm with a little give",
+      "Strong citrus smell when scratched"
+    ],
+    "spoilageSigns": [
+      "White or blue-green mould",
+      "Soft, wet or sunken patches",
+      "Hard, shrivelled and brown inside"
+    ],
+    "usageIdeas": [
+      "Nimbu pani or lemonade",
+      "Dressings and marinades",
+      "Squeeze over dal or chaat",
+      "Frozen juice cubes"
+    ]
+  },
+  {
+    "slug": "grapes",
+    "name": "Grapes",
+    "category": "Fruits",
+    "image": "/images/foods/grapes.webp",
+    "shortDescription": "Sweet bunches that keep best cold, dry and unwashed.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep grapes unwashed in the refrigerator in a ventilated bag or open container. Wash only the amount you are about to eat, and remove any soft or mouldy grapes first.",
+    "shelfLifePreview": "Fridge: about 1–2 weeks",
+    "shelfLife": {
+      "roomTemperature": "About 1–2 days",
+      "refrigerator": "About 1–2 weeks, unwashed",
+      "freezer": "Washed, dried and frozen whole: about 3 months for best quality"
+    },
+    "storageTips": [
+      "Moisture causes mould, so dry grapes well if you do wash them.",
+      "Leave grapes on the stem until you eat them.",
+      "Frozen grapes make a simple cold snack."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Plump, firm, attached to green, flexible stems."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Some grapes softening or wrinkling, stems browning."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Leaking, mouldy or fizzy-smelling grapes. Remove them."
+      }
+    ],
+    "freshnessSigns": [
+      "Plump, firm grapes",
+      "Green, flexible stems",
+      "A light natural bloom on the skin"
+    ],
+    "spoilageSigns": [
+      "Fuzzy grey mould where grapes touch",
+      "Leaking juice or sticky bunches",
+      "Fermented smell"
+    ],
+    "usageIdeas": [
+      "Frozen grape snack",
+      "Fruit salad",
+      "Roasted grapes with cheese",
+      "Grape juice"
+    ]
+  },
+  {
+    "slug": "pomegranate",
+    "name": "Pomegranate",
+    "category": "Fruits",
+    "image": "/images/foods/pomegranate.webp",
+    "shortDescription": "A thick-skinned fruit that keeps well whole; the seeds spoil much faster.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep whole pomegranates in a cool place for a week or two, or in the refrigerator for much longer. Store the removed seeds (arils) in a sealed container in the refrigerator.",
+    "shelfLifePreview": "Whole, fridge: about 1–2 months",
+    "shelfLife": {
+      "roomTemperature": "Whole: about 1–2 weeks in a cool, dry place",
+      "refrigerator": "Whole: about 1–2 months. Seeds: about 5 days",
+      "freezer": "Seeds spread on a tray, then bagged: about 6 months for best quality"
+    },
+    "storageTips": [
+      "Choose fruit that feels heavy for its size.",
+      "Remove the seeds in a bowl of water to avoid splashes.",
+      "Dry seeds well before refrigerating them."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Heavy, firm, with tight, leathery skin."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Skin drying and hardening, a few soft spots."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Brown, mushy seeds or a sour smell inside. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Heavy for its size",
+      "Firm, unbroken skin",
+      "Bright, juicy seeds"
+    ],
+    "spoilageSigns": [
+      "Soft, brown or grey seeds",
+      "Mould at the crown or on cut seeds",
+      "Fermented smell"
+    ],
+    "usageIdeas": [
+      "Raita or salad topping",
+      "Fresh juice",
+      "Chaat garnish",
+      "Breakfast bowls"
+    ]
+  },
+  {
+    "slug": "watermelon",
+    "name": "Watermelon",
+    "category": "Fruits",
+    "image": "/images/foods/watermelon.webp",
+    "shortDescription": "Keeps for days whole, but cut melon needs the fridge.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Keep an uncut watermelon in a cool place out of the sun. Once cut, cover the flesh tightly or move pieces to a sealed container and refrigerate.",
+    "shelfLifePreview": "Whole: about 1 week",
+    "shelfLife": {
+      "roomTemperature": "Whole: about 7–10 days",
+      "refrigerator": "Whole: about 2 weeks. Cut: about 3–5 days",
+      "freezer": "Cubes: about 6 months (soft once thawed, fine for drinks)"
+    },
+    "storageTips": [
+      "Wash the rind before cutting so the knife does not carry dirt into the flesh.",
+      "Do not leave cut watermelon out in a warm room.",
+      "Blend soft pieces into juice rather than throwing them away."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Heavy, firm rind with a creamy yellow ground spot."
+      },
+      {
+        "label": "Cut: Fresh",
+        "description": "Crisp, juicy, bright red flesh."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Cut flesh turning watery or slightly mealy. Make juice."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy flesh, sour smell or mould. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Heavy for its size",
+      "Firm rind without soft spots",
+      "Crisp, juicy flesh"
+    ],
+    "spoilageSigns": [
+      "Slimy or very mushy flesh",
+      "Sour or fizzy smell",
+      "Mould on cut surfaces"
+    ],
+    "usageIdeas": [
+      "Watermelon juice",
+      "Fruit chaat",
+      "Watermelon and mint salad",
+      "Frozen cubes in drinks"
+    ]
+  },
+  {
+    "slug": "pineapple",
+    "name": "Pineapple",
+    "category": "Fruits",
+    "image": "/images/foods/pineapple.webp",
+    "shortDescription": "Does not get sweeter after picking, so eat it while it smells fragrant.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Keep a whole pineapple at room temperature for a day or two, or refrigerate it to slow decline. Store cut pineapple in a sealed container in the refrigerator.",
+    "shelfLifePreview": "Whole: about 1–2 days",
+    "shelfLife": {
+      "roomTemperature": "Whole: about 1–2 days",
+      "refrigerator": "Whole: about 3–5 days. Cut: about 3–4 days",
+      "freezer": "Chunks: about 6 months for best quality"
+    },
+    "storageTips": [
+      "A sweet smell at the base is a better guide than colour.",
+      "Pineapple does not ripen further after harvest; it only softens.",
+      "Cut away and discard any brown, fermented-smelling flesh."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, fragrant at the base, green leaves."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Softer, darker skin, very sweet smell."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Leaking, mouldy base or vinegary smell. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Sweet smell at the base",
+      "Firm with slight give",
+      "Fresh green crown"
+    ],
+    "spoilageSigns": [
+      "Vinegar or alcohol smell",
+      "Mould at the base or on cut flesh",
+      "Very soft, leaking areas"
+    ],
+    "usageIdeas": [
+      "Pineapple raita",
+      "Grilled pineapple",
+      "Smoothie",
+      "Sweet and sour stir-fry"
+    ]
+  },
+  {
+    "slug": "pear",
+    "name": "Pear",
+    "category": "Fruits",
+    "image": "/images/foods/pear.webp",
+    "shortDescription": "Ripens from the inside out, so check the neck rather than the body.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Ripen pears at room temperature. Check ripeness by pressing gently near the stem; when it gives, the pear is ready and can go in the refrigerator for a few days.",
+    "shelfLifePreview": "Room temp: 2–5 days to ripen",
+    "shelfLife": {
+      "roomTemperature": "About 2–5 days to ripen",
+      "refrigerator": "Ripe: about 3–5 days",
+      "freezer": "Cooked or poached: about 10 months for best quality"
+    },
+    "storageTips": [
+      "Pears ripen from the inside, so a firm body can hide a soft core.",
+      "Keep them out of sealed bags at room temperature.",
+      "Cut pears brown quickly; a squeeze of lemon helps."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Unripe",
+        "description": "Hard all over. Leave it at room temperature."
+      },
+      {
+        "label": "Ripe",
+        "description": "The neck gives slightly when pressed."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Soft and bruising. Poach or bake it."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Brown, mushy core or mould. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Slight give near the stem",
+      "Smooth skin",
+      "Fresh, sweet smell"
+    ],
+    "spoilageSigns": [
+      "Brown, mushy flesh or core",
+      "Mould around bruises",
+      "Fermented smell"
+    ],
+    "usageIdeas": [
+      "Poached pears",
+      "Pear and cheese salad",
+      "Baked pear crumble",
+      "Sliced into porridge"
+    ]
+  },
+  {
+    "slug": "kiwi",
+    "name": "Kiwi",
+    "category": "Fruits",
+    "image": "/images/foods/kiwi.webp",
+    "shortDescription": "A fuzzy fruit that ripens on the counter and keeps for weeks once cold.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Ripen firm kiwis at room temperature until they give slightly, then keep them in the refrigerator. Unripe kiwis also keep for weeks in the refrigerator and can be ripened later.",
+    "shelfLifePreview": "Ripe, fridge: about 1–2 weeks",
+    "shelfLife": {
+      "roomTemperature": "About 3–7 days for a firm kiwi to ripen",
+      "refrigerator": "Ripe: about 1–2 weeks. Unripe: up to about 4 weeks",
+      "freezer": "Peeled slices: about 6 months (soft once thawed)"
+    },
+    "storageTips": [
+      "Kiwis ripen faster next to apples or bananas.",
+      "A ripe kiwi feels like a ripe peach: slight give, not soft.",
+      "Eat the skin of golden varieties if you like; it is thinner."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Unripe",
+        "description": "Hard and sour. Ripen at room temperature."
+      },
+      {
+        "label": "Ripe",
+        "description": "Gives slightly, sweet and juicy."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Soft and wrinkling. Use in a smoothie."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Mushy, leaking or mouldy. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Slight give when pressed",
+      "Unbroken skin",
+      "Bright green or gold flesh"
+    ],
+    "spoilageSigns": [
+      "Very soft, wet patches",
+      "Mould on the skin",
+      "Fermented smell"
+    ],
+    "usageIdeas": [
+      "Breakfast topping",
+      "Smoothie",
+      "Fruit salad",
+      "Kiwi salsa"
+    ]
+  },
+  {
+    "slug": "avocado",
+    "name": "Avocado",
+    "category": "Fruits",
+    "image": "/images/foods/avocado.webp",
+    "shortDescription": "Hard when bought, perfect for a day or two, then brown fast.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Ripen avocados at room temperature. When one yields to gentle pressure, eat it or move it to the refrigerator to hold it for a couple of days. Wrap a cut half with the stone left in.",
+    "shelfLifePreview": "Room temp: 3–5 days to ripen",
+    "shelfLife": {
+      "roomTemperature": "About 3–5 days to ripen",
+      "refrigerator": "Ripe: about 2–3 days. Cut half, wrapped: about 1 day",
+      "freezer": "Mashed with lemon juice: about 4–6 months"
+    },
+    "storageTips": [
+      "Flick off the stem cap: green underneath means ripe, brown means overripe.",
+      "Lemon or lime juice slows browning on cut flesh.",
+      "Overripe but not rotten avocado still works in smoothies or baking."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Unripe",
+        "description": "Hard, often bright green. Leave it out for a few days."
+      },
+      {
+        "label": "Ripe",
+        "description": "Yields to gentle pressure, green under the stem cap."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Soft, with some dark streaks inside. Mash it today."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Black flesh, sour smell or mould. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Gentle give near the stem",
+      "Green under the stem cap",
+      "Pale green, creamy flesh"
+    ],
+    "spoilageSigns": [
+      "Mostly brown or black flesh",
+      "Sour or rancid smell",
+      "Mould on the skin or flesh"
+    ],
+    "usageIdeas": [
+      "Guacamole",
+      "Avocado toast",
+      "Salad",
+      "Smoothie"
+    ]
+  },
+  {
+    "slug": "blueberries",
+    "name": "Blueberries",
+    "category": "Fruits",
+    "image": "/images/foods/blueberries.webp",
+    "shortDescription": "Small berries that last longest dry, cold and unwashed.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Refrigerate blueberries unwashed in their ventilated box or an open container lined with paper towel. Pick out soft or mouldy berries, and wash only what you will eat.",
+    "shelfLifePreview": "Fridge: about 5–10 days",
+    "shelfLife": {
+      "roomTemperature": "About 1 day",
+      "refrigerator": "About 5–10 days, unwashed",
+      "freezer": "Spread on a tray, then bagged: about 10–12 months"
+    },
+    "storageTips": [
+      "One mouldy berry can spread to the rest; check the box when you buy it.",
+      "The dusty white bloom is natural and protects the berry.",
+      "Freeze extras on a tray so they do not stick together."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, dusty-blue berries that roll freely."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Some berries soft or wrinkled. Bake or blend them."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Fuzzy mould, leaking juice or a sour smell. Remove them."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm, plump berries",
+      "A dusty white bloom",
+      "Dry box with no juice stains"
+    ],
+    "spoilageSigns": [
+      "White or grey fuzzy mould",
+      "Shrivelled, leaking berries",
+      "Sour smell"
+    ],
+    "usageIdeas": [
+      "Porridge or yogurt topping",
+      "Muffins",
+      "Smoothie",
+      "Blueberry compote"
+    ]
+  },
+  {
+    "slug": "peach",
+    "name": "Peach",
+    "category": "Fruits",
+    "image": "/images/foods/peach.webp",
+    "shortDescription": "A soft stone fruit that ripens on the counter and bruises at a touch.",
+    "storageLocation": "Room Temperature",
+    "storageMethod": "Ripen firm peaches at room temperature, stem side down and not touching each other. Once a peach smells sweet and gives slightly near the stem, move it to the refrigerator and eat it within a few days.",
+    "shelfLifePreview": "Room temp: 1–3 days to ripen",
+    "shelfLife": {
+      "roomTemperature": "About 1–3 days for a firm peach to ripen",
+      "refrigerator": "Ripe: about 3–5 days. Cut: about 1–2 days in a sealed container",
+      "freezer": "Sliced: about 10–12 months for best quality"
+    },
+    "storageTips": [
+      "Handle peaches gently; bruises turn brown and soft within a day.",
+      "Do not refrigerate unripe peaches; cold makes the flesh dry and mealy.",
+      "A paper bag speeds up ripening if you need them sooner."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Unripe",
+        "description": "Hard, with a green tinge near the stem. Leave it out for a day or two."
+      },
+      {
+        "label": "Ripe",
+        "description": "Sweet smell, slight give near the stem, golden background colour."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Very soft or bruised in places. Bake, blend or cook it today."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Leaking, wrinkled, fermented smell or mould. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Sweet smell at the stem",
+      "Slight give when pressed gently",
+      "Smooth, unbroken skin"
+    ],
+    "spoilageSigns": [
+      "White or brown fuzzy mould",
+      "Sour or alcohol-like smell",
+      "Large brown, mushy patches"
+    ],
+    "usageIdeas": [
+      "Sliced with yogurt",
+      "Peach crumble",
+      "Smoothie",
+      "Grilled peaches"
+    ]
+  },
+  {
+    "slug": "fig",
+    "name": "Fig",
+    "category": "Fruits",
+    "image": "/images/foods/fig.webp",
+    "shortDescription": "Fresh figs are delicate and keep for only a few days, even when cold.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep ripe fresh figs in a single layer in the refrigerator, on a paper-lined plate or in a shallow container, and eat them within a couple of days. Wash just before eating.",
+    "shelfLifePreview": "Fridge: about 2–3 days",
+    "shelfLife": {
+      "roomTemperature": "Ripe: about 1 day",
+      "refrigerator": "About 2–3 days in a single layer",
+      "freezer": "Whole or halved: about 6 months (soft once thawed, fine for cooking)"
+    },
+    "storageTips": [
+      "Do not stack figs; their weight bruises the ones below.",
+      "Figs do not ripen much after picking, so choose soft, fragrant ones.",
+      "Dried figs are a different product and keep for months in the pantry."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Plump and soft, with a sweet smell and an intact skin."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Very soft, starting to wrinkle or split. Eat or cook it today."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Sour or fermented smell, leaking or mould. Throw it out."
+      }
+    ],
+    "freshnessSigns": [
+      "Soft but not mushy",
+      "Sweet, honey-like smell",
+      "Skin intact, stem still attached"
+    ],
+    "spoilageSigns": [
+      "White or grey mould, often at the base",
+      "Sour or fermented smell",
+      "Leaking or very mushy flesh"
+    ],
+    "usageIdeas": [
+      "With yogurt or cheese",
+      "Fig and honey toast",
+      "Fig jam",
+      "Fruit salad"
+    ]
+  },
+  {
+    "slug": "onion",
+    "name": "Onion",
+    "category": "Vegetables",
+    "image": "/images/foods/onion.webp",
+    "shortDescription": "A dry-skinned bulb that keeps for weeks somewhere cool, dark and airy.",
+    "storageLocation": "Pantry",
+    "storageMethod": "Store whole onions in a cool, dry, well-ventilated place such as a basket or mesh bag. Keep them away from potatoes, which make them spoil faster. Refrigerate cut onion in a sealed container.",
+    "shelfLifePreview": "Pantry: about 1–2 months",
+    "shelfLife": {
+      "pantry": "Whole: about 1–2 months in a cool, dry, airy place",
+      "refrigerator": "Cut or peeled: about 7–10 days in a sealed container",
+      "freezer": "Chopped: about 8 months (for cooking only)"
+    },
+    "storageTips": [
+      "Do not store onions in plastic bags; they need air.",
+      "Keep onions and potatoes apart.",
+      "Use sprouting onions soon; the green shoots can be eaten like spring onion."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, heavy, with dry papery skin."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Starting to sprout or slightly soft at the neck."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Soft, wet, black mould or a rotten smell. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm all over",
+      "Dry, papery outer skin",
+      "No smell through the skin"
+    ],
+    "spoilageSigns": [
+      "Soft, wet or slimy layers",
+      "Black powdery mould under the skin",
+      "Strong rotten smell"
+    ],
+    "usageIdeas": [
+      "Tadka for dal",
+      "Caramelised onions",
+      "Onion pakoras",
+      "Kachumber salad"
+    ]
+  },
+  {
+    "slug": "garlic",
+    "name": "Garlic",
+    "category": "Vegetables",
+    "image": "/images/foods/garlic.webp",
+    "shortDescription": "Whole bulbs keep for months; peeled cloves need the fridge.",
+    "storageLocation": "Pantry",
+    "storageMethod": "Keep whole garlic bulbs in a cool, dry, airy place out of direct light. Once a bulb is broken, use the cloves within about 10 days. Refrigerate peeled cloves in a sealed container.",
+    "shelfLifePreview": "Whole bulb: about 3–5 months",
+    "shelfLife": {
+      "pantry": "Whole bulb: about 3–5 months. Separated cloves: about 10 days",
+      "refrigerator": "Peeled cloves: about 1 week in a sealed container",
+      "freezer": "Peeled or chopped: about 6 months"
+    },
+    "storageTips": [
+      "Do not store raw garlic in oil at room temperature; it can grow dangerous bacteria.",
+      "Green sprouts in the centre are safe but can taste bitter; remove them.",
+      "Keep garlic in a mesh or paper bag, not plastic."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, tight bulb with dry papery skin."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Green sprouts appearing or cloves softening."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Soft, brown, hollow or mouldy cloves. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm, tight cloves",
+      "Dry, papery skin",
+      "Heavy for its size"
+    ],
+    "spoilageSigns": [
+      "Soft or shrivelled cloves",
+      "Brown or yellow spots",
+      "Green or black mould"
+    ],
+    "usageIdeas": [
+      "Ginger-garlic paste",
+      "Garlic rice",
+      "Roasted garlic",
+      "Garlic chutney"
+    ]
+  },
+  {
+    "slug": "ginger",
+    "name": "Ginger",
+    "category": "Vegetables",
+    "image": "/images/foods/ginger.webp",
+    "shortDescription": "A knobbly root that keeps for weeks in the fridge if kept dry.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Store unpeeled ginger in a dry, sealed bag or container in the refrigerator crisper. Peel and grate only what you need. Freeze extra ginger and grate it straight from frozen.",
+    "shelfLifePreview": "Fridge: about 3–4 weeks",
+    "shelfLife": {
+      "roomTemperature": "About 1 week",
+      "refrigerator": "Unpeeled: about 3–4 weeks. Peeled: about 2 weeks",
+      "freezer": "Whole or grated: about 6 months"
+    },
+    "storageTips": [
+      "Pat ginger dry before storing; moisture invites mould.",
+      "Scrape the skin off with a spoon to waste less.",
+      "Frozen ginger grates more easily than fresh."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, smooth skin, snaps cleanly."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Wrinkled skin and drier flesh. Still fine for cooking."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Soft, mouldy or dark inside. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Smooth, tight skin",
+      "Snaps cleanly",
+      "Strong, spicy smell"
+    ],
+    "spoilageSigns": [
+      "Soft or mushy texture",
+      "Mould on the skin or cut ends",
+      "Dark grey or brown flesh"
+    ],
+    "usageIdeas": [
+      "Adrak chai",
+      "Ginger-garlic paste",
+      "Stir-fries",
+      "Ginger honey lemon drink"
+    ]
+  },
+  {
+    "slug": "carrot",
+    "name": "Carrot",
+    "category": "Vegetables",
+    "image": "/images/foods/carrot.webp",
+    "shortDescription": "A sturdy root that stays crisp for weeks when cold and covered.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Cut off any leafy tops, then store carrots in a bag or covered container in the refrigerator crisper. The tops pull moisture out of the root if left on.",
+    "shelfLifePreview": "Fridge: about 3–4 weeks",
+    "shelfLife": {
+      "refrigerator": "About 3–4 weeks with tops removed",
+      "freezer": "Blanched: about 10–12 months"
+    },
+    "storageTips": [
+      "Bendy carrots are not spoiled; soak them in cold water to crisp them up.",
+      "Keep carrots away from apples and bananas, which can make them bitter.",
+      "Peel only before using."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, bright orange, snaps cleanly."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Bendy or with small white hairs. Fine for cooking."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, mushy or mouldy. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm and crisp",
+      "Bright colour",
+      "Smooth skin"
+    ],
+    "spoilageSigns": [
+      "Slimy surface",
+      "Soft, wet black spots",
+      "Mould at the top"
+    ],
+    "usageIdeas": [
+      "Gajar halwa",
+      "Carrot soup",
+      "Stir-fry",
+      "Grated into salads"
+    ]
+  },
+  {
+    "slug": "cucumber",
+    "name": "Cucumber",
+    "category": "Vegetables",
+    "image": "/images/foods/cucumber.webp",
+    "shortDescription": "Mostly water, so it softens quickly once it starts to go.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep cucumbers dry in the refrigerator, ideally wrapped in a cloth or paper towel inside a bag. Keep them away from tomatoes and bananas. Wrap cut ends tightly.",
+    "shelfLifePreview": "Fridge: about 1 week",
+    "shelfLife": {
+      "roomTemperature": "About 1–2 days",
+      "refrigerator": "Whole: about 1 week. Cut: about 2–3 days"
+    },
+    "storageTips": [
+      "Store them in the warmer front of the fridge; very cold spots damage them.",
+      "Wipe off moisture before storing.",
+      "Soft but not slimy cucumbers can still go into raita."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, dark green, crisp when cut."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Slightly soft at the ends or a little wrinkled."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, mushy or mouldy. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm from end to end",
+      "Even green colour",
+      "Crisp flesh"
+    ],
+    "spoilageSigns": [
+      "Slimy skin",
+      "Soft, sunken or watery spots",
+      "Sour smell or mould"
+    ],
+    "usageIdeas": [
+      "Raita",
+      "Kachumber salad",
+      "Cucumber sandwiches",
+      "Quick pickle"
+    ]
+  },
+  {
+    "slug": "bell-pepper",
+    "name": "Bell Pepper",
+    "category": "Vegetables",
+    "image": "/images/foods/bell-pepper.webp",
+    "shortDescription": "Capsicum keeps a week or two in the fridge; green lasts longer than red.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Store whole, dry bell peppers in the refrigerator crisper. Keep cut peppers in a sealed container and use them within a few days.",
+    "shelfLifePreview": "Fridge: about 1–2 weeks",
+    "shelfLife": {
+      "refrigerator": "Whole: about 1–2 weeks (green lasts longest). Cut: about 3–4 days",
+      "freezer": "Sliced: about 10–12 months (for cooking only)"
+    },
+    "storageTips": [
+      "Red, yellow and orange peppers are riper than green and spoil sooner.",
+      "Do not wash peppers until you are ready to use them.",
+      "Wrinkled peppers are still fine roasted or in curries."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, glossy and heavy for its size."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Wrinkling or slightly soft. Roast or cook it."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, sunken spots or mould. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Glossy, taut skin",
+      "Firm walls",
+      "Green, fresh stem"
+    ],
+    "spoilageSigns": [
+      "Soft, sunken or wet patches",
+      "Mould near the stem or inside",
+      "Sour smell"
+    ],
+    "usageIdeas": [
+      "Capsicum stir-fry",
+      "Stuffed peppers",
+      "Roasted pepper sauce",
+      "Fajitas"
+    ]
+  },
+  {
+    "slug": "green-chilli",
+    "name": "Green Chilli",
+    "category": "Vegetables",
+    "image": "/images/foods/green-chilli.webp",
+    "shortDescription": "Lasts longer with the stems removed and kept dry.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Remove the stems, discard any soft chillies, then store them dry in a paper-lined container in the refrigerator. Freeze extras whole.",
+    "shelfLifePreview": "Fridge: about 1–2 weeks",
+    "shelfLife": {
+      "roomTemperature": "About 2–3 days",
+      "refrigerator": "About 1–2 weeks, stems removed and kept dry",
+      "freezer": "Whole: about 6 months"
+    },
+    "storageTips": [
+      "Removing the stems slows rotting.",
+      "Keep them dry; damp chillies turn slimy.",
+      "Wash your hands after handling chillies."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, bright green and glossy."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Some turning red or wrinkling. Still fine to cook."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Black, slimy or mouldy chillies. Throw them out."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm and glossy",
+      "Bright green colour",
+      "Snaps when bent"
+    ],
+    "spoilageSigns": [
+      "Black or dark brown soft spots",
+      "Slimy texture",
+      "White fuzzy mould"
+    ],
+    "usageIdeas": [
+      "Tadka for dal and sabzi",
+      "Green chutney",
+      "Chilli pickle",
+      "Upma and poha"
+    ]
+  },
+  {
+    "slug": "cauliflower",
+    "name": "Cauliflower",
+    "category": "Vegetables",
+    "image": "/images/foods/cauliflower.webp",
+    "shortDescription": "Firm white curds that develop brown spots as they age.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep cauliflower unwashed in a loosely closed bag in the refrigerator, stem side up so moisture does not collect on the florets.",
+    "shelfLifePreview": "Fridge: about 4–7 days",
+    "shelfLife": {
+      "refrigerator": "Whole: about 4–7 days. Florets: about 3–4 days",
+      "freezer": "Blanched florets: about 10–12 months"
+    },
+    "storageTips": [
+      "Small light-brown spots can be cut off; the rest is fine.",
+      "Wash only just before cooking.",
+      "The leaves and stem are edible: cook them with the florets."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Tight, creamy-white head with green leaves."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Small brown spots appearing. Cut them off and cook."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Spreading dark spots, mushy or mouldy. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Tight, compact florets",
+      "Creamy white colour",
+      "Crisp green leaves"
+    ],
+    "spoilageSigns": [
+      "Large dark or black patches",
+      "Soft, mushy florets",
+      "Mould or a sour smell"
+    ],
+    "usageIdeas": [
+      "Aloo gobi",
+      "Gobi paratha",
+      "Roasted cauliflower",
+      "Cauliflower soup"
+    ]
+  },
+  {
+    "slug": "cabbage",
+    "name": "Cabbage",
+    "category": "Vegetables",
+    "image": "/images/foods/cabbage.webp",
+    "shortDescription": "A tight head of leaves that keeps for weeks whole and cold.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep cabbage whole in the refrigerator crisper with the outer leaves on. Wrap a cut head tightly and use it within a few days.",
+    "shelfLifePreview": "Fridge: about 2 weeks or more",
+    "shelfLife": {
+      "refrigerator": "Whole: about 2 weeks, often longer with outer leaves on. Cut: about 3–4 days",
+      "freezer": "Blanched: about 9 months (for cooking only)"
+    },
+    "storageTips": [
+      "Peel off wilted outer leaves; the inside is usually still crisp.",
+      "Do not wash until you are ready to use it.",
+      "Shredded cabbage loses vitamins quickly; cut it close to cooking."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Heavy, firm head with crisp, tight leaves."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Outer leaves wilting or yellowing. Remove them."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, dark or smelly leaves inside. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Heavy and firm",
+      "Crisp, tight leaves",
+      "Fresh, mild smell"
+    ],
+    "spoilageSigns": [
+      "Slimy inner leaves",
+      "Black or brown rot",
+      "Strong sulphur smell"
+    ],
+    "usageIdeas": [
+      "Cabbage sabzi",
+      "Coleslaw",
+      "Stir-fry",
+      "Soup"
+    ]
+  },
+  {
+    "slug": "broccoli",
+    "name": "Broccoli",
+    "category": "Vegetables",
+    "image": "/images/foods/broccoli.webp",
+    "shortDescription": "Tight green florets that turn yellow within days of purchase.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Store broccoli unwashed in the refrigerator in a loosely closed bag or wrapped in a damp towel. Use it within a few days.",
+    "shelfLifePreview": "Fridge: about 3–5 days",
+    "shelfLife": {
+      "refrigerator": "About 3–5 days",
+      "freezer": "Blanched florets: about 10–12 months"
+    },
+    "storageTips": [
+      "Yellow florets mean it is ageing: cook it soon.",
+      "Peel and slice the stem; it tastes like the florets.",
+      "Do not seal it airtight; it needs a little air."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Deep green, tight florets, firm stem."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Some florets turning yellow. Cook it today."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, mouldy or strongly smelly. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Deep green colour",
+      "Tight, compact florets",
+      "Firm stem"
+    ],
+    "spoilageSigns": [
+      "Mostly yellow florets",
+      "Slimy or soft spots",
+      "Mould or a strong smell"
+    ],
+    "usageIdeas": [
+      "Stir-fry with garlic",
+      "Broccoli soup",
+      "Roasted broccoli",
+      "Pasta"
+    ]
+  },
+  {
+    "slug": "okra",
+    "name": "Okra",
+    "category": "Vegetables",
+    "image": "/images/foods/okra.webp",
+    "shortDescription": "Bhindi bruises easily and goes slimy if stored damp.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep okra completely dry in a paper bag or paper-lined container in the refrigerator. Wash and dry it well only just before cooking.",
+    "shelfLifePreview": "Fridge: about 2–3 days",
+    "shelfLife": {
+      "roomTemperature": "About 1 day",
+      "refrigerator": "About 2–3 days, dry",
+      "freezer": "Blanched: about 10–12 months"
+    },
+    "storageTips": [
+      "Moisture is the main enemy: never store okra wet.",
+      "Choose small, tender pods; large ones can be woody.",
+      "Dry okra completely after washing so it does not turn slimy in the pan."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Bright green, firm, tip snaps cleanly."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Some dark marks or softening. Cook it today."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, black or mouldy pods. Throw them out."
+      }
+    ],
+    "freshnessSigns": [
+      "Bright green pods",
+      "Tips snap cleanly",
+      "Dry, firm surface"
+    ],
+    "spoilageSigns": [
+      "Slimy surface",
+      "Black or dark brown patches",
+      "Mould"
+    ],
+    "usageIdeas": [
+      "Bhindi masala",
+      "Crispy fried okra",
+      "Sambar",
+      "Stir-fry"
+    ]
+  },
+  {
+    "slug": "eggplant",
+    "name": "Eggplant",
+    "category": "Vegetables",
+    "image": "/images/foods/eggplant.webp",
+    "shortDescription": "Baingan bruises easily and turns bitter as it ages.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep eggplant whole and unwashed in the warmer part of the refrigerator, such as the crisper, and use it within a few days. Very cold spots can damage it.",
+    "shelfLifePreview": "Fridge: about 4–5 days",
+    "shelfLife": {
+      "roomTemperature": "About 1–2 days",
+      "refrigerator": "About 4–5 days",
+      "freezer": "Cooked or roasted: about 6–8 months"
+    },
+    "storageTips": [
+      "Cut eggplant browns quickly; cook it soon after slicing.",
+      "A green, fresh-looking cap is a good sign.",
+      "Handle gently; bruises turn brown and soft."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Glossy, firm skin that springs back when pressed."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Dull skin, slight wrinkling or soft spots."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Mushy, brown inside or mouldy. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Glossy, taut skin",
+      "Springs back when pressed",
+      "Green cap"
+    ],
+    "spoilageSigns": [
+      "Soft, sunken patches",
+      "Brown, slimy flesh",
+      "Mould near the cap"
+    ],
+    "usageIdeas": [
+      "Baingan bharta",
+      "Bagara baingan",
+      "Grilled slices",
+      "Ratatouille"
+    ]
+  },
+  {
+    "slug": "mushroom",
+    "name": "Mushroom",
+    "category": "Vegetables",
+    "image": "/images/foods/mushroom.webp",
+    "shortDescription": "Button mushrooms sweat in plastic; give them a paper bag instead.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Store mushrooms unwashed in a paper bag or their original ventilated box in the refrigerator. Brush or wipe them clean just before cooking.",
+    "shelfLifePreview": "Fridge: about 3–7 days",
+    "shelfLife": {
+      "refrigerator": "About 3–7 days in a paper bag",
+      "freezer": "Sautéed: about 10–12 months"
+    },
+    "storageTips": [
+      "Do not wash mushrooms before storing them.",
+      "Plastic traps moisture and makes them slimy.",
+      "Slightly wrinkled mushrooms are fine to cook."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, smooth, dry caps with closed gills."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Darkening, a little wrinkled or open gills. Cook today."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, dark spots or a sour smell. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm, dry caps",
+      "Even colour",
+      "Earthy, mild smell"
+    ],
+    "spoilageSigns": [
+      "Slimy surface",
+      "Dark, wet spots",
+      "Sour or fishy smell"
+    ],
+    "usageIdeas": [
+      "Mushroom masala",
+      "Soup",
+      "Omelette filling",
+      "Stir-fry"
+    ]
+  },
+  {
+    "slug": "green-peas",
+    "name": "Green Peas",
+    "category": "Vegetables",
+    "image": "/images/foods/green-peas.webp",
+    "shortDescription": "Fresh peas lose sweetness quickly once picked.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep peas in their pods in a bag in the refrigerator and shell them just before cooking. Freeze shelled peas after a quick blanch if you cannot use them soon.",
+    "shelfLifePreview": "Fridge: about 3–5 days",
+    "shelfLife": {
+      "refrigerator": "In the pod: about 3–5 days. Shelled: about 2 days",
+      "freezer": "Blanched: about 10–12 months"
+    },
+    "storageTips": [
+      "Their sugar turns to starch over time, so cook them soon.",
+      "Plump, bright pods hold the sweetest peas.",
+      "Frozen peas are a good, long-lasting alternative."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Bright green, plump, crisp pods."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Pods dulling or yellowing. Peas getting starchy."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy pods, mould or a sour smell. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Bright green pods",
+      "Crisp, squeaky feel",
+      "Plump peas inside"
+    ],
+    "spoilageSigns": [
+      "Yellow, limp or slimy pods",
+      "Mould",
+      "Sour smell"
+    ],
+    "usageIdeas": [
+      "Matar paneer",
+      "Pulao",
+      "Pea soup",
+      "Aloo matar"
+    ]
+  },
+  {
+    "slug": "sweet-corn",
+    "name": "Sweet Corn",
+    "category": "Vegetables",
+    "image": "/images/foods/sweet-corn.webp",
+    "shortDescription": "Tastes sweetest on the day it is bought.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep corn in its husk in the refrigerator and cook it within a day or two. Its sugars turn to starch quickly, so the sooner the better.",
+    "shelfLifePreview": "Fridge: about 1–3 days",
+    "shelfLife": {
+      "refrigerator": "In the husk: about 1–3 days",
+      "freezer": "Blanched kernels: about 8–12 months"
+    },
+    "storageTips": [
+      "Leave the husk on until cooking.",
+      "Moist, light-coloured silk means fresher corn.",
+      "Cut kernels off older cobs and use them in soups."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Green husk, plump kernels that spurt juice when pressed."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Drying husk and silk, kernels less juicy."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Mould on the kernels or a sour smell. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Green, tight husk",
+      "Plump, glossy kernels",
+      "Moist silk"
+    ],
+    "spoilageSigns": [
+      "Mould on the kernels or under the husk",
+      "Shrivelled, dented kernels",
+      "Sour smell"
+    ],
+    "usageIdeas": [
+      "Roasted bhutta with lemon",
+      "Corn chaat",
+      "Corn soup",
+      "Corn pulao"
+    ]
+  },
+  {
+    "slug": "coriander",
+    "name": "Coriander",
+    "category": "Vegetables",
+    "image": "/images/foods/coriander.webp",
+    "shortDescription": "Fresh dhania wilts within days unless it is kept cool and slightly damp.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Trim the stems and stand the bunch in a glass of water in the refrigerator with a bag loosely over the leaves, or wrap it in a barely damp paper towel inside a container.",
+    "shelfLifePreview": "Fridge: about 1 week",
+    "shelfLife": {
+      "roomTemperature": "About 1 day",
+      "refrigerator": "About 1 week, stems in water or wrapped in damp paper",
+      "freezer": "Chopped, in ice-cube trays with water or oil: about 6 months (for cooking)"
+    },
+    "storageTips": [
+      "Remove rubber bands and yellow leaves before storing.",
+      "Wash only before using, then dry it well.",
+      "Blend wilting coriander into green chutney."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Bright green, perky leaves, strong aroma."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Leaves wilting or a few turning yellow."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy, black or mouldy leaves. Throw them out."
+      }
+    ],
+    "freshnessSigns": [
+      "Bright green leaves",
+      "Strong fresh smell",
+      "Firm stems"
+    ],
+    "spoilageSigns": [
+      "Slimy or dark leaves",
+      "Mould at the stems",
+      "Unpleasant smell"
+    ],
+    "usageIdeas": [
+      "Green chutney",
+      "Garnish for curry and dal",
+      "Coriander rice",
+      "Salsa"
+    ]
+  },
+  {
+    "slug": "mint",
+    "name": "Mint",
+    "category": "Vegetables",
+    "image": "/images/foods/mint.webp",
+    "shortDescription": "Pudina keeps best like a bunch of flowers: stems in water.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Stand the stems in a glass of water in the refrigerator with a bag loosely over the top, or wrap the bunch in a barely damp paper towel inside a container.",
+    "shelfLifePreview": "Fridge: about 1 week",
+    "shelfLife": {
+      "roomTemperature": "About 1 day",
+      "refrigerator": "About 1 week",
+      "freezer": "Chopped in ice-cube trays: about 6 months (for drinks and cooking)"
+    },
+    "storageTips": [
+      "Pick off dark or slimy leaves before storing.",
+      "Dry the leaves after washing; wet mint blackens.",
+      "Dry extra mint in the shade and keep it in a jar."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Bright green, firm leaves, strong cool smell."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Leaves softening or a few dark spots."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Black, slimy or mouldy leaves. Throw them out."
+      }
+    ],
+    "freshnessSigns": [
+      "Bright green leaves",
+      "Strong minty smell",
+      "Firm stems"
+    ],
+    "spoilageSigns": [
+      "Black, slimy leaves",
+      "Mould",
+      "Musty smell"
+    ],
+    "usageIdeas": [
+      "Pudina chutney",
+      "Mint raita",
+      "Nimbu pani",
+      "Mint chai"
+    ]
+  },
+  {
+    "slug": "zucchini",
+    "name": "Zucchini",
+    "category": "Vegetables",
+    "image": "/images/foods/zucchini.webp",
+    "shortDescription": "A mild summer squash that stays firm for about a week in the fridge.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep zucchini whole, dry and unwashed in the refrigerator crisper, loosely wrapped or in a paper bag. Wash it and trim the ends just before cooking.",
+    "shelfLifePreview": "Fridge: about 4–7 days",
+    "shelfLife": {
+      "roomTemperature": "About 1–2 days",
+      "refrigerator": "About 4–7 days, whole and dry",
+      "freezer": "Sliced and blanched: about 10–12 months (for cooking only)"
+    },
+    "storageTips": [
+      "Moisture makes zucchini slimy, so store it dry.",
+      "Smaller zucchini are more tender and keep their texture better.",
+      "Grate a softening zucchini into batters, soups or sabzi."
+    ],
+    "freshnessStatus": "Moderately Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Firm, glossy skin and heavy for its size."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Slightly bendy or dull. Cook it in the next day or two."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Soft, slimy or mouldy spots. Avoid if in doubt."
+      }
+    ],
+    "freshnessSigns": [
+      "Firm from end to end",
+      "Glossy, unbroken skin",
+      "Fresh-looking stem end"
+    ],
+    "spoilageSigns": [
+      "Soft, sunken or wet spots",
+      "Slimy skin",
+      "Mould at the ends"
+    ],
+    "usageIdeas": [
+      "Zucchini stir-fry",
+      "Grated into fritters",
+      "Roasted vegetables",
+      "Zucchini soup"
+    ]
+  },
+  {
+    "slug": "paneer",
+    "name": "Paneer",
+    "category": "Dairy",
+    "image": "/images/foods/paneer.webp",
+    "shortDescription": "Fresh cheese with a short life; keep it cold, covered and moist.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep paneer in the refrigerator in a sealed container. Fresh paneer can be kept submerged in water that you change every day. Packaged paneer follows its label until opened.",
+    "shelfLifePreview": "Fridge: about 2–3 days once opened",
+    "shelfLife": {
+      "refrigerator": "Fresh or opened: about 2–3 days. Unopened packet: use by the label date",
+      "freezer": "Cubed: about 2–3 months (slightly crumbly once thawed)"
+    },
+    "storageTips": [
+      "Soak refrigerated paneer in warm water for a few minutes to soften it before cooking.",
+      "Use a clean knife and container to avoid contamination.",
+      "Do not leave paneer out at room temperature for more than about 2 hours."
+    ],
+    "freshnessStatus": "Highly Perishable",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "White, soft, mild milky smell."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Edges drying or slightly yellow. Cook it in a curry today."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Slimy surface, sour smell or mould. Throw it out."
+      }
+    ],
+    "freshnessSigns": [
+      "Clean white colour",
+      "Soft, springy texture",
+      "Mild milky smell"
+    ],
+    "spoilageSigns": [
+      "Slimy surface",
+      "Sour or bitter smell",
+      "Yellow, pink or green spots"
+    ],
+    "usageIdeas": [
+      "Paneer bhurji",
+      "Matar paneer",
+      "Paneer tikka",
+      "Paneer paratha"
+    ]
+  },
+  {
+    "slug": "butter",
+    "name": "Butter",
+    "category": "Dairy",
+    "image": "/images/foods/butter.webp",
+    "shortDescription": "Keeps for weeks in the fridge; light and air make it taste stale.",
+    "storageLocation": "Refrigerator",
+    "storageMethod": "Keep butter wrapped or in a covered dish in the refrigerator, away from strong-smelling foods. Keep only a small amount out for spreading and use it within a day or two.",
+    "shelfLifePreview": "Fridge: about 1–3 months",
+    "shelfLife": {
+      "roomTemperature": "A small portion in a covered dish: about 1–2 days",
+      "refrigerator": "About 1–3 months; check the label date",
+      "freezer": "About 6–9 months, well wrapped"
+    },
+    "storageTips": [
+      "Butter absorbs fridge smells; keep it wrapped.",
+      "A darker yellow surface layer is oxidised; scrape it off.",
+      "Salted butter keeps a little longer than unsalted."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Even pale yellow, sweet, creamy smell."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Darker yellow edges or picking up fridge smells."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Sour, cheesy or rancid smell, or mould. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Even colour",
+      "Clean, creamy smell",
+      "Smooth texture"
+    ],
+    "spoilageSigns": [
+      "Rancid or sour smell",
+      "Mould spots",
+      "Bitter or soapy taste"
+    ],
+    "usageIdeas": [
+      "Butter on roti or toast",
+      "Baking",
+      "Tadka",
+      "Garlic butter"
+    ]
+  },
+  {
+    "slug": "ghee",
+    "name": "Ghee",
+    "category": "Dairy",
+    "image": "/images/foods/ghee.webp",
+    "shortDescription": "Clarified butter with almost no water, so it keeps for months.",
+    "storageLocation": "Pantry",
+    "storageMethod": "Keep ghee in a clean, tightly closed glass or steel jar in a cool, dark cupboard. Always use a dry spoon; water or food crumbs shorten its life.",
+    "shelfLifePreview": "Pantry: about 3 months once opened",
+    "shelfLife": {
+      "pantry": "Opened: about 3 months in a cool, dark place. Unopened: check the label",
+      "refrigerator": "Opened: up to about 1 year (it becomes firm)"
+    },
+    "storageTips": [
+      "Never put a wet or used spoon in the jar.",
+      "Keep the jar away from the stove's heat.",
+      "Ghee can be grainy or smooth; both are normal."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Golden, nutty smell, smooth or grainy texture."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Smell getting flat; nearing the label date."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Sour, rancid smell or mould. Throw it out."
+      }
+    ],
+    "freshnessSigns": [
+      "Golden colour",
+      "Rich, nutty smell",
+      "Clean jar with no water"
+    ],
+    "spoilageSigns": [
+      "Sharp, rancid or sour smell",
+      "Mould on the surface",
+      "Very dark colour or bitter taste"
+    ],
+    "usageIdeas": [
+      "Tadka for dal",
+      "Ghee on roti or rice",
+      "Sweets and halwa",
+      "Roasting spices"
+    ]
+  },
+  {
+    "slug": "wheat-flour",
+    "name": "Wheat Flour",
+    "category": "Pantry & Grains",
+    "image": "/images/foods/wheat-flour.webp",
+    "shortDescription": "Whole-wheat atta contains oils that slowly turn stale.",
+    "storageLocation": "Pantry",
+    "storageMethod": "Keep atta in a clean, dry, airtight container in a cool pantry. For long storage, keep it in the refrigerator or freezer to slow staleness and keep insects out.",
+    "shelfLifePreview": "Pantry: about 1–3 months",
+    "shelfLife": {
+      "pantry": "Whole-wheat atta: about 1–3 months. Refined flour (maida): about 6–8 months",
+      "refrigerator": "Whole-wheat atta: about 6 months",
+      "freezer": "About 1 year"
+    },
+    "storageTips": [
+      "Do not mix new flour on top of old; finish the old batch first.",
+      "Keep the container away from the sink and stove steam.",
+      "A bay leaf in the container is a traditional insect deterrent."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Fresh",
+        "description": "Dry, loose, neutral or slightly sweet smell."
+      },
+      {
+        "label": "Use Soon",
+        "description": "Nearing three months open, or a faint stale smell."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Bitter or musty smell, insects, lumps or mould. Avoid."
+      }
+    ],
+    "freshnessSigns": [
+      "Dry, free-flowing powder",
+      "Neutral smell",
+      "No insects or webbing"
+    ],
+    "spoilageSigns": [
+      "Sour, bitter or musty smell",
+      "Insects or webbing",
+      "Damp lumps or mould"
+    ],
+    "usageIdeas": [
+      "Roti and paratha",
+      "Puri",
+      "Halwa",
+      "Baking"
+    ]
+  },
+  {
+    "slug": "lentils",
+    "name": "Lentils",
+    "category": "Pantry & Grains",
+    "image": "/images/foods/lentils.webp",
+    "shortDescription": "Dry dal keeps for a long time; cooked dal needs the fridge.",
+    "storageLocation": "Pantry",
+    "storageMethod": "Store dry lentils in an airtight container in a cool, dry pantry. Refrigerate cooked dal within about 2 hours and reheat it until it is steaming hot.",
+    "shelfLifePreview": "Dry: about 1 year · Cooked: 3–4 days",
+    "shelfLife": {
+      "pantry": "Dry: about 1 year for best quality",
+      "refrigerator": "Cooked dal: about 3–4 days in a sealed container",
+      "freezer": "Cooked dal: about 2–3 months"
+    },
+    "storageTips": [
+      "Older lentils take longer to cook but are still fine.",
+      "Check for small insects before washing.",
+      "Cool cooked dal quickly in a shallow container before refrigerating."
+    ],
+    "freshnessStatus": "Longer Lasting",
+    "freshnessStages": [
+      {
+        "label": "Dry: Stable",
+        "description": "Dry, loose, even colour."
+      },
+      {
+        "label": "Cooked: Fresh",
+        "description": "Just cooked and refrigerated within 2 hours."
+      },
+      {
+        "label": "Cooked: Use Soon",
+        "description": "Third or fourth day in the fridge. Reheat well."
+      },
+      {
+        "label": "Check Quality",
+        "description": "Sour smell, froth or mould in cooked dal. Throw it out."
+      }
+    ],
+    "freshnessSigns": [
+      "Dry lentils: loose and even",
+      "No insects or holes",
+      "Cooked dal: fresh smell"
+    ],
+    "spoilageSigns": [
+      "Insects or webbing in dry lentils",
+      "Sour smell or bubbles in cooked dal",
+      "Mould"
+    ],
+    "usageIdeas": [
+      "Dal tadka",
+      "Sambar",
+      "Dal paratha with leftovers",
+      "Lentil soup"
     ]
   }
 ]

@@ -10,10 +10,11 @@ after(async () => { await server.stop() })
 beforeEach(async () => { await resetUsers(); fakeAi.calls = [] })
 
 describe('foods', () => {
-  test('lists all 12 seeded foods in the original order', async () => {
+  test('lists all 50 seeded foods in the original order', async () => {
     const { status, data } = await client(server.baseUrl).get('/api/foods')
     assert.equal(status, 200)
-    assert.equal(data.count, 12)
+    assert.equal(data.count, 50)
+    assert.equal(new Set(data.foods.map((f) => f.id)).size, 50, 'every food is unique')
     assert.equal(data.foods[0].id, 'banana')
     assert.equal(data.foods[0]._id, undefined, 'database internals are not exposed')
   })
@@ -21,7 +22,7 @@ describe('foods', () => {
   test('search is case-insensitive and combines with category', async () => {
     const api = client(server.baseUrl)
     assert.deepEqual((await api.get('/api/foods?search=BAN')).data.foods.map((f) => f.id), ['banana'])
-    assert.equal((await api.get('/api/foods?category=Dairy')).data.count, 3)
+    assert.equal((await api.get('/api/foods?category=Dairy')).data.count, 6)
     assert.equal((await api.get('/api/foods?search=ban&category=Dairy')).data.count, 0)
   })
 
@@ -149,7 +150,7 @@ describe('freshness scanner', () => {
     assert.equal(res.status, 201)
     assert.equal(res.data.scan.recommendation, 'cook-today')
     assert.equal(res.data.food.id, 'banana', 'the ShelfLife record is attached')
-    assert.equal(fakeAi.calls[0].catalog.length, 12, 'the AI is given our catalog')
+    assert.equal(fakeAi.calls[0].catalog.length, 50, 'the AI is given our catalog')
     const history = await api.get('/api/scans')
     assert.equal(history.data.count, 1)
     assert.ok(history.data.scans[0].thumbnail.startsWith('data:image/jpeg'))
@@ -230,13 +231,13 @@ describe('freshness scanner', () => {
 
 describe('admin', () => {
   const newFood = {
-    slug: 'mango', name: 'Mango', category: 'Fruits', image: '/images/placeholder.svg',
+    slug: 'jackfruit', name: 'Jackfruit', category: 'Fruits', image: '/images/placeholder.svg',
     shortDescription: 'A sweet tropical fruit that ripens at room temperature.', storageLocation: 'Room Temperature',
     storageMethod: 'Ripen at room temperature, then refrigerate for a few extra days.', shelfLifePreview: 'Room temp: 2–4 days',
     shelfLife: { roomTemperature: 'About 2–4 days once ripe', refrigerator: 'About 5 days once ripe' },
-    storageTips: ['Keep unripe mangoes out of the fridge.'], freshnessStatus: 'Highly Perishable',
+    storageTips: ['Keep a whole jackfruit out of the fridge until it ripens.'], freshnessStatus: 'Highly Perishable',
     freshnessStages: [{ label: 'Ripe', description: 'Gives slightly when pressed, fragrant at the stem.' }],
-    freshnessSigns: ['Fragrant'], spoilageSigns: ['Sour smell'], usageIdeas: ['Mango lassi'],
+    freshnessSigns: ['Fragrant'], spoilageSigns: ['Sour smell'], usageIdeas: ['Jackfruit curry'],
   }
 
   async function adminClient() {
@@ -259,7 +260,7 @@ describe('admin', () => {
     await api.post('/api/saved/banana')
     const { status, data } = await api.get('/api/admin/stats')
     assert.equal(status, 200)
-    assert.equal(data.totals.foods, 12)
+    assert.equal(data.totals.foods, 50)
     assert.equal(data.totals.admins, 1)
     assert.deepEqual(data.mostSaved[0], { id: 'banana', name: 'Banana', saves: 1 })
   })
@@ -268,15 +269,15 @@ describe('admin', () => {
     const api = await adminClient()
     assert.equal((await api.post('/api/admin/foods', newFood)).status, 201)
     assert.equal((await api.post('/api/admin/foods', newFood)).status, 409)
-    assert.equal((await client(server.baseUrl).get('/api/foods/mango')).data.food.name, 'Mango')
+    assert.equal((await client(server.baseUrl).get('/api/foods/jackfruit')).data.food.name, 'Jackfruit')
 
-    const edited = await api.put('/api/admin/foods/mango', { ...newFood, name: 'Alphonso Mango', slug: 'changed' })
-    assert.equal(edited.data.food.name, 'Alphonso Mango')
-    assert.equal(edited.data.food.id, 'mango', 'the slug cannot be changed')
+    const edited = await api.put('/api/admin/foods/jackfruit', { ...newFood, name: 'Kerala Jackfruit', slug: 'changed' })
+    assert.equal(edited.data.food.name, 'Kerala Jackfruit')
+    assert.equal(edited.data.food.id, 'jackfruit', 'the slug cannot be changed')
 
-    await api.post('/api/saved/mango')
-    assert.equal((await api.delete('/api/admin/foods/mango')).status, 200)
-    assert.equal((await client(server.baseUrl).get('/api/foods/mango')).status, 404)
+    await api.post('/api/saved/jackfruit')
+    assert.equal((await api.delete('/api/admin/foods/jackfruit')).status, 200)
+    assert.equal((await client(server.baseUrl).get('/api/foods/jackfruit')).status, 404)
     assert.deepEqual((await api.get('/api/auth/me')).status, 200)
     assert.equal((await api.get('/api/saved')).data.count, 0)
   })

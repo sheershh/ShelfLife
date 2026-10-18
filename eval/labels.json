@@ -1,0 +1,30 @@
+[
+  { "file": "client/images/apple.jpg", "food": "apple", "ripeness": "ripe", "mould": false, "recommendation": "eat", "credit": "ShelfLife v1 photo" },
+  { "file": "client/images/banana-unripe.jpg", "food": "banana", "ripeness": "unripe", "mould": false, "recommendation": "eat", "credit": "rawpixel, CC0 (see /about#credits)" },
+  { "file": "client/images/banana-ripe.jpg", "food": "banana", "ripeness": "ripe", "mould": false, "recommendation": "eat", "credit": "rawpixel, CC0 (see /about#credits)" },
+  { "file": "client/images/banana-overripe.jpg", "food": "banana", "ripeness": ["overripe", "ripe"], "mould": false, "recommendation": ["eat", "use-soon"], "credit": "Plant pests and diseases, CC0 (see /about#credits)" },
+  { "file": "client/images/banana.jpg", "food": "banana", "ripeness": ["ripe", "overripe"], "mould": false, "recommendation": ["eat", "use-soon"], "credit": "ShelfLife v1 photo" },
+  { "file": "client/images/bread.jpg", "food": "bread", "ripeness": "ripe", "mould": false, "recommendation": "eat", "credit": "ShelfLife v1 photo" },
+  { "file": "client/images/cheese.jpg", "food": "cheese", "ripeness": "ripe", "mould": false, "recommendation": "eat", "credit": "ShelfLife v1 photo" },
+  { "file": "client/images/milk.jpg", "food": "milk", "ripeness": ["ripe", "unknown"], "mould": false, "recommendation": ["eat", "unsure"], "credit": "ShelfLife v1 photo" },
+  { "file": "client/images/pasta.jpg", "food": "pasta", "ripeness": ["ripe", "unknown"], "mould": false, "recommendation": "eat", "credit": "ShelfLife v1 photo" },
+  { "file": "client/images/potato.jpg", "food": "potato", "ripeness": "ripe", "mould": false, "recommendation": "eat", "credit": "ShelfLife v1 photo" },
+  { "file": "client/images/rice.jpg", "food": "rice", "ripeness": ["ripe", "unknown"], "mould": false, "recommendation": ["eat", "use-soon"], "credit": "ShelfLife v1 photo (cooked rice)" },
+  { "file": "client/images/spinach.jpg", "food": ["spinach", "none"], "ripeness": "ripe", "mould": false, "recommendation": "eat", "credit": "ShelfLife v1 photo (leafy greens, may be amaranth)" },
+  { "file": "client/images/strawberry.jpg", "food": "strawberry", "ripeness": "ripe", "mould": false, "recommendation": "eat", "credit": "ShelfLife v1 photo" },
+  { "file": "client/images/tomato.jpg", "food": "tomato", "ripeness": "ripe", "mould": false, "recommendation": "eat", "credit": "ShelfLife v1 photo" },
+  { "file": "client/images/yogurt.jpg", "food": "yogurt", "ripeness": ["ripe", "unknown"], "mould": false, "recommendation": ["eat", "unsure"], "credit": "ShelfLife v1 photo" },
+
+  { "file": "eval/photos/banana-overripe-2.jpg", "food": "banana", "ripeness": "overripe", "mould": false, "recommendation": ["use-soon", "cook-today"], "credit": "Overripe lacatan bananas by Obsidi♠nSoul, public domain, Wikimedia Commons" },
+  { "file": "eval/photos/banana-overripe-3.jpg", "food": "banana", "ripeness": "overripe", "mould": false, "recommendation": ["use-soon", "cook-today"], "credit": "Overripe kitchen bananas by Meltdown reverter, CC BY-SA 4.0, Wikimedia Commons" },
+  { "file": "eval/photos/banana-very-overripe.jpg", "food": "banana", "ripeness": ["overripe", "spoiled"], "mould": false, "recommendation": ["cook-today", "discard"], "credit": "Extremely overripe banana by Park taeho, CC BY-SA 4.0, Wikimedia Commons" },
+
+  { "file": "client/images/banana-spoiled.jpg", "food": "banana", "ripeness": "spoiled", "mould": null, "recommendation": "discard", "credit": "Zawezome, CC BY 2.0 (see /about#credits)" },
+  { "file": "eval/photos/apple-rotten-1.jpg", "food": "apple", "ripeness": "spoiled", "mould": false, "recommendation": "discard", "credit": "Rotten Apple 02 by Shams948, CC0, Wikimedia Commons" },
+  { "file": "eval/photos/apple-rotten-2.jpg", "food": "apple", "ripeness": "spoiled", "mould": false, "recommendation": "discard", "credit": "Rotten Apple 03 by Shams948, CC0, Wikimedia Commons" },
+  { "file": "eval/photos/bread-mouldy.jpg", "food": "bread", "ripeness": "spoiled", "mould": true, "recommendation": "discard", "credit": "Mouldy bread by Matt Wharton, CC BY-SA 2.0, Wikimedia Commons" },
+  { "file": "eval/photos/strawberry-mouldy-1.jpg", "food": "strawberry", "ripeness": "spoiled", "mould": true, "recommendation": "discard", "credit": "Moldy Strawberries by Kevin Payravi, CC BY-SA 4.0, Wikimedia Commons" },
+  { "file": "eval/photos/strawberry-mouldy-2.jpg", "food": "strawberry", "ripeness": "spoiled", "mould": true, "recommendation": "discard", "credit": "Strawberry mold by Shuntaro Kawasaki, CC BY-SA 4.0, Wikimedia Commons" },
+  { "file": "eval/photos/orange-rotten.jpg", "food": "orange", "ripeness": "spoiled", "mould": true, "recommendation": "discard", "credit": "Rotten, moldy and decaying oranges by Downtowngal, public domain, Wikimedia Commons" },
+  { "file": "eval/photos/onion-rotten.jpg", "food": "onion", "ripeness": "spoiled", "mould": null, "recommendation": "discard", "credit": "Rotten onion by Tiia Monto, CC BY-SA 4.0, Wikimedia Commons" }
+]

@@ -20,7 +20,9 @@ image understanding. **The model perceives; our database advises.**
 2. The page loads one stylesheet (`client/css/style.css`, which `@import`s the layers) and one script, e.g. `client/js/pages/foods.js`.
 3. Every page script starts with `await initLayout()` (`client/js/layout.js`). This:
    - calls `initSession()` (`client/js/session.js`), which asks `GET /api/auth/me` who is logged in and, if someone is, `GET /api/saved`;
-   - draws the header (different links for visitors, users and admins) and the footer.
+   - draws the header (different links for visitors, users and admins) and the footer;
+   - starts the scroll-reveal effect: elements with the class `reveal` fade up once when they enter the screen
+     (an `IntersectionObserver`; without JavaScript or with reduced motion everything is simply visible).
 4. The page then fetches its data through `api.get/post/...` (`client/js/api.js`), a small `fetch` wrapper that sends the cookie and turns error responses into an `ApiError` with `status`, `message` and per-field `errors`.
 5. HTML is built as strings by helpers in `client/js/ui.js`. **Every value from the API goes through `escapeHtml()`**, which is our XSS protection on the client.
 
@@ -42,7 +44,7 @@ Loads `.env`, refuses to start if `JWT_SECRET` is shorter than 32 characters, ca
 
 ### `server/db.js`: database connection
 - `mongoose.set('sanitizeFilter', true)`: any `$`-operator smuggled into a query filter from user input is neutralised (NoSQL injection).
-- `connectDb()`: connects with a 10-second timeout, builds indexes (`syncIndexes`), and on an **empty** database loads the 12 foods from `server/data/foods.json`.
+- `connectDb()`: connects with a 10-second timeout, builds indexes (`syncIndexes`), and on an **empty** database loads the 50 foods from `server/data/foods.json`. An existing database (our Atlas) is updated with `npm run seed`, which upserts by slug.
 - Development fallback: if `MONGODB_URI` is empty (and not production) it starts an in-memory MongoDB from the `mongodb-memory-server` dev dependency. The tests use the same trick.
 
 ### `server/app.js`: the Express app
@@ -89,8 +91,15 @@ Notable details:
 ### In the browser: `client/js/pages/scan.js`, `client/js/image.js`, `client/js/scan-ui.js`
 1. The user takes a photo (`<input capture="environment">` opens the rear camera on phones), chooses a file, drags one in or pastes one.
 2. `preparePhoto()` decodes it with `createImageBitmap` (which also fixes phone rotation), draws it on a `<canvas>` at most 1024px wide and exports a JPEG (~150 KB instead of several MB), plus a 160px thumbnail.
-3. The chat shows the photo with a scanning line, then `POST /api/scans { image, thumbnail }`.
-4. `verdictHtml()` draws the result card: item, recommendation tag, ripeness scale with marker, score meter, time left, mould, observations, and **"From the ShelfLife guide"**, which is our database record.
+3. The page is an **instrument with a visible state**. `setStage(state, text)` in `scan.js` writes one attribute,
+   `data-state` on `#stage`, and the CSS (`client/css/scan.css`) shows the right thing for each state:
+   `idle` (empty viewfinder with Take / Choose photo) → `preparing` (photo blurred while it is shrunk) →
+   `analysing` (the scan line moves **only while the real request is running**) → `done` (corners turn green, status line
+   names the result) or `error` (photo greyed out, the server's message, **Try again** resends the same prepared photo).
+   No progress percentage is shown, because we don't know one. Then `POST /api/scans { image, thumbnail }`.
+4. `verdictHtml()` (`client/js/scan-ui.js`) draws the result card in a fixed order: the item and the call, the freshness
+   score and ripeness scale, **What the scanner saw** (summary, signs, mould), **What to do** (recommendation, time left),
+   and **"From the ShelfLife guide"**, which is our database record. Nothing is filled in when the model left a value out.
 5. Follow-up questions go to `POST /api/assistant` with the last 8 turns and the `scanId`.
 
 ### On the server: `server/controllers/scanController.js` + `server/services/gemini.js`
@@ -122,11 +131,59 @@ relevant records, put them in the prompt, ask the model to base its answer on th
 | Both models busy / slow | 503 "very busy right now" or 504 "took too long" |
 | Safety-filtered / empty answer | 422 "Try a clearer photo" |
 | Our rate limit | 429 "You are going a bit fast" |
-All of these show in the chat with a **Try again** button.
+Photo errors switch the instrument to its `error` state with a **Try again** button; question errors show in the chat with their own **Try again** button.
 
 ---
 
-## 5. The admin console (`client/admin.html`, `client/js/pages/admin.js`, `server/controllers/adminController.js`)
+## 5. Saved foods: the fridge (`client/saved.html`, `client/js/pages/saved.js`, `client/css/fridge.css`)
+
+- **Data.** `loadFridge()` fetches `GET /api/saved` (the user's saved foods) and `GET /api/scans` (their last 30 scans) with
+  `Promise.allSettled`, so the fridge still opens if scans fail. For each food the newest scan with that `matchedFood` is
+  remembered and shown in its detail panel. Saved foods are **bookmarks**, not real inventory, and the page says so.
+- **Drawing.** `renderFridge()` puts each food on the shelf for its category: dairy on top, fruits in the middle,
+  pantry and grains below, vegetables in the crisper drawer. The look is layered CSS: dark brushed-steel cabinet, a bright
+  back wall that fades into shadow, side walls drawn as trapezoids (`clip-path`) so the inside looks deep, white LED strips
+  (a white line with a large `box-shadow` glow), glass shelves with a bright front edge and a cast shadow, a faint reflection
+  under each food (`-webkit-box-reflect`) and a frosted drawer front (`backdrop-filter: blur`). Each food is a real `<button>` with its cut-out photo,
+  so keyboard users can Tab to it and press Enter; screen readers hear "Milk, highly perishable. Open details".
+- **The 3D.** Pure CSS. The cabinet has `perspective`; each door is a `div` with `transform-style: preserve-3d` and two faces
+  (`.door-front` brushed steel with a handle, `.door-back` the white liner, turned with `rotateY(180deg)` and hidden with
+  `backface-visibility`). When the data has loaded, JavaScript sets `data-state="open"` and the CSS transition turns the doors
+  `rotateY(±100deg)` around their hinges. At the same moment a dark overlay inside fades out, which looks like the interior
+  light switching on, and the foods appear one after another (`animation-delay` from a `--i` variable set in JavaScript,
+  because the CSP blocks inline styles). With reduced motion the doors are simply open.
+- **Hover / focus** lifts the food (`translateY` + `scale`, transform only) and shows its name and status (the ripeness of the
+  last scan if there is one, otherwise how perishable it is). On touch screens the label is hidden and a tap opens the panel.
+- **Detail panel.** A native `<dialog>` (`showModal()` traps focus, Escape closes it, focus returns to the food).
+  It shows the guide data, the user's latest scan of that food (or says there is none) and actions: full guide, scan one
+  now, and **Remove from saved** (two clicks, then a toast with **Undo**, which saves it again through the same API).
+- **States.** Loading (doors closed, "Opening your fridge…"), error (doors closed, message, Try again), logged out (login
+  prompt), empty (a note on the back wall), many foods (the interior scrolls).
+
+---
+
+## 6. The design system (`client/css/tokens.css` and the files it feeds)
+
+- Everything visual is a **token** (CSS custom property): colours, two fonts, a type scale, a 4px spacing scale, radii,
+  shadows for floating things only, motion timings. Pages never use raw colour values, except the fridge materials.
+- Brand idea: **"a second look"**. Colour blocks of deep ink, ivory, tomato red, citrus yellow, orange and botanical green,
+  one per section, so the page has rhythm. Archivo (expanded, heavy) for headings, Instrument Sans for everything else.
+  The motif is the scanner **lens** (a circle with reticle marks), used only where something is being looked at.
+  Buttons are pills (`border-radius: 999px`), panels are crisp.
+- The **ripeness scale** colours mean freshness and nothing else. They are never used as decoration or chart colours.
+- Food photos are real, licensed photographs (Wikimedia Commons / Openverse). During development each one was processed
+  the same way with an open-source background-removal model: cut out, edges cleaned, centred at the same scale on an
+  800×800 transparent square with the same soft shadow (`client/images/foods/`). On the site every photo sits on one shared
+  warm studio background, the `.food-frame` class in `components.css`, so all 50 foods look like one photo series.
+  A tightly cropped copy (`client/images/fridge/`) lets each food stand on a fridge shelf; if one is missing (a food added
+  later by an admin), `data-fallback` in `saved.js` and the image error listener in `ui.js` switch to the normal photo.
+  Every photo is credited in `docs/PHOTO_CREDITS.md`. Produce photos appear only as scanner input or as food-guide reference, as the
+  mid-sem feedback asked.
+- CSS is split into layers imported by `style.css`: tokens → base → components → pages → scan → fridge → admin.
+
+---
+
+## 7. The admin console (`client/admin.html`, `client/js/pages/admin.js`, `server/controllers/adminController.js`)
 
 - The page hides itself for non-admins, but **the real protection is on the server**: every `/api/admin/*` route runs `requireAuth` + `requireAdmin`. Hiding a button is never security.
 - **Overview.** `GET /api/admin/stats` runs counts and aggregations in parallel with `Promise.all`. The charts are plain HTML bars in one colour, each labelled with text (a recommendation tag or food name) and a value, with a tooltip and a hidden data table for screen readers.
@@ -138,7 +195,7 @@ Making the first admin: sign up on the site, then `npm run make-admin -- you@exa
 
 ---
 
-## 6. Design decisions worth defending
+## 8. Design decisions worth defending
 
 | Decision | Reason |
 | --- | --- |
@@ -154,10 +211,12 @@ Making the first admin: sign up on the site, then `npm run make-admin -- you@exa
 | Cookie (httpOnly) instead of localStorage for the token | JavaScript, including injected scripts, can't read it |
 | Role loaded from DB each request | Role changes and deletions apply instantly |
 | Dependency-injected AI service | Tests run offline, are repeatable and cost nothing |
+| Fridge in CSS 3D instead of a 3D library (three.js) | No dependency, nothing to download, works with keyboard and screen readers because every food is a normal button; real photos give the realism |
+| Real licensed photos instead of AI-generated images | Honest reference images for a food guide, free, and every one is credited |
 
 ---
 
-## 7. Likely viva questions
+## 9. Likely viva questions
 
 **Q: Is the AI deciding whether food is safe?**
 No. It judges visible quality only. A photo cannot show smell, temperature history or bacteria. The UI says this
@@ -203,24 +262,52 @@ are atomic.
 250 ms after typing (debounce) and ignores out-of-date responses (`latestRequest` counter in `foods.js`).
 
 **Q: How did you test it?**
-39 API tests with Node's built-in runner against a real (in-memory) MongoDB and a fake AI, and 10 Playwright browser
-journeys run on desktop and mobile sizes. See section 11 of `PROJECT_STATUS.md`.
+39 API tests with Node's built-in runner against a real (in-memory) MongoDB and a fake AI, and 11 Playwright browser
+journeys run on desktop and mobile sizes (22 runs), including the fridge with keyboard, remove and undo. See section 11 of `PROJECT_STATUS.md`.
+
+**Q: How does the fridge animation work without a 3D library?**
+CSS 3D transforms. The cabinet sets `perspective`, each door rotates around its hinge with `rotateY`, and
+`backface-visibility` shows the inside of the door once it has turned past 90°. JavaScript only sets `data-state="open"`
+after the saved foods have loaded; the CSS transition does the rest. Only `transform` and `opacity` are animated, so it stays smooth.
+
+**Q: Does the fridge know what is in my real fridge?**
+No. It shows the foods you saved from the guide (bookmarks). The page says this. Tracking real inventory with purchase dates is future work.
+
+**Q: Where do the 50 food photos come from? Are they AI-generated?**
+They are real photographs from Wikimedia Commons and Openverse under free licences (CC0, public domain, CC BY, CC BY-SA),
+cut out from their backgrounds during development. Every photo is credited in `docs/PHOTO_CREDITS.md`, with its author and licence.
 
 **Q: How much does it cost to run?**
 Nothing: MongoDB Atlas M0 and Gemini's free tier. Rate limits protect the free quota.
 
+**Q: How accurate is the scanner?**
+We measured it. `npm run eval` (`scripts/evaluate-scanner.js`) sends labelled photos (`eval/labels.json`) through the
+real scanner code, the same prompt and the same `normaliseVerdict()` safety rule, and compares each answer with the
+label a person chose. On the first 20 of 26 photos it named the right food 20 times, the right ripeness 20 times and the
+right recommendation 19 times. It caught both "must discard" photos scored so far and never told anyone to throw out
+usable food. The one miss was green bananas: it said "use soon", because our recommendation list has no "wait until ripe"
+option. The free daily quota (about 20 requests per model) stopped the run, so 6 rotten or mouldy photos are still to be
+scored with `npm run eval -- --resume`. Twenty photos is a rough indicator, not a benchmark.
+
+**Q: Why not just trust the tests for accuracy?**
+The tests use a fake AI on purpose, so they are free, offline and repeatable. That proves our code handles every kind of
+answer, but says nothing about whether the real model sees correctly. The evaluation is the separate check for that.
+
 **Q: What would you do next?**
-A pantry tracker with purchase dates and reminders, more (Indian) foods, an installable PWA, measuring scanner accuracy on a
-labelled dataset, and deployment.
+A pantry tracker with purchase dates and reminders (the fridge could then show real inventory), more foods, an installable PWA,
+finishing the scanner evaluation on a larger labelled set, a "wait until ripe" recommendation, and deployment.
 
 ---
 
-## 8. Demo script (5 minutes)
+## 10. Demo script (5 minutes)
 
-1. Home page: the scanner demo plays. Point out that the photo is shown *as an input being analysed*.
-2. Food guide: search "mil", filter Dairy, open Milk; show the shelf-life table and stages.
+1. Home page: "One scan closer to a smarter kitchen." The tomatoes sit inside the scanner lens and an example reading appears:
+   the photo is shown *as an input being analysed*, never as decoration. Scroll to the ripeness scale, pick Tomato and drag
+   the slider: the stages come from our database. The four colour blocks below are the guide's categories with real counts.
+2. Food guide: 50 foods. Search "mil", filter Dairy, open Milk; show the shelf-life table and stages.
 3. Log in, open the scanner, take a photo of a real fruit (bring a spotty banana!). Show the verdict, the ripeness scale and "From the ShelfLife guide".
 4. Tap "Can I still cook with it?" to show the grounded answer.
-5. Your shelf → Scan history.
-6. Log in as admin: overview charts, add a food (e.g. Mango), show it in the public guide, delete it.
+5. Save two or three foods, open **Saved**: the fridge doors open. Hover a food, click it to show the detail panel with your
+   latest scan, remove it and press Undo. Then the Scan history tab.
+6. Log in as admin: overview charts, add a food (e.g. Jackfruit, which is not in the guide yet), show it in the public guide, delete it.
 7. If asked about security: open DevTools → Application → Cookies and show the `HttpOnly` flag; try `/api/admin/stats` as a normal user and show the 403.

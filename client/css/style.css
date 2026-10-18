@@ -4,11 +4,12 @@
    2. base        - element defaults (body, headings, links, forms)
    3. components  - reusable pieces (buttons, fields, ripeness scale, tables, toasts, nav, footer)
    4. pages       - layout for individual pages
-   5. scan, admin - the two app-like screens */
+   5. scan, fridge, admin - the app-like screens (scanner, saved foods, admin console) */
 
 @import url('tokens.css');
 @import url('base.css');
 @import url('components.css');
 @import url('pages.css');
 @import url('scan.css');
+@import url('fridge.css');
 @import url('admin.css');

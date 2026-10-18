@@ -12,16 +12,26 @@ const resultCountVisible = document.getElementById('result-count-visible')
 const results = document.getElementById('food-results')
 
 let categories = [ALL]
+let countByCategory = {} // e.g. { Fruits: 18 }, from one request for all foods
 let searchText = ''
 let selectedCategory = ALL
 let totalFoods = 0
 let latestRequest = 0
 
+// Category filters: each has a colour swatch and the number of foods in it.
+const categoryTone = { 'All foods': 'tomato', Fruits: 'orange', Vegetables: 'green', Dairy: 'citrus', 'Pantry & Grains': 'ink' }
+
 function renderCategoryButtons() {
   categoryFilter.innerHTML = categories
-    .map((category) => `
-      <button type="button" class="chip" aria-pressed="${category === selectedCategory}"
-        data-category="${escapeHtml(category)}">${escapeHtml(category)}</button>`)
+    .map((category) => {
+      const count = category === ALL ? totalFoods : countByCategory[category]
+      return `
+      <button type="button" class="cat cat-${categoryTone[category] || 'ink'}" aria-pressed="${category === selectedCategory}"
+        data-category="${escapeHtml(category)}">
+        <span class="cat-swatch" aria-hidden="true"></span>${escapeHtml(category)}
+        ${count ? `<span class="cat-count num">${count}</span>` : ''}
+      </button>`
+    })
     .join('')
 }
 
@@ -69,11 +79,13 @@ handleSaveButtons(results)
 // A ?category= link (e.g. from a food page) preselects that category.
 const fromUrl = new URLSearchParams(window.location.search).get('category')
 try {
-  const meta = await api.get('/api/meta')
+  const [meta, all] = await Promise.all([api.get('/api/meta'), api.get('/api/foods')])
   categories = [ALL, ...meta.categories]
   if (meta.categories.includes(fromUrl)) selectedCategory = fromUrl
+  totalFoods = all.foods.length
+  for (const food of all.foods) countByCategory[food.category] = (countByCategory[food.category] || 0) + 1
 } catch {
-  // Without the list we still show every food; the chips simply only offer "All foods".
+  // Without the list we still show every food; the filters simply only offer "All foods".
 }
 renderCategoryButtons()
 

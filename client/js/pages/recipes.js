@@ -10,7 +10,7 @@ function recipeHtml(idea, food) {
   return `
     <article class="recipe">
       <div class="recipe-when">
-        <img src="${escapeHtml(food.image)}" alt="" loading="lazy" width="96" height="96">
+        <span class="food-frame recipe-photo"><img src="${escapeHtml(food.image)}" alt="" loading="lazy" width="96" height="96"></span>
         <p>${escapeHtml(idea.useWhen)}</p>
       </div>
       <div class="recipe-body">

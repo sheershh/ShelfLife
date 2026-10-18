@@ -2,62 +2,70 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
 
 body {
   margin: 0;
-  background: var(--frost);
-  color: var(--ink);
+  background: var(--ivory);
+  color: var(--text);
   font-family: var(--font-body);
   font-size: var(--text-md);
-  line-height: 1.6;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgb(31 90 58 / 0.15);
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4 {
+/* Display headings: Archivo, expanded and heavy, set tight */
+h1, h2, h3 {
   margin: 0 0 var(--space-3);
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  font-stretch: var(--display-stretch);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
   text-wrap: balance;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 h1 { font-size: var(--text-2xl); }
 h2 { font-size: var(--text-xl); }
-h3 { font-size: var(--text-lg); letter-spacing: -0.01em; }
+h3 { font-size: var(--text-lg); font-weight: 700; letter-spacing: -0.015em; line-height: 1.1; }
+h4 { margin: 0 0 var(--space-2); font-size: var(--text-sm); font-weight: 600; }
 
 p { margin: 0 0 var(--space-3); text-wrap: pretty; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 img { display: block; max-width: 100%; }
-a { color: var(--leaf); text-underline-offset: 0.18em; }
-a:hover { color: var(--leaf-dark); }
+a { color: var(--botanical); text-underline-offset: 0.18em; text-decoration-thickness: 0.07em; }
+a:hover { color: var(--ink); }
 strong { font-weight: 600; }
 
 /* Numbers line up in tables, meters and readouts */
 .num { font-variant-numeric: tabular-nums; }
 
 input, select, textarea, button { font: inherit; color: inherit; }
+button { touch-action: manipulation; }
 
 input, select, textarea {
   width: 100%;
-  min-height: 46px;
-  padding: 0.65rem 0.85rem;
-  border: 1px solid var(--line-strong);
+  min-height: 48px;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--rule-strong);
   border-radius: var(--radius-sm);
-  background: var(--surface);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  background: var(--paper);
+  font-size: max(16px, 1rem); /* 16px or more stops iOS zooming into fields */
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
 }
+select { background-color: var(--paper); color: var(--text); }
 textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
-input::placeholder, textarea::placeholder { color: var(--ink-faint); }
-input:hover, select:hover, textarea:hover { border-color: var(--ink-faint); }
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--leaf); box-shadow: 0 0 0 3px var(--leaf-tint); }
+input::placeholder, textarea::placeholder { color: var(--text-faint); }
+input:hover, select:hover, textarea:hover { border-color: var(--text-faint); }
+/* Fields show focus with a green ring instead of the default outline */
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--botanical); box-shadow: 0 0 0 3px rgb(31 90 58 / 0.22); }
 input[aria-invalid='true'] { border-color: var(--danger); }
 
-:focus-visible { outline: 2px solid var(--leaf); outline-offset: 3px; border-radius: 4px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
 
-::selection { background: var(--r-peak); color: var(--ink); }
+::selection { background: var(--citrus); color: var(--ink); }
 
 .visually-hidden {
   position: absolute !important;
@@ -74,15 +82,20 @@ input[aria-invalid='true'] { border-color: var(--danger); }
   z-index: 100;
   padding: var(--space-2) var(--space-4);
   background: var(--ink);
-  color: var(--frost);
+  color: var(--ivory);
   border-radius: var(--radius-sm);
 }
-.skip-link:focus { top: var(--space-3); color: var(--frost); }
+.skip-link:focus { top: var(--space-3); color: var(--ivory); }
 
 /* Page frame */
-.app { min-height: 100vh; display: flex; flex-direction: column; }
+.app { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; }
 .main { flex: 1; }
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
+
+/* Reveal on scroll: sections fade up once as they enter (layout.js adds .is-visible).
+   Without JavaScript, or with reduced motion, everything is simply visible. */
+.js-reveal .reveal { opacity: 0; translate: 0 24px; transition: opacity 700ms var(--ease-out), translate 700ms var(--ease-out); transition-delay: var(--delay, 0ms); }
+.js-reveal .reveal.is-visible { opacity: 1; translate: 0 0; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -91,4 +104,5 @@ input[aria-invalid='true'] { border-color: var(--danger); }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .js-reveal .reveal { opacity: 1; translate: 0 0; }
 }

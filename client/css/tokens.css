@@ -1,24 +1,39 @@
-/* Design tokens: every colour, font and size used on the site is defined once here.
-   Visual idea: a cold-storage / produce-grading feel. Cool frost background, deep chlorophyll ink,
-   one leaf-green action colour. The ripeness scale colours are used ONLY for freshness data. */
+/* Design tokens: every colour, font, size and motion value used on the site is defined once here.
+
+   Brand idea: "a second look". ShelfLife is the moment you look at food again before deciding.
+   - Colour: bold blocks of deep ink, warm ivory, tomato red, citrus yellow, orange and botanical green.
+     Each section uses one block, so the page has rhythm instead of one repeated treatment.
+   - Type: Archivo (expanded, heavy) for display headings; Instrument Sans for reading and data.
+   - Motif: the scanner lens (a circle with reticle marks), used only where something is being looked at.
+   The ripeness scale colours are reserved for freshness data and are never used as decoration. */
 
 :root {
-  /* Surfaces and text */
-  --frost: #f1f4f0;          /* page background */
-  --frost-deep: #e4eae3;     /* bands, hover fills */
-  --surface: #ffffff;        /* panels */
-  --ink: #0f2a1f;            /* main text, dark bands */
-  --ink-soft: #4a5d53;       /* secondary text */
-  --ink-faint: #7b8b82;      /* hints, placeholders */
-  --line: #d4ddd5;           /* hairlines and borders */
-  --line-strong: #b9c7bc;
+  /* Brand colours */
+  --ink: #111310;            /* deep ink: text, dark sections */
+  --ink-2: #1b1e19;          /* a step lighter, for panels on ink */
+  --ivory: #f5f0e6;          /* warm ivory: the page */
+  --ivory-2: #ebe3d4;        /* a step darker: bands, image frames */
+  --paper: #fcfaf5;          /* lightest surface: inputs, slips, panels */
+  --tomato: #df4328;         /* vivid tomato red: the main accent */
+  --tomato-deep: #b8321b;
+  --citrus: #f4c13d;         /* citrus yellow: primary buttons, highlights */
+  --orange: #ec7b2c;         /* rich orange */
+  --botanical: #1f5a3a;      /* botanical green */
+  --botanical-deep: #133d27;
 
-  /* Action colour */
-  --leaf: #1e6b47;
-  --leaf-dark: #154f34;
-  --leaf-tint: #dcebe1;
+  /* Text */
+  --text: var(--ink);
+  --text-soft: #4b4d45;      /* secondary text on ivory (about 8:1) */
+  --text-faint: #6b6c62;     /* hints, labels (about 5:1 on ivory) */
+  --on-dark: #f5f0e6;        /* text on ink / green / tomato */
+  --on-dark-soft: #b9bdb2;   /* secondary text on ink */
 
-  /* Ripeness scale: unripe -> ripe -> peak -> overripe -> spoiled, plus mould */
+  /* Lines */
+  --rule: #ddd4c3;
+  --rule-strong: #b9ae99;
+  --rule-dark: rgb(245 240 230 / 0.16);
+
+  /* Ripeness scale: unripe -> ripe -> overripe -> spoiled, plus mould. Freshness data only. */
   --r-unripe: #4c8b3b;
   --r-ripe: #97b33c;
   --r-peak: #e3b93c;
@@ -32,20 +47,25 @@
   --r-over-text: #9a4f0a;
   --r-spoiled-text: #7a4524;
 
-  --danger: #b23a2a;
-  --danger-tint: #f7e3df;
+  --danger: #c2321c;
+  --danger-tint: #f8dcd4;
+  --focus: #1f5a3a;
+
+  /* The warm studio background every food photo sits on (the same frame everywhere) */
+  --studio: radial-gradient(120% 95% at 50% 28%, #fffdf8 0%, #f3ece0 58%, #e6dccb 100%);
 
   /* Type */
-  --font-display: 'Bricolage Grotesque', 'Avenir Next', system-ui, sans-serif;
+  --font-display: 'Archivo', 'Arial Narrow', system-ui, sans-serif;
   --font-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --display-stretch: 115%;   /* Archivo's width axis: expanded headings */
 
-  --text-xs: 0.8125rem;
-  --text-sm: 0.9375rem;
-  --text-md: 1.0625rem;
-  --text-lg: 1.25rem;
-  --text-xl: clamp(1.5rem, 1.1rem + 1.4vw, 2rem);
-  --text-2xl: clamp(2rem, 1.3rem + 2.6vw, 3rem);
-  --text-hero: clamp(2.75rem, 1.4rem + 5.4vw, 5.25rem);
+  --text-xs: 0.8125rem;   /* 13px labels */
+  --text-sm: 0.9375rem;   /* 15px */
+  --text-md: 1.0625rem;   /* 17px body */
+  --text-lg: 1.3125rem;   /* 21px lead */
+  --text-xl: clamp(1.6rem, 1.15rem + 1.6vw, 2.5rem);
+  --text-2xl: clamp(2.3rem, 1.3rem + 3.6vw, 4.6rem);
+  --text-hero: clamp(2.9rem, 1rem + 6.4vw, 7.4rem);
 
   /* Spacing (4px grid) */
   --space-1: 0.25rem;
@@ -58,15 +78,24 @@
   --space-8: 4.5rem;
   --space-9: 7rem;
 
-  /* Shape: bigger radius for bigger surfaces */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
+  /* Shape: panels are crisp, actions are round (pills), the lens is a circle */
+  --radius-sm: 4px;
+  --radius-md: 10px;
   --radius-pill: 999px;
 
-  --shadow-raised: 0 1px 2px rgb(15 42 31 / 0.06), 0 12px 32px -12px rgb(15 42 31 / 0.18);
+  /* Shadows only for things that float (slips over photos, dialogs, toasts) */
+  --shadow-float: 0 2px 4px rgb(17 19 16 / 0.08), 0 24px 48px -20px rgb(17 19 16 / 0.45);
+  --shadow-dialog: 0 40px 100px -30px rgb(0 0 0 / 0.6);
 
+  /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --container: 1200px;
-  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-med: 320ms;
+  --dur-slow: 900ms;
+
+  /* Layout */
+  --container: 1320px;
+  --gutter: clamp(1rem, 3vw, 2.5rem);
+  --header-h: 64px;
 }

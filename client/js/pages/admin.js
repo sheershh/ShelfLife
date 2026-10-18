@@ -164,7 +164,7 @@ function foodsTableHtml(list) {
   if (list.length === 0) return emptyStateHtml('No foods match', 'Try a different name.')
   const rows = list.map((food) => `
     <tr>
-      <td><div class="cell-food"><img src="${escapeHtml(food.image)}" alt="" width="40" height="40" loading="lazy">
+      <td><div class="cell-food"><span class="food-frame cell-thumb"><img src="${escapeHtml(food.image)}" alt="" width="40" height="40" loading="lazy"></span>
         <div><a href="/food?id=${encodeURIComponent(food.id)}" target="_blank" rel="noopener"><strong>${escapeHtml(food.name)}</strong></a><span>${escapeHtml(food.id)}</span></div></div></td>
       <td>${escapeHtml(food.category)}</td>
       <td>${escapeHtml(food.storageLocation)}</td>

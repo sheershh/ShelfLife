@@ -30,7 +30,8 @@ food up before it spoils.
 | Landing page photos were misleading | **Product-led landing page**: the hero is a live demo of the scanner reading a photo; produce photos appear only as scanner input or as reference in the guide, never as decoration |
 | Add an AI chatbot | **Freshness scanner chat**: upload/take a photo → structured verdict (ripeness, mould, score, days left, recommendation) → follow-up questions |
 | Real database | **MongoDB Atlas** with Mongoose schemas replaces the JSON files |
-| Overall quality | New visual identity, accessibility, rate limiting, NoSQL-injection protection, 39 API tests + 20 browser tests |
+| Overall quality | New visual identity, accessibility, rate limiting, NoSQL-injection protection, 39 API tests + 22 browser tests |
+| Frontend level-up (v3/v4) | "Second look" brand identity (colour-blocked ink, ivory, tomato, citrus, orange and botanical green; Archivo + Instrument Sans; the scanner lens as the motif), scanner rebuilt as an instrument with visible states, a cinematic **interactive fridge** for saved foods, food guide grown from 12 to **50 foods** with one consistent studio photo style |
 
 ---
 
@@ -55,14 +56,14 @@ Dev dependencies: `mongodb-memory-server`, `@playwright/test`.
 ## 3. Features
 
 **Visitors**
-- Landing page with an animated scanner demo, freshness stages for any food, guide preview and impact figures.
-- Food guide: search by name + filter by category (combined), storage, shelf life and perishability per food.
+- Landing page: headline with the scanner's input photo set inside it, an animated example reading, how a scan works (3 steps), a ripeness spectrum of real banana photos with a slider that reads the stages of any food from the guide, an editorial food-guide spread, what a reading gives you, closing call to action.
+- Food guide (50 foods): search by name + filter by category (combined), storage, shelf life and perishability per food.
 - Food details: shelf life per storage condition (best one marked), stages coloured along the ripeness scale, storage method and tips, fresh vs spoilage signs, use-it ideas, quality-vs-safety disclaimer.
 - Use it up (recipe ideas, served by the API) and About.
 
 **Logged-in users**
-- Freshness scanner chat: camera or file upload, drag-and-drop, paste; verdict card; follow-up questions; suggested questions.
-- Save / unsave foods; "Your shelf" with tabs for saved foods and scan history (clearable).
+- Freshness scanner: an instrument panel with visible states (idle, preparing, analysing, done, error with retry), camera or file upload, drag-and-drop, paste; verdict card (observations, recommendation and guide advice in separate sections); follow-up questions; suggested questions.
+- Save / unsave foods; saved foods shown in an **interactive fridge** (doors open, foods on shelves by category, hover/focus label, detail panel with the food's guide data and the user's latest scan of it, remove with confirm and undo); scan history tab (clearable).
 
 **Admins**
 - Overview: account/food/scan/save totals, scans per day (14 days), scanner recommendations, most-saved foods.
@@ -321,12 +322,12 @@ An Admin can do everything a User can; a User everything a Visitor can.
 
 | URL | Page | Script |
 | --- | --- | --- |
-| `/` | Home: hero scanner demo, how it works, freshness stages, guide preview, impact | `pages/home.js` |
-| `/scan` | Freshness scanner chat | `pages/scan.js` |
+| `/` | Home: hero scanner demo, how a scan works, ripeness spectrum + stage reader, guide spread, features, call to action | `pages/home.js` |
+| `/scan` | Freshness scanner: instrument stage + readings and chat | `pages/scan.js` |
 | `/foods` | Food guide | `pages/foods.js` |
 | `/food?id=banana` | Food details | `pages/food.js` |
 | `/recipes` | Use it up | `pages/recipes.js` |
-| `/saved` | Your shelf: saved foods and scan history tabs | `pages/saved.js` |
+| `/saved` | Saved foods (the fridge) and scan history tabs | `pages/saved.js` |
 | `/admin` | Admin console (role-gated) | `pages/admin.js` |
 | `/login`, `/signup` | Accounts | `pages/login.js`, `pages/signup.js` |
 | `/about` | About, how the scanner works, limits | `pages/about.js` |
@@ -334,11 +335,19 @@ An Admin can do everything a User can; a User everything a Visitor can.
 
 ### Visual design
 
-"Cold storage" identity: cool frost background `#F1F4F0`, chlorophyll ink `#0F2A1F`, one leaf-green action colour `#1E6B47`.
-The **ripeness scale** (green → yellow → amber → brown) is the signature element and is only used for freshness data:
-the hero demo, verdict cards, freshness stages and perishability pips. Type: Bricolage Grotesque (display) and
-Instrument Sans (text). All colours, sizes and spacing are tokens in `client/css/tokens.css`. Responsive from 360px,
-keyboard accessible, and `prefers-reduced-motion` turns animations off.
+"Second look" identity (v4): ShelfLife is the moment you look at food again before deciding.
+Colour blocks of deep ink `#111310`, warm ivory `#F5F0E6`, tomato red `#DF4328`, citrus yellow `#F4C13D`, rich orange
+`#EC7B2C` and botanical green `#1F5A3A`; each section uses one block so neighbouring sections never look alike. Type:
+**Archivo** (expanded, heavy display headings) and **Instrument Sans** (text, labels, numbers). The motif is the scanner
+**lens** (a circle with reticle marks), used only where something is being looked at (the hero, the scanner, About, auth).
+Buttons are pills; panels are crisp. The **ripeness scale** (green → yellow → amber → brown) is reserved for freshness data.
+Food photos are real, licensed photographs, all processed the same way: cut out, centred at the same scale on an 800×800
+square with the same soft shadow, and shown on one shared warm studio background (`.food-frame`), so the 50 foods read as
+one series (credits in `docs/PHOTO_CREDITS.md`). A second, tightly cropped set (`client/images/fridge/`) lets foods stand on the
+fridge shelves. All colours, sizes, spacing and motion values are tokens in
+`client/css/tokens.css`. Responsive from 360px, keyboard accessible, and `prefers-reduced-motion` turns animations off.
+The fridge (`client/css/fridge.css`) is built from layered HTML with CSS 3D transforms, gradients for steel, glass and LED light,
+and `backdrop-filter` for the frosted crisper drawer; no 3D library.
 
 ---
 
@@ -370,22 +379,51 @@ keyboard accessible, and `prefers-reduced-motion` turns animations off.
 | Suite | Command | What it covers |
 | --- | --- | --- |
 | API (39 tests) | `npm test` | Gemini service (low thinking level, fallback model when busy, quota message, hidden thought parts); foods search/filter/regex safety; register/login/logout, duplicates, NoSQL injection, cookie flags; saved foods; scanner with fake AI (grounding, mould rule, cleaning bad AI output, non-food, fake image files, ownership); assistant context; admin 401/403, CRUD, validation, users, uploads; 404 JSON, body limit, security headers; rate limiting |
-| Browser (10 journeys × desktop + mobile = 20) | `npm run test:e2e` | Home demo + stages, guide search/filter/empty state, save-while-logged-out redirect, save/remove, full scanner journey with follow-ups and history, visitor gate, admin gate, admin add/edit/delete food, admin validation errors, mobile navigation without horizontal scroll |
+| Browser (11 journeys × desktop + mobile = 22) | `npm run test:e2e` | Home demo + stage reader (food picker and slider) + guide spread, guide search/filter/empty state (50 foods), save-while-logged-out redirect, fridge: save → item on shelf → detail panel → remove (two-step) → undo → reload, fridge keyboard (Enter opens, Escape returns focus) + empty state, full scanner journey with follow-ups and history, visitor gate, admin gate, admin add/edit/delete food, admin validation errors, mobile navigation without horizontal scroll |
 
 Both suites use an in-memory MongoDB and a fake AI service, so they run offline and never spend Gemini quota.
+
+### Scanner evaluation (real AI, `npm run eval`)
+
+The tests prove the code paths, not whether the AI's answers are right. `scripts/evaluate-scanner.js` measures that.
+It sends each labelled photo in `eval/labels.json` to the **real** scanner code (the same Gemini prompt and schema
+in `services/gemini.js` and the same `normaliseVerdict()` safety rule in `scanController.js`) and compares the answer
+with the label a person chose. It never writes to MongoDB, sends one photo every 12 seconds, stops after 3 failures in a
+row, and `--resume` continues a run that ran out of quota. Results are saved in `eval/results.json`.
+
+The set has 26 photos: 15 fresh, 3 overripe and 8 that must be thrown out (rotten or mouldy). They are older app photos
+plus free-licensed Wikimedia Commons photos (credits in `labels.json`). Where two answers are both reasonable
+(an overripe banana: "use soon" or "cook today") the label accepts both.
+
+**First run, 2026-10-18** (`gemini-3.5-flash`, backup `gemini-3.5-flash-lite`). The free daily quota ran out after 20 photos,
+so 6 of the 8 "must discard" photos are still to be scored.
+
+| Measure | Result (20 photos) |
+| --- | --- |
+| Right food (matched to our catalogue) | 20 of 20 |
+| Right ripeness stage | 20 of 20 |
+| Right mould call | 19 of 19 scored |
+| Right recommendation | 19 of 20 (95%) |
+| "Must discard" photos the scanner also discarded | 2 of 2 |
+| Usable photos wrongly told to discard | 0 of 18 |
+
+The one miss: green (unripe) bananas got "use soon" instead of "eat". The recommendation list has no
+"wait until ripe" option, so a future version could add one. Twenty photos is a rough indicator, not a benchmark.
 
 ---
 
 ## 12. Known limitations
 
 - Scanner verdicts come from a general vision model; they can be wrong, especially for blurry photos or foods not in the guide. We show confidence and always frame results as quality, not safety.
-- Gemini's free tier has rate limits; under heavy use the scanner asks people to wait a minute.
+- Gemini's free tier has rate limits: about 20 requests per day per model at the time of writing, and per-minute limits. When they run out the scanner asks people to try again later.
 - The rate limiter stores counts in memory, so it resets on restart and would need a shared store (e.g. Redis) for several servers.
 - Uploaded food photos are saved on the server's disk; a hosted deployment would use object storage.
 - No password reset or email verification.
 - Shelf-life figures are general estimates written for this project.
+- Saved foods are bookmarks: the fridge shows what a user saved from the guide, not what is physically in their fridge, and the date a food was saved is not recorded.
+- Food photos come from Wikimedia Commons / Openverse under CC0, public domain, CC BY or CC BY-SA licences; they must stay credited (`docs/PHOTO_CREDITS.md`, which lists the author and licence of each one).
 
 ## 13. Future work
 
-Pantry tracker with purchase dates and "use first" reminders; more foods including Indian staples; installable PWA
-so the camera opens straight from the home screen; an accuracy evaluation of the scanner on a labelled fresh/rotten dataset; deployment.
+Pantry tracker with purchase dates and "use first" reminders (the fridge could then show real inventory); more foods; installable PWA
+so the camera opens straight from the home screen; finish the scanner evaluation and grow it to a larger labelled fresh/rotten set; a "wait until ripe" recommendation; deployment.

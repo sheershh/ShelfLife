@@ -4,31 +4,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Shelf life, storage and spoilage signs for everyday foods." />
-    <meta name="theme-color" content="#f1f4f0" />
+    <meta name="theme-color" content="#f5f0e6" />
     <title>Food guide | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body class="page-foods">
     <div class="app">
       <div id="navbar"></div>
       <main class="main" id="main">
-        <div class="container">
-          <header class="page-head">
-            <h1>Food guide</h1>
-            <p>How long everyday foods keep, where to store them, and the signs that they have turned.</p>
-          </header>
+        <!-- Editorial introduction: a colour block with a row of foods from the guide -->
+        <section class="guide-hero" aria-labelledby="guide-title">
+          <div class="container guide-hero-inner">
+            <div class="guide-hero-text">
+              <h1 id="guide-title">The food guide</h1>
+              <p>How long everyday foods keep, where to store them, and the signs that they have turned.</p>
+            </div>
+            <div class="guide-hero-row" aria-hidden="true">
+              <img src="/images/foods/peach.webp" alt="" width="800" height="800" />
+              <img src="/images/foods/broccoli.webp" alt="" width="800" height="800" />
+              <img src="/images/foods/milk.webp" alt="" width="800" height="800" />
+              <img src="/images/foods/bread.webp" alt="" width="800" height="800" />
+              <img src="/images/foods/lemon.webp" alt="" width="800" height="800" />
+            </div>
+          </div>
+        </section>
 
+        <div class="container guide-body">
           <div class="guide-toolbar">
             <div class="search-input">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
               <label for="food-search" class="visually-hidden">Search foods by name</label>
-              <input id="food-search" type="search" placeholder="Search foods, e.g. banana" autocomplete="off" />
+              <input id="food-search" type="search" placeholder="Search foods, e.g. mango…" autocomplete="off" />
             </div>
-            <div class="chips" id="category-filter" role="group" aria-label="Filter by category"></div>
+            <div class="cats" id="category-filter" role="group" aria-label="Filter by category"></div>
+          </div>
+
+          <div class="guide-key" aria-label="How to read the list">
+            <span class="guide-key-item"><span class="lasting" data-level="1"><span class="lasting-pips" aria-hidden="true"><span></span><span></span><span></span></span></span>Highly perishable</span>
+            <span class="guide-key-item"><span class="lasting" data-level="2"><span class="lasting-pips" aria-hidden="true"><span></span><span></span><span></span></span></span>Moderately perishable</span>
+            <span class="guide-key-item"><span class="lasting" data-level="3"><span class="lasting-pips" aria-hidden="true"><span></span><span></span><span></span></span></span>Longer lasting</span>
           </div>
 
           <div class="guide-list-head" aria-hidden="true">

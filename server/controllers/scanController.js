@@ -17,7 +17,8 @@ const cleanText = (value, max) => (typeof value === 'string' ? value.trim().slic
 
 // Never trust AI output blindly: keep only known values, clamp numbers, cut long text,
 // then apply our own safety rule on top of the model's opinion.
-function normaliseVerdict(raw, catalog, matchedCategory) {
+// Exported so scripts/evaluate-scanner.js measures exactly what users see.
+export function normaliseVerdict(raw, catalog, matchedCategory) {
   const verdict = {
     item: cleanText(raw.item, 60) || 'Unknown',
     matchedFood: catalog.some((food) => food.slug === raw.matchedFoodId) ? raw.matchedFoodId : null,

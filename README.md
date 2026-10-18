@@ -3,8 +3,8 @@
 Know what's still good. ShelfLife is a food freshness web app:
 
 - **Freshness scanner.** Upload or take a photo of fruit or vegetables. ShelfLife returns a ripeness reading, a mould check, a freshness score and one clear recommendation, grounded in its own food guide. You can then ask follow-up questions in a chat.
-- **Food guide.** Shelf life by storage condition, storage tips, freshness stages and spoilage signs for everyday foods.
-- **Accounts.** Save foods to "your shelf" and keep a history of scans.
+- **Food guide.** Shelf life by storage condition, storage tips, freshness stages and spoilage signs for 50 everyday foods (fruits, vegetables, dairy, pantry staples, including Indian kitchen staples such as paneer, okra, ghee and atta).
+- **Accounts.** Save foods and see them on the shelves of an interactive fridge, and keep a history of scans.
 - **Admin console.** Add, edit and delete foods (with photo upload), manage users and roles, and see scanner activity.
 
 | Layer | Technology |
@@ -36,7 +36,8 @@ npm run dev               # http://localhost:3000, restarts on file changes
 | `GEMINI_API_KEY` | Google AI Studio, free (steps below). If empty, the scanner page says it is not set up; everything else works. |
 | `GEMINI_MODEL` | Optional, defaults to `gemini-3.5-flash` (falls back to `gemini-3.8-flash` when busy). |
 
-On first start with an empty database the 12 starter foods are loaded from `server/data/foods.json` automatically.
+On first start with an empty database the 50 starter foods are loaded from `server/data/foods.json` automatically.
+An existing database is updated with `npm run seed` (see Scripts).
 
 ### MongoDB Atlas (free, no card)
 
@@ -57,17 +58,20 @@ On first start with an empty database the 12 starter foods are loaded from `serv
 | --- | --- |
 | `npm start` / `npm run dev` | Start the server (dev restarts on changes) |
 | `npm test` | 39 API tests (in-memory MongoDB, fake AI, no internet needed) |
-| `npm run test:e2e` | 10 browser journeys on desktop and mobile (Playwright) |
-| `npm run seed` | Re-load `server/data/foods.json` into the database (updates, never deletes admin-added foods) |
+| `npm run test:e2e` | 11 browser journeys on desktop and mobile (Playwright) |
+| `npm run seed` | Load `server/data/foods.json` into the database: adds new foods, overwrites foods with the same id (admin edits to those foods are replaced) and removes the retired foods listed in `scripts/seed.js` (oats, chapati, poha); never deletes admin-added foods |
 | `npm run make-admin -- you@example.com` | Give an existing account the admin role |
 | `npm run migrate-users` | One-time copy of accounts from the old `server/data/users.json` into MongoDB |
+| `npm run eval` | Score the real scanner on the labelled photos in `eval/` (uses free Gemini quota; `-- 2` for the first 2 photos, `-- --resume` to continue a run). Results in `eval/results.json` |
 
 ## Folders
 
 ```
 client/                 the website (served as static files)
   *.html                one file per page (index, foods, food, scan, saved, recipes, about, login, signup, admin, 404)
-  css/                  style.css imports tokens, base, components, pages, scan, admin
+  css/                  style.css imports tokens, base, components, pages, scan, fridge, admin
+  images/foods/         one studio photo per food: 800x800 transparent WebP, same scale and shadow (credits in docs/PHOTO_CREDITS.md)
+  images/fridge/        the same foods cropped tightly so they can stand on the fridge shelves
   js/                   api, session, layout, ui, icons, image, scan-ui, constants, auth-form
   js/pages/             one script per page
 server/
@@ -82,7 +86,8 @@ server/
   store/                data-access functions used by controllers
   utils/helpers.js      validation rules, AppError, image checks
   data/                 foods.json and recipes.json (seed data)
-scripts/                seed, make-admin, migrate-users
+scripts/                seed, make-admin, migrate-users, evaluate-scanner
+eval/                   labelled photos (labels.json, photos/) and the latest scanner results (results.json)
 tests/                  API tests; tests/e2e/ browser tests
 docs/VIVA_NOTES.md      how everything works, for the viva
 ```

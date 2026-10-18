@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Snap a photo of your fruit or veg. ShelfLife reads its ripeness, spots mould and tells you whether to eat it, cook it today or let it go." />
-    <meta name="theme-color" content="#f1f4f0" />
-    <title>ShelfLife | Know what's still good</title>
+    <meta name="description" content="One scan closer to a smarter kitchen. Upload or take a photo of fruit or vegetables and ShelfLife checks ripeness and mould, then tells you to eat it, use it soon, cook it today or throw it out." />
+    <meta name="theme-color" content="#f5f0e6" />
+    <title>ShelfLife | One scan closer to a smarter kitchen</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="/images/foods/tomato.webp" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body class="page-home">
@@ -17,145 +18,208 @@
       <div id="navbar"></div>
       <main class="main" id="main">
 
-        <!-- Hero: the product itself. The photo is shown only as scanner input, never as decoration. -->
-        <section class="hero">
-          <div class="container hero-grid">
-            <div class="hero-copy">
-              <h1>Know what's still good.</h1>
-              <p class="hero-lead">
-                Take a photo of your fruit or veg. ShelfLife reads its ripeness, looks for mould and tells you
-                whether to eat it, cook it today or let it go, with storage advice to make the next one last longer.
-              </p>
-              <div class="button-row">
-                <a href="/scan" class="btn btn-primary" id="hero-scan-link">Scan a photo</a>
-                <a href="/foods" class="btn btn-secondary">Browse the food guide</a>
-              </div>
-              <p class="hero-note">Free with an account. Works with your phone camera or any photo.</p>
+        <!-- 1. Hero: one focal point. The tomatoes are the scanner's input, framed by the lens,
+                with the reading they would produce docked beside them. -->
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <h1 class="hero-title" id="hero-title">
+              <span class="hero-line"><span>One scan</span></span>
+              <span class="hero-line"><span>closer to a</span></span>
+              <span class="hero-line"><span class="hero-accent">smarter</span></span>
+              <span class="hero-line"><span class="hero-accent">kitchen.</span></span>
+            </h1>
+            <p class="hero-lead">That tomato's getting soft. Those strawberries look suspicious. Before you decide what's worth keeping, give ShelfLife a closer look: upload or take a photo, and it checks ripeness and mould, then tells you to eat it, use it soon, cook it today or throw it out.</p>
+            <div class="button-row">
+              <a href="/scan" class="btn btn-primary btn-lg" id="hero-scan-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+                Scan a photo
+              </a>
+              <a href="/foods" class="hero-link">Browse the food guide
+                <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-5-5m5 5-5 5"/></svg>
+              </a>
             </div>
-
-            <figure class="demo" id="scanner-demo" aria-label="Example: ShelfLife scanning a photo of bananas">
-              <div class="demo-frame">
-                <img src="/images/banana.jpg" alt="Spotted yellow bananas on a market stall" width="900" height="598" />
-                <span class="demo-corner demo-corner-tl" aria-hidden="true"></span>
-                <span class="demo-corner demo-corner-tr" aria-hidden="true"></span>
-                <span class="demo-corner demo-corner-bl" aria-hidden="true"></span>
-                <span class="demo-corner demo-corner-br" aria-hidden="true"></span>
-                <span class="demo-sweep" aria-hidden="true"></span>
-                <span class="demo-pin demo-pin-a"><span>Brown spots</span></span>
-                <span class="demo-pin demo-pin-b"><span>Peel intact</span></span>
-                <span class="demo-status" aria-hidden="true"><span class="demo-status-dot"></span><span id="demo-status-text">Reading photo</span></span>
-              </div>
-              <figcaption class="demo-readout">
-                <div class="demo-readout-head">
-                  <div>
-                    <p class="demo-item">Banana</p>
-                    <p class="demo-meta">Matched to the ShelfLife guide, high confidence</p>
-                  </div>
-                  <span class="tag tag-dot tag-cook-today">Cook or blend today</span>
-                </div>
-                <div class="scale" role="img" aria-label="Ripeness: overripe" data-at="66">
-                  <div class="scale-track"><span></span><span></span><span></span><span></span></div>
-                  <span class="scale-marker"></span>
-                  <div class="scale-labels" aria-hidden="true"><span>Unripe</span><span>Ripe</span><span class="is-current">Overripe</span><span>Spoiled</span></div>
-                </div>
-                <dl class="demo-facts">
-                  <div><dt>Freshness</dt><dd class="num">48 / 100</dd></div>
-                  <div><dt>Time left</dt><dd>About a day</dd></div>
-                  <div><dt>Mould</dt><dd>None seen</dd></div>
-                </dl>
-              </figcaption>
-            </figure>
+            <dl class="hero-facts">
+              <div><dt>Reads</dt><dd>Ripeness, bruising and visible mould</dd></div>
+              <div><dt>Decides</dt><dd>Eat, use soon, cook today or discard</dd></div>
+              <div><dt>Advises</dt><dd>Storage from a guide to <span id="hero-food-count">everyday</span> foods</dd></div>
+            </dl>
           </div>
+
+          <figure class="hero-stage" id="scanner-demo" aria-label="Example: ShelfLife reading a photo of tomatoes">
+            <div class="lens" aria-hidden="true">
+              <span class="lens-tick lens-tick-n"></span><span class="lens-tick lens-tick-e"></span>
+              <span class="lens-tick lens-tick-s"></span><span class="lens-tick lens-tick-w"></span>
+              <span class="lens-sweep"></span>
+            </div>
+            <img class="hero-food" src="/images/foods/tomato.webp" alt="Ripe red tomatoes on the vine" width="800" height="800" />
+            <span class="hero-status" aria-hidden="true"><span class="hero-status-dot"></span><span id="demo-status-text">Reading photo</span></span>
+            <figcaption class="readout">
+              <p class="label">Example reading</p>
+              <div class="readout-head">
+                <p class="readout-item">Tomato</p>
+                <span class="tag tag-dot tag-eat">Good to eat</span>
+              </div>
+              <div class="scale" role="img" aria-label="Ripeness: ripe" data-at="38">
+                <div class="scale-track"><span></span><span></span><span></span><span></span></div>
+                <span class="scale-marker"></span>
+                <div class="scale-labels" aria-hidden="true"><span>Unripe</span><span class="is-current">Ripe</span><span>Overripe</span><span>Spoiled</span></div>
+              </div>
+              <dl class="readout-facts">
+                <div><dt>Freshness</dt><dd class="num">82 / 100</dd></div>
+                <div><dt>Time left</dt><dd>About 3 days</dd></div>
+                <div><dt>Mould</dt><dd>None seen</dd></div>
+              </dl>
+            </figcaption>
+          </figure>
         </section>
 
-        <!-- How it works: a real sequence, so the steps are numbered. -->
-        <section class="section steps-section" aria-labelledby="steps-heading">
-          <div class="container">
-            <div class="section-intro">
-              <h2 id="steps-heading">From photo to decision in a few seconds</h2>
-              <p>Point your camera at it and get a straight answer, not a page of maybes.</p>
+        <!-- 2. How a scan works: a real sequence, so the steps are numbered. -->
+        <section class="steps-section" aria-labelledby="steps-heading">
+          <div class="container steps-layout">
+            <div class="steps-intro reveal">
+              <h2 id="steps-heading">Three steps. One clear call.</h2>
+              <p>The model looks at the photo. Our own rules and food records decide what it means for you.</p>
             </div>
             <ol class="steps">
-              <li class="step">
-                <span class="step-number num" aria-hidden="true">1</span>
-                <h3>Take a photo</h3>
-                <p>One item, in good light. On a phone, the camera opens straight away.</p>
+              <li class="step reveal">
+                <span class="step-num num" aria-hidden="true">1</span>
+                <div>
+                  <h3>Take one photo</h3>
+                  <p>One item, close up, in daylight. On a phone the camera opens straight away, and the photo is shrunk on your device before upload.</p>
+                </div>
               </li>
-              <li class="step">
-                <span class="step-number num" aria-hidden="true">2</span>
-                <h3>ShelfLife reads it</h3>
-                <p>Ripeness, bruising and visible mould are checked by Google's Gemini vision model.</p>
+              <li class="step reveal">
+                <span class="step-num num" aria-hidden="true">2</span>
+                <div>
+                  <h3>It is read, then checked</h3>
+                  <p>Google's Gemini vision model describes what it sees in a fixed format. Our server checks every field, and visible mould on soft food always means discard.</p>
+                </div>
               </li>
-              <li class="step">
-                <span class="step-number num" aria-hidden="true">3</span>
-                <h3>Act on a clear call</h3>
-                <p>Eat it, use it soon, cook it today or throw it out, with storage tips from our food guide.</p>
-              </li>
-              <li class="step">
-                <span class="step-number num" aria-hidden="true">4</span>
-                <h3>Ask what's next</h3>
-                <p>"Can I still bake with it?" The assistant answers using the same guide.</p>
+              <li class="step reveal">
+                <span class="step-num num" aria-hidden="true">3</span>
+                <div>
+                  <h3>Act on one clear call</h3>
+                  <p>Good to eat, use soon, cook today or throw it out, with the time it has left and storage advice from our food guide.</p>
+                </div>
               </li>
             </ol>
           </div>
         </section>
 
-        <!-- Stages: real data from the API, so people learn to read ripeness themselves. -->
-        <section class="section stages-section" aria-labelledby="stages-heading">
-          <div class="container">
-            <div class="section-intro section-intro-split">
-              <div>
-                <h2 id="stages-heading">Learn to read the signs yourself</h2>
-                <p>Every food in the guide has its own stages, from just bought to past its best.</p>
-              </div>
-              <div class="chips" id="stage-food-picker" role="group" aria-label="Choose a food"></div>
+        <!-- 3. The ripeness spectrum: real photographs of one food at four stages, and a slider
+                that reads the stages of any food from the guide (real data from the API). -->
+        <section class="spectrum-section" aria-labelledby="spectrum-heading">
+          <div class="container spectrum-head reveal">
+            <h2 id="spectrum-heading">From unripe to past its best.</h2>
+            <p>The four stages the scanner reports, on real bananas. Learn to read them and you will need the scanner less.</p>
+          </div>
+
+          <ol class="spectrum" id="spectrum">
+            <li class="spectrum-stage" data-stage="0">
+              <figure>
+                <img src="/images/banana-unripe.jpg" alt="A bunch of green, unripe bananas" width="720" height="900" loading="lazy" />
+                <figcaption><strong>Unripe</strong> Green and firm. Leave it a few days.</figcaption>
+              </figure>
+            </li>
+            <li class="spectrum-stage" data-stage="1">
+              <figure>
+                <img src="/images/banana-ripe.jpg" alt="A ripe yellow banana" width="720" height="900" loading="lazy" />
+                <figcaption><strong>Ripe</strong> Yellow, sweet and easy to peel.</figcaption>
+              </figure>
+            </li>
+            <li class="spectrum-stage" data-stage="2">
+              <figure>
+                <img src="/images/banana-overripe.jpg" alt="Bananas covered in brown speckles" width="720" height="900" loading="lazy" />
+                <figcaption><strong>Overripe</strong> Speckled and soft. Bake or blend it.</figcaption>
+              </figure>
+            </li>
+            <li class="spectrum-stage" data-stage="3">
+              <figure>
+                <img src="/images/banana-spoiled.jpg" alt="A blackened, rotten banana peel" width="720" height="900" loading="lazy" />
+                <figcaption><strong>Spoiled</strong> Black, leaking or mouldy. Let it go.</figcaption>
+              </figure>
+            </li>
+          </ol>
+
+          <div class="container stage-reader reveal" aria-labelledby="reader-heading">
+            <div class="stage-reader-controls">
+              <h3 id="reader-heading">Read the stages of any food</h3>
+              <div class="chips chips-on-dark" id="stage-food-picker" role="group" aria-label="Choose a food"></div>
+              <label class="stage-range-label" for="stage-range">Drag through the stages</label>
+              <input type="range" id="stage-range" min="0" max="3" step="1" value="0" disabled />
             </div>
-            <div id="stage-strip" class="stage-strip" aria-live="polite">
+            <div id="stage-strip" class="stage-readout" aria-live="polite">
               <div class="skeleton stage-skeleton"></div>
             </div>
           </div>
         </section>
 
-        <!-- Food guide preview -->
-        <section class="section guide-section" aria-labelledby="guide-heading">
+        <!-- 4. The food guide, as four colour-blocked aisles (real counts from the API). -->
+        <section class="aisles-section" aria-labelledby="aisles-heading">
           <div class="container">
-            <div class="section-intro section-intro-split">
-              <div>
-                <h2 id="guide-heading">A storage guide for everyday food</h2>
-                <p>How long it keeps in the fridge, the pantry or the freezer, and how to tell when it has turned.</p>
-              </div>
-              <a href="/foods" class="btn btn-secondary">Open the food guide</a>
+            <div class="aisles-head reveal">
+              <h2 id="aisles-heading">A guide to keeping everyday food.</h2>
+              <p>Shelf life on the counter, in the fridge, the pantry and the freezer, with the signs that it has turned.</p>
+              <a href="/foods" class="btn btn-secondary" id="guide-link">Open the food guide</a>
             </div>
-            <div id="guide-preview"><div class="skeleton guide-skeleton"></div></div>
+            <div class="aisles" id="aisles"><div class="skeleton aisles-skeleton"></div></div>
+            <p class="guide-index reveal" id="guide-index"></p>
           </div>
         </section>
 
-        <!-- Why it matters -->
-        <section class="impact" aria-labelledby="impact-heading">
+        <!-- 5. What a reading gives you: three claims, each with proof from the product. -->
+        <section class="features-section" aria-labelledby="features-heading">
           <div class="container">
-            <h2 id="impact-heading">Most food waste happens at home</h2>
-            <dl class="impact-figures">
-              <div>
-                <dt>food wasted worldwide in 2022</dt>
-                <dd class="num">1.05<span> billion tonnes</span></dd>
-              </div>
-              <div>
-                <dt>of it thrown away by households</dt>
-                <dd class="num">60<span>%</span></dd>
-              </div>
-              <div>
-                <dt>wasted per person every year in Indian homes</dt>
-                <dd class="num">55<span> kg</span></dd>
-              </div>
-            </dl>
-            <p class="impact-source">Source: UNEP Food Waste Index Report 2024. ShelfLife supports UN Sustainable Development Goal 12 (responsible consumption) and Goal 2 (zero hunger).</p>
+            <h2 id="features-heading" class="reveal">See it. Store it. Ask about it.</h2>
+            <div class="features">
+              <article class="feature reveal">
+                <h3>Visual freshness analysis</h3>
+                <p>A ripeness stage, a freshness score and the signs the scanner noticed, so you can see why it made its call.</p>
+                <div class="feature-proof proof-reading" data-ui>
+                  <p class="label">Example reading</p>
+                  <div class="proof-score"><span class="proof-score-num num">82</span><span>/ 100 freshness</span></div>
+                  <div class="scale" role="img" aria-label="Ripeness: ripe" data-at="38">
+                    <div class="scale-track"><span></span><span></span><span></span><span></span></div>
+                    <span class="scale-marker"></span>
+                    <div class="scale-labels" aria-hidden="true"><span>Unripe</span><span class="is-current">Ripe</span><span>Overripe</span><span>Spoiled</span></div>
+                  </div>
+                  <ul class="proof-signs">
+                    <li>Deep red, glossy skin</li>
+                    <li>Firm, no wrinkles or soft spots</li>
+                    <li>No mould seen</li>
+                  </ul>
+                </div>
+              </article>
+              <article class="feature reveal">
+                <h3>Storage from our own guide</h3>
+                <p>The advice isn't made up by the model. It comes from the ShelfLife record for that food.</p>
+                <div class="feature-proof proof-storage" data-ui id="proof-storage">
+                  <div class="skeleton proof-skeleton"></div>
+                </div>
+              </article>
+              <article class="feature reveal">
+                <h3>Follow-up questions</h3>
+                <p>Ask what to do next. The answer uses the scan and the matching food records.</p>
+                <div class="feature-proof proof-chat" data-ui>
+                  <p class="label">Example conversation</p>
+                  <p class="proof-msg proof-msg-user">They're going soft. Still usable?</p>
+                  <p class="proof-msg">Yes. Soft tomatoes are ideal cooked down into a sauce or soup. Use them today and check there is no mould near the stem.</p>
+                </div>
+              </article>
+            </div>
           </div>
         </section>
 
-        <section class="section closing">
+        <!-- 6. Closing call to action -->
+        <section class="closing" aria-labelledby="closing-heading">
           <div class="container closing-inner">
-            <h2>Something in the fruit bowl you're not sure about?</h2>
-            <a href="/scan" class="btn btn-primary">Check it now</a>
+            <h2 id="closing-heading">Not sure about it? Take a second look.</h2>
+            <div class="closing-action">
+              <p>One photo, one clear answer, and storage advice to make the next one last longer.</p>
+              <a href="/scan" class="btn btn-primary btn-lg">Scan a photo
+                <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m0 0-5-5m5 5-5 5"/></svg>
+              </a>
+            </div>
           </div>
         </section>
       </main>

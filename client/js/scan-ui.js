@@ -1,4 +1,5 @@
-// HTML builders for scan results, used by the scanner page and the scan history tab.
+// HTML builders for scan results, used by the scanner page, the scan history tab and the fridge.
+// Everything shown comes from the scan the server returned; nothing is filled in when a value is missing.
 
 import { icon } from './icons.js'
 import {
@@ -6,7 +7,7 @@ import {
 } from './ui.js'
 
 // Meter colour follows the score: green when fresh, through yellow and amber, to brown.
-function scoreColor(score) {
+export function scoreColor(score) {
   if (score >= 70) return 'var(--r-unripe)'
   if (score >= 45) return 'var(--r-peak)'
   if (score >= 20) return 'var(--r-over)'
@@ -19,50 +20,72 @@ const confidenceText = {
   low: 'Low confidence: try a closer, brighter photo for a better reading',
 }
 
-// The main result card shown in the chat after a photo is analysed.
+// What the recommendation means in practice, shown under the call.
+const recommendationAdvice = {
+  eat: 'It looks fine to eat as it is.',
+  'use-soon': 'Fine now, but plan to use it within a day or two.',
+  'cook-today': 'Past its best raw. Cook, bake or blend it today.',
+  discard: 'Throw it out. Do not cut around mould on soft food.',
+  unsure: 'The photo was not clear enough for a firm call. Check it yourself.',
+}
+
+export function mouldHtml(mould) {
+  return mould?.detected
+    ? `<span class="verdict-alert">${icon('alert')}Yes${mould.where ? `, ${escapeHtml(mould.where)}` : ''}</span>`
+    : 'None seen'
+}
+
+// The main result card shown in the log after a photo is analysed.
 // `food` is the matching ShelfLife record (grounding), or null if the food isn't in the guide.
 export function verdictHtml(scan, food) {
   const score = scan.freshnessScore ?? 0
-  const mould = scan.mould?.detected
-    ? `<dd class="verdict-alert">${icon('alert')}Yes${scan.mould.where ? `, ${escapeHtml(scan.mould.where)}` : ''}</dd>`
-    : '<dd>None seen</dd>'
 
   const guide = food ? `
-    <div class="verdict-guide">
+    <section class="verdict-block verdict-guide">
       <h4>From the ShelfLife guide</h4>
       <p class="verdict-guide-store">Best kept: ${storageHtml(food.storageLocation)} <span class="num">${escapeHtml(food.shelfLifePreview)}</span></p>
       <p>${escapeHtml(food.storageMethod)}</p>
       <a class="text-link" href="/food?id=${encodeURIComponent(food.id)}">Full guide for ${escapeHtml(food.name.toLowerCase())}</a>
-    </div>` : `
-    <div class="verdict-guide">
+    </section>` : `
+    <section class="verdict-block verdict-guide">
       <h4>Not in the ShelfLife guide yet</h4>
       <p>We don't have a storage record for this food, so ask a question below for general advice.</p>
-    </div>`
+    </section>`
 
   return `
-    <article class="verdict" aria-label="Scan result for ${escapeHtml(scan.item)}">
+    <article class="verdict" aria-label="Scan result for ${escapeHtml(scan.item)}" data-ui>
       <header class="verdict-head">
-        <div>
-          <h3>${escapeHtml(scan.item)}</h3>
-          <p class="verdict-confidence">${escapeHtml(confidenceText[scan.confidence] || '')}</p>
-        </div>
+        <p class="label">Reading &nbsp;·&nbsp; ${escapeHtml(confidenceText[scan.confidence] || 'Confidence not given')}</p>
+        <h3>${escapeHtml(scan.item)}</h3>
         ${recommendationTag(scan.recommendation)}
       </header>
 
-      ${scan.ripeness !== 'unknown' ? scaleHtml(scan.ripeness, score) : ''}
-
-      <dl class="verdict-facts">
-        <div>
-          <dt>Freshness</dt>
-          <dd><span class="num">${score}</span> / 100
-            <span class="meter" data-value="${score}" data-color="${scoreColor(score)}"><span></span></span></dd>
+      <div class="verdict-measure">
+        <div class="verdict-score">
+          <span class="verdict-score-num num">${score}</span>
+          <span class="verdict-score-unit">/ 100<br>freshness</span>
+          <span class="meter" data-value="${score}" data-color="${scoreColor(score)}"><span></span></span>
         </div>
-        <div><dt>Time left</dt><dd>${escapeHtml(scan.estimatedDaysLeft || 'Unclear')}</dd></div>
-        <div><dt>Mould</dt>${mould}</div>
-      </dl>
+        ${scan.ripeness !== 'unknown' ? scaleHtml(scan.ripeness, score) : '<p class="verdict-muted">Ripeness could not be judged from this photo.</p>'}
+      </div>
 
-      ${scan.summary ? `<p class="verdict-summary">${escapeHtml(scan.summary)}</p>` : ''}
-      ${scan.visibleSigns?.length ? `<div class="verdict-signs"><h4>What the scanner noticed</h4><ul>${listHtml(scan.visibleSigns)}</ul></div>` : ''}
+      <section class="verdict-block">
+        <h4>What the scanner saw</h4>
+        ${scan.summary ? `<p class="verdict-summary">${escapeHtml(scan.summary)}</p>` : ''}
+        ${scan.visibleSigns?.length ? `<ul class="verdict-signs">${listHtml(scan.visibleSigns)}</ul>` : ''}
+        <dl class="verdict-facts">
+          <div><dt>Mould</dt><dd>${mouldHtml(scan.mould)}</dd></div>
+          <div><dt>Ripeness</dt><dd>${escapeHtml(RIPENESS_LABELS[scan.ripeness] || 'Unclear')}</dd></div>
+        </dl>
+      </section>
+
+      <section class="verdict-block verdict-advice">
+        <h4>What to do</h4>
+        <p class="verdict-call">${escapeHtml(RECOMMENDATION_LABELS[scan.recommendation] || scan.recommendation)}</p>
+        <p>${escapeHtml(recommendationAdvice[scan.recommendation] || '')}</p>
+        <dl class="verdict-facts"><div><dt>Time left</dt><dd>${escapeHtml(scan.estimatedDaysLeft || 'Unclear')}</dd></div></dl>
+      </section>
+
       ${guide}
       <p class="verdict-disclaimer">Based on how it looks only. A photo can't show smell or bacteria: when in doubt, throw it out.</p>
     </article>`

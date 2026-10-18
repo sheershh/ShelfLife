@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Your saved foods and freshness scan history." />
-    <meta name="theme-color" content="#f1f4f0" />
+    <meta name="description" content="Your saved foods, shown in your ShelfLife fridge, and your freshness scan history." />
+    <meta name="theme-color" content="#f5f0e6" />
     <title>Your saved foods and scans | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body class="page-saved">
@@ -18,20 +18,53 @@
       <main class="main" id="main">
         <div class="container">
           <header class="page-head">
-            <h1>Your shelf</h1>
-            <p>Foods you saved from the guide, and every photo you've checked with the scanner.</p>
+            <h1>Your saved foods</h1>
+            <p>The foods you bookmarked from the guide, on the shelves of your ShelfLife fridge, and every photo you've checked with the scanner.</p>
           </header>
           <div class="tabs" role="tablist" aria-label="Your shelf">
             <button type="button" class="tab" role="tab" id="tab-saved" aria-controls="panel-saved" aria-selected="true">Saved foods</button>
             <button type="button" class="tab" role="tab" id="tab-scans" aria-controls="panel-scans" aria-selected="false" tabindex="-1">Scan history</button>
           </div>
-          <section class="tab-panel" id="panel-saved" role="tabpanel" aria-labelledby="tab-saved">
-            <div id="saved-results"><div class="skeleton guide-skeleton"></div></div>
-          </section>
-          <section class="tab-panel" id="panel-scans" role="tabpanel" aria-labelledby="tab-scans" hidden>
-            <div id="scan-results"></div>
-          </section>
         </div>
+
+        <!-- Saved foods: the fridge. Every item is a real saved food from the API. -->
+        <section class="tab-panel tab-panel-fridge" id="panel-saved" role="tabpanel" aria-labelledby="tab-saved">
+          <div class="fridge-scene">
+            <!-- Minimal supporting UI: one slim bar, so the fridge stays the focal point -->
+            <div class="container fridge-bar" aria-label="About your fridge">
+              <p class="fridge-count" id="fridge-count">&nbsp;</p>
+              <ul class="fridge-legend" id="fridge-legend"></ul>
+              <div class="fridge-status" id="fridge-status" role="status" aria-live="polite">Opening your fridge…</div>
+            </div>
+
+            <div class="fridge" id="fridge" data-state="closed">
+              <div class="fridge-cabinet">
+                <div class="fridge-interior" id="fridge-interior">
+                  <span class="fridge-wall fridge-wall-left" aria-hidden="true"></span>
+                  <span class="fridge-wall fridge-wall-right" aria-hidden="true"></span>
+                  <span class="fridge-led" aria-hidden="true"></span>
+                  <div class="fridge-shelves" id="fridge-shelves"></div>
+                </div>
+                <div class="fridge-door fridge-door-left" aria-hidden="true"><span class="door-front"></span><span class="door-back"></span></div>
+                <div class="fridge-door fridge-door-right" aria-hidden="true"><span class="door-front"></span><span class="door-back"></span></div>
+              </div>
+              <span class="fridge-floor" aria-hidden="true"></span>
+            </div>
+
+            <p class="container fridge-hint">Hover, tap or Tab to a food to inspect it. Saved foods are bookmarks from the food guide, not a record of what is in your real fridge. <a href="/foods">Add foods from the guide</a></p>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="panel-scans" role="tabpanel" aria-labelledby="tab-scans" hidden>
+          <div class="container">
+            <div id="scan-results"></div>
+          </div>
+        </section>
+
+        <!-- Details of one saved food: opened from the fridge -->
+        <dialog class="fridge-dialog" id="fridge-dialog" aria-labelledby="fridge-dialog-title">
+          <div class="fridge-dialog-inner" id="fridge-dialog-body"></div>
+        </dialog>
       </main>
       <div id="footer"></div>
     </div>

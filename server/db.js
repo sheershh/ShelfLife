@@ -37,7 +37,7 @@ export function readSeedFoods() {
   return JSON.parse(readFileSync(new URL('./data/foods.json', import.meta.url), 'utf8'))
 }
 
-// On a brand-new database, load the 12 starter foods from foods.json.
+// On a brand-new database, load the starter foods (50) from foods.json.
 async function seedFoodsIfEmpty() {
   if ((await Food.estimatedDocumentCount()) > 0) return
   await Food.insertMany(readSeedFoods())

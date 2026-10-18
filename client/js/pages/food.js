@@ -43,7 +43,7 @@ function detailsHtml(food) {
   return `
     ${backLink}
     <header class="detail-head">
-      <div class="detail-photo"><img src="${escapeHtml(food.image)}" alt="${name}" width="640" height="480"></div>
+      <div class="detail-photo food-frame"><img src="${escapeHtml(food.image)}" alt="${name}" width="800" height="800"></div>
       <div class="detail-summary">
         <p class="detail-category"><a href="/foods?category=${encodeURIComponent(food.category)}">${escapeHtml(food.category)}</a></p>
         <h1>${name}</h1>

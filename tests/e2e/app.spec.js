@@ -11,6 +11,14 @@ async function logIn(page, who) {
   await expect(page).not.toHaveURL(/\/login/)
 }
 
+// Desktop and mobile runs share one server, so tests that save foods start from an empty list.
+async function clearSaved(page) {
+  await page.evaluate(async () => {
+    const { foods } = await (await fetch('/api/saved')).json()
+    for (const food of foods) await fetch(`/api/saved/${food.id}`, { method: 'DELETE' })
+  })
+}
+
 async function openMenuIfMobile(page) {
   const toggle = page.locator('#menu-toggle')
   if (await toggle.isVisible()) await toggle.click()
@@ -20,26 +28,35 @@ test('home page shows the scanner demo and real food data, no console errors', a
   const errors = []
   page.on('pageerror', (error) => errors.push(error.message))
   await page.goto('/')
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText("Know what's still good.")
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/One scan\s*closer to a\s*smarter\s*kitchen\./)
   await expect(page.locator('#scanner-demo')).toHaveClass(/is-done/, { timeout: 5000 })
-  await expect(page.locator('.stage-cell').first()).toBeVisible()
+  await expect(page.locator('#hero-food-count')).toHaveText('50 everyday')
+
+  // The stage reader: pick a food, then drag through its real stages from the guide.
+  await expect(page.locator('.stage-readout-body')).toContainText('Banana')
   await page.getByRole('button', { name: 'Tomato', exact: true }).click()
-  await expect(page.locator('#stage-strip')).toContainText('tomato')
-  await expect(page.locator('#guide-preview .food-row')).toHaveCount(5)
+  await expect(page.locator('#stage-strip')).toContainText('Ripening')
+  await page.locator('#stage-range').fill('3')
+  await expect(page.locator('#stage-strip')).toContainText('Check Quality')
+  await expect(page.locator('.spectrum-stage.is-active')).toHaveAttribute('data-stage', '3')
+
+  await expect(page.locator('#aisles .aisle')).toHaveCount(4)
+  await expect(page.locator('#aisles .aisle').first()).toContainText('18 foods')
+  await expect(page.locator('#guide-index a')).toHaveCount(50)
   expect(errors).toEqual([])
 })
 
 test('food guide search and category filter work together', async ({ page }) => {
   await page.goto('/foods')
-  await expect(page.locator('.food-row')).toHaveCount(12)
+  await expect(page.locator('.food-row')).toHaveCount(50)
   await page.getByRole('button', { name: 'Dairy' }).click()
-  await expect(page.locator('.food-row')).toHaveCount(3)
+  await expect(page.locator('.food-row')).toHaveCount(6)
   await page.getByLabel('Search foods by name').fill('mil')
   await expect(page.locator('.food-row')).toHaveCount(1)
   await page.getByLabel('Search foods by name').fill('banana')
   await expect(page.getByText('No foods match')).toBeVisible()
   await page.getByRole('button', { name: 'Clear search and filters' }).click()
-  await expect(page.locator('.food-row')).toHaveCount(12)
+  await expect(page.locator('.food-row')).toHaveCount(50)
 })
 
 test('saving while logged out goes to login and comes back', async ({ page }) => {
@@ -53,15 +70,49 @@ test('saving while logged out goes to login and comes back', async ({ page }) =>
   await expect(page).toHaveURL(/\/food\?id=milk/)
 })
 
-test('save a food, see it on the shelf, remove it', async ({ page }) => {
+test('save a food, see it in the fridge, inspect it, remove it and undo', async ({ page }) => {
   await logIn(page, 'user')
+  await clearSaved(page)
   await page.goto('/food?id=spinach')
   await page.getByRole('button', { name: 'Save Spinach' }).click()
   await expect(page.getByRole('button', { name: 'Remove Spinach from saved foods' })).toHaveAttribute('aria-pressed', 'true')
+
   await page.goto('/saved')
-  await expect(page.locator('.food-row', { hasText: 'Spinach' })).toBeVisible()
-  await page.getByRole('button', { name: 'Remove Spinach from saved foods' }).click()
-  await expect(page.locator('.food-row', { hasText: 'Spinach' })).toHaveCount(0)
+  await expect(page.locator('#fridge')).toHaveAttribute('data-state', 'open')
+  const item = page.locator('.fridge-item[data-food-id="spinach"]')
+  await expect(item).toBeVisible()
+  await item.click()
+  const dialog = page.locator('#fridge-dialog')
+  await expect(dialog.getByRole('heading', { name: 'Spinach' })).toBeVisible()
+  await expect(dialog).toContainText("You haven't scanned spinach yet")
+
+  await dialog.getByRole('button', { name: 'Remove from saved' }).click()
+  await dialog.getByRole('button', { name: 'Yes, remove it' }).click()
+  await expect(dialog).toBeHidden()
+  await expect(item).toHaveCount(0)
+  await page.locator('.toast').getByRole('button', { name: 'Undo' }).click()
+  await expect(page.locator('.fridge-item[data-food-id="spinach"]')).toBeVisible()
+
+  await page.reload()
+  await expect(page.locator('.fridge-item[data-food-id="spinach"]')).toBeVisible()
+  await clearSaved(page)
+})
+
+test('the fridge is keyboard friendly and shows an empty state', async ({ page }) => {
+  await logIn(page, 'admin')
+  await clearSaved(page)
+  await page.goto('/saved')
+  await expect(page.locator('.fridge-empty')).toContainText('Nothing saved yet')
+  await page.goto('/food?id=milk')
+  await page.getByRole('button', { name: 'Save Milk' }).click()
+  await page.goto('/saved')
+  const item = page.locator('.fridge-item[data-food-id="milk"]')
+  await item.focus()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('#fridge-dialog').getByRole('heading', { name: 'Milk' })).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(item).toBeFocused()
+  await clearSaved(page)
 })
 
 test('scanner: upload a photo, get a grounded verdict, ask a follow-up', async ({ page }) => {
@@ -103,33 +154,33 @@ test('admin console: add, edit and delete a food', async ({ page }) => {
   await page.getByRole('button', { name: 'Add a food' }).click()
 
   const dialog = page.locator('#food-dialog')
-  await dialog.getByLabel('Name', { exact: true }).fill('Guava')
-  await expect(dialog.getByLabel('Id (used in the URL)')).toHaveValue('guava')
+  await dialog.getByLabel('Name', { exact: true }).fill('Jackfruit')
+  await expect(dialog.getByLabel('Id (used in the URL)')).toHaveValue('jackfruit')
   await dialog.getByLabel('Shelf-life summary').fill('Room temp: 2–4 days')
-  await dialog.getByLabel('Short description').fill('A fragrant fruit that softens as it ripens.')
+  await dialog.getByLabel('Short description').fill('A huge, fragrant fruit that softens as it ripens.')
   await dialog.getByLabel('Room temperature').fill('About 2–4 days once ripe')
   await dialog.getByLabel('Storage method').fill('Ripen at room temperature, then refrigerate.')
-  await dialog.getByLabel('Freshness stages').fill('Ripe: Yellow-green and slightly soft.')
-  await dialog.getByLabel('Storage tips').fill('Keep away from bananas.')
-  await dialog.getByLabel('Ways to use it up').fill('Guava juice')
+  await dialog.getByLabel('Freshness stages').fill('Ripe: Strong sweet smell, gives slightly when pressed.')
+  await dialog.getByLabel('Storage tips').fill('Refrigerate cut pods in a sealed box.')
+  await dialog.getByLabel('Ways to use it up').fill('Jackfruit curry')
   await dialog.getByLabel("Signs it's fresh").fill('Sweet smell')
   await dialog.getByLabel("Signs it's spoiling").fill('Dark mushy patches')
   await dialog.getByRole('button', { name: 'Save food' }).click()
   await expect(dialog).toBeHidden()
-  await expect(page.locator('#foods-table')).toContainText('Guava')
+  await expect(page.locator('#foods-table')).toContainText('Jackfruit')
 
-  await page.locator('[data-edit="guava"]').click()
-  await dialog.getByLabel('Name', { exact: true }).fill('Pink Guava')
+  await page.locator('[data-edit="jackfruit"]').click()
+  await dialog.getByLabel('Name', { exact: true }).fill('Kerala Jackfruit')
   await dialog.getByRole('button', { name: 'Save food' }).click()
-  await expect(page.locator('#foods-table')).toContainText('Pink Guava')
+  await expect(page.locator('#foods-table')).toContainText('Kerala Jackfruit')
 
   await page.goto('/foods')
-  await expect(page.locator('.food-row', { hasText: 'Pink Guava' })).toBeVisible()
+  await expect(page.locator('.food-row', { hasText: 'Kerala Jackfruit' })).toBeVisible()
 
   await page.goto('/admin#foods')
-  await page.locator('[data-delete-food="guava"]').click()
-  await page.locator('[data-delete-food="guava"]').click()
-  await expect(page.locator('#foods-table')).not.toContainText('Pink Guava')
+  await page.locator('[data-delete-food="jackfruit"]').click()
+  await page.locator('[data-delete-food="jackfruit"]').click()
+  await expect(page.locator('#foods-table')).not.toContainText('Kerala Jackfruit')
 })
 
 test('admin form shows server validation errors next to fields', async ({ page }) => {
