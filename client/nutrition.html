@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Log what you eat and track calories, carbs, fat and protein against your daily goals." />
+    <meta name="theme-color" content="#f5f0e6" />
+    <title>Nutrition diary | ShelfLife</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="page-nutrition">
+    <div class="app">
+      <div id="navbar"></div>
+      <main class="main" id="main">
+        <div class="container">
+          <header class="page-head">
+            <h1>Nutrition diary</h1>
+            <p>Log what you eat and see calories, carbs, fat and protein for the day, against goals you set. Figures come from the ShelfLife food guide.</p>
+          </header>
+
+          <div id="nutri-login" class="empty-state" hidden>
+            <h2>Log in to keep a diary</h2>
+            <p>Your diary and goals are kept in your account.</p>
+            <div class="button-row">
+              <a href="/login?next=/nutrition" class="btn btn-primary">Log in</a>
+              <a href="/signup?next=/nutrition" class="btn btn-secondary">Create account</a>
+            </div>
+          </div>
+
+          <div id="nutri-app" hidden>
+            <!-- Which day -->
+            <div class="day-bar" role="group" aria-label="Choose a day">
+              <button type="button" class="day-step" id="day-prev" aria-label="Previous day">&#8249;</button>
+              <div class="day-label">
+                <h2 id="day-title">Today</h2>
+                <label for="day-picker" class="visually-hidden">Pick a date</label>
+                <input type="date" id="day-picker" />
+              </div>
+              <button type="button" class="day-step" id="day-next" aria-label="Next day">&#8250;</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="day-today">Today</button>
+            </div>
+            <p class="visually-hidden" id="nutri-status" role="status" aria-live="polite"></p>
+
+            <!-- The day at a glance -->
+            <section class="nutri-summary" aria-labelledby="summary-heading">
+              <h2 class="visually-hidden" id="summary-heading">Summary for the day</h2>
+              <div class="nutri-ring" id="nutri-ring"></div>
+              <div class="nutri-macros" id="nutri-macros"></div>
+            </section>
+
+            <!-- The meals -->
+            <div class="meal-list" id="meal-list"></div>
+
+            <!-- The last seven days -->
+            <section class="nutri-week" aria-labelledby="week-heading">
+              <div class="nutri-week-head">
+                <h2 id="week-heading">The last 7 days</h2>
+                <button type="button" class="btn btn-secondary btn-sm" id="goals-open">Edit daily goals</button>
+              </div>
+              <div id="nutri-week"></div>
+            </section>
+
+            <p class="notice">Nutrition figures are general estimates, not medical advice. Portions, varieties and cooking change the real numbers.</p>
+          </div>
+
+          <!-- Add food -->
+          <dialog class="nutri-dialog" id="add-dialog" aria-labelledby="add-title">
+            <div class="nutri-dialog-inner" id="add-body"></div>
+          </dialog>
+
+          <!-- Goals -->
+          <dialog class="nutri-dialog nutri-dialog-small" id="goals-dialog" aria-labelledby="goals-title">
+            <form class="nutri-dialog-inner" id="goals-form" novalidate>
+              <button type="button" class="fd-close" data-close aria-label="Close">×</button>
+              <h2 id="goals-title">Daily goals</h2>
+              <p class="fd-muted">Starting points only. Your own needs depend on your age, size, activity and health, so ask a dietitian or doctor if you need a plan.</p>
+              <p class="form-error" id="goals-error" data-error role="alert" hidden></p>
+              <div class="field"><label for="goal-calories">Calories (kcal)</label><input id="goal-calories" name="calories" type="number" inputmode="numeric" min="500" max="10000" required /><p class="field-error" hidden></p></div>
+              <div class="field"><label for="goal-carbs">Carbs (g)</label><input id="goal-carbs" name="carbs" type="number" inputmode="numeric" min="0" max="1500" required /><p class="field-error" hidden></p></div>
+              <div class="field"><label for="goal-fat">Fat (g)</label><input id="goal-fat" name="fat" type="number" inputmode="numeric" min="0" max="600" required /><p class="field-error" hidden></p></div>
+              <div class="field"><label for="goal-protein">Protein (g)</label><input id="goal-protein" name="protein" type="number" inputmode="numeric" min="0" max="600" required /><p class="field-error" hidden></p></div>
+              <div class="button-row">
+                <button type="submit" class="btn btn-primary">Save goals</button>
+                <button type="button" class="btn btn-ghost" id="goals-defaults">Use suggested</button>
+              </div>
+            </form>
+          </dialog>
+        </div>
+      </main>
+      <div id="footer"></div>
+    </div>
+    <script type="module" src="/js/pages/nutrition.js"></script>
+  </body>
+</html>

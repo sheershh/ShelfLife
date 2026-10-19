@@ -52,7 +52,20 @@
       "Banana bread or pancakes",
       "Frozen banana slices",
       "Oatmeal topping"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 89,
+        "protein": 1.1,
+        "carbs": 22.8,
+        "fat": 0.3,
+        "fibre": 2.6
+      },
+      "serving": {
+        "label": "1 medium (118 g)",
+        "grams": 118
+      }
+    }
   },
   {
     "slug": "apple",
@@ -107,7 +120,20 @@
       "Oatmeal topping",
       "Apple sauce",
       "Sliced with peanut butter"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 52,
+        "protein": 0.3,
+        "carbs": 13.8,
+        "fat": 0.2,
+        "fibre": 2.4
+      },
+      "serving": {
+        "label": "1 medium (180 g)",
+        "grams": 180
+      }
+    }
   },
   {
     "slug": "strawberry",
@@ -158,7 +184,20 @@
       "Yogurt topping",
       "Quick jam or compote",
       "Frozen berry mix"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 32,
+        "protein": 0.7,
+        "carbs": 7.7,
+        "fat": 0.3,
+        "fibre": 2
+      },
+      "serving": {
+        "label": "1 cup (150 g)",
+        "grams": 150
+      }
+    }
   },
   {
     "slug": "tomato",
@@ -213,7 +252,20 @@
       "Fresh salad",
       "Roasted tomato soup",
       "Bruschetta topping"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 18,
+        "protein": 0.9,
+        "carbs": 3.9,
+        "fat": 0.2,
+        "fibre": 1.2
+      },
+      "serving": {
+        "label": "1 medium (120 g)",
+        "grams": 120
+      }
+    }
   },
   {
     "slug": "potato",
@@ -263,7 +315,21 @@
       "Roasted potatoes",
       "Potato soup",
       "Aloo curry"
-    ]
+    ],
+    "nutrition": {
+      "basis": "Raw weight",
+      "per100g": {
+        "calories": 77,
+        "protein": 2,
+        "carbs": 17.5,
+        "fat": 0.1,
+        "fibre": 2.2
+      },
+      "serving": {
+        "label": "1 medium (170 g)",
+        "grams": 170
+      }
+    }
   },
   {
     "slug": "spinach",
@@ -313,7 +379,20 @@
       "Stir-fry",
       "Smoothie",
       "Added to eggs or pasta"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 23,
+        "protein": 2.9,
+        "carbs": 3.6,
+        "fat": 0.4,
+        "fibre": 2.2
+      },
+      "serving": {
+        "label": "1 cup raw (30 g)",
+        "grams": 30
+      }
+    }
   },
   {
     "slug": "milk",
@@ -363,7 +442,21 @@
       "Pancake batter",
       "Porridge",
       "Homemade paneer"
-    ]
+    ],
+    "nutrition": {
+      "basis": "Whole milk",
+      "per100g": {
+        "calories": 61,
+        "protein": 3.2,
+        "carbs": 4.8,
+        "fat": 3.3,
+        "fibre": 0
+      },
+      "serving": {
+        "label": "1 glass (245 g)",
+        "grams": 245
+      }
+    }
   },
   {
     "slug": "yogurt",
@@ -413,7 +506,21 @@
       "Marinade for chicken or vegetables",
       "Salad dressing",
       "Baking substitute"
-    ]
+    ],
+    "nutrition": {
+      "basis": "Plain, whole milk",
+      "per100g": {
+        "calories": 61,
+        "protein": 3.5,
+        "carbs": 4.7,
+        "fat": 3.3,
+        "fibre": 0
+      },
+      "serving": {
+        "label": "1 bowl (150 g)",
+        "grams": 150
+      }
+    }
   },
   {
     "slug": "cheese",
@@ -463,7 +570,21 @@
       "Grilled cheese sandwich",
       "Cheese sauce",
       "Baked dishes"
-    ]
+    ],
+    "nutrition": {
+      "basis": "Hard cheese such as cheddar",
+      "per100g": {
+        "calories": 403,
+        "protein": 24.9,
+        "carbs": 1.3,
+        "fat": 33.1,
+        "fibre": 0
+      },
+      "serving": {
+        "label": "1 slice (28 g)",
+        "grams": 28
+      }
+    }
   },
   {
     "slug": "bread",
@@ -513,7 +634,21 @@
       "Breadcrumbs",
       "Croutons",
       "French toast or bread pudding"
-    ]
+    ],
+    "nutrition": {
+      "basis": "White bread",
+      "per100g": {
+        "calories": 265,
+        "protein": 9,
+        "carbs": 49,
+        "fat": 3.2,
+        "fibre": 2.7
+      },
+      "serving": {
+        "label": "1 slice (30 g)",
+        "grams": 30
+      }
+    }
   },
   {
     "slug": "rice",
@@ -568,7 +703,21 @@
       "Rice porridge",
       "Stuffed peppers",
       "Rice pudding"
-    ]
+    ],
+    "nutrition": {
+      "basis": "Cooked white rice",
+      "per100g": {
+        "calories": 130,
+        "protein": 2.7,
+        "carbs": 28.2,
+        "fat": 0.3,
+        "fibre": 0.4
+      },
+      "serving": {
+        "label": "1 cup cooked (160 g)",
+        "grams": 160
+      }
+    }
   },
   {
     "slug": "pasta",
@@ -623,7 +772,21 @@
       "Pasta salad",
       "Stir-fried noodles",
       "Soup add-in"
-    ]
+    ],
+    "nutrition": {
+      "basis": "Cooked pasta",
+      "per100g": {
+        "calories": 158,
+        "protein": 5.8,
+        "carbs": 30.9,
+        "fat": 0.9,
+        "fibre": 1.8
+      },
+      "serving": {
+        "label": "1 cup cooked (140 g)",
+        "grams": 140
+      }
+    }
   },
   {
     "slug": "mango",
@@ -678,7 +841,20 @@
       "Aamras or mango pulp",
       "Salsa or chutney",
       "Frozen mango cubes"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 60,
+        "protein": 0.8,
+        "carbs": 15,
+        "fat": 0.4,
+        "fibre": 1.6
+      },
+      "serving": {
+        "label": "1 cup sliced (165 g)",
+        "grams": 165
+      }
+    }
   },
   {
     "slug": "papaya",
@@ -733,7 +909,20 @@
       "Smoothie",
       "Raw papaya salad (when green)",
       "Papaya and yogurt breakfast"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 43,
+        "protein": 0.5,
+        "carbs": 10.8,
+        "fat": 0.3,
+        "fibre": 1.7
+      },
+      "serving": {
+        "label": "1 cup cubed (140 g)",
+        "grams": 140
+      }
+    }
   },
   {
     "slug": "guava",
@@ -788,7 +977,20 @@
       "Guava juice",
       "Jam or cheese (guava paste)",
       "Fruit salad"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 68,
+        "protein": 2.6,
+        "carbs": 14.3,
+        "fat": 1,
+        "fibre": 5.4
+      },
+      "serving": {
+        "label": "1 fruit (55 g)",
+        "grams": 55
+      }
+    }
   },
   {
     "slug": "orange",
@@ -843,7 +1045,20 @@
       "Orange and onion salad",
       "Zest in baking",
       "Segments with yogurt"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 47,
+        "protein": 0.9,
+        "carbs": 11.8,
+        "fat": 0.1,
+        "fibre": 2.4
+      },
+      "serving": {
+        "label": "1 medium (130 g)",
+        "grams": 130
+      }
+    }
   },
   {
     "slug": "lemon",
@@ -894,7 +1109,20 @@
       "Dressings and marinades",
       "Squeeze over dal or chaat",
       "Frozen juice cubes"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 29,
+        "protein": 1.1,
+        "carbs": 9.3,
+        "fat": 0.3,
+        "fibre": 2.8
+      },
+      "serving": {
+        "label": "1 lemon (58 g)",
+        "grams": 58
+      }
+    }
   },
   {
     "slug": "grapes",
@@ -945,7 +1173,20 @@
       "Fruit salad",
       "Roasted grapes with cheese",
       "Grape juice"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 69,
+        "protein": 0.7,
+        "carbs": 18.1,
+        "fat": 0.2,
+        "fibre": 0.9
+      },
+      "serving": {
+        "label": "1 cup (150 g)",
+        "grams": 150
+      }
+    }
   },
   {
     "slug": "pomegranate",
@@ -996,7 +1237,20 @@
       "Fresh juice",
       "Chaat garnish",
       "Breakfast bowls"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 83,
+        "protein": 1.7,
+        "carbs": 18.7,
+        "fat": 1.2,
+        "fibre": 4
+      },
+      "serving": {
+        "label": "½ cup seeds (87 g)",
+        "grams": 87
+      }
+    }
   },
   {
     "slug": "watermelon",
@@ -1051,7 +1305,20 @@
       "Fruit chaat",
       "Watermelon and mint salad",
       "Frozen cubes in drinks"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 30,
+        "protein": 0.6,
+        "carbs": 7.6,
+        "fat": 0.2,
+        "fibre": 0.4
+      },
+      "serving": {
+        "label": "1 cup diced (152 g)",
+        "grams": 152
+      }
+    }
   },
   {
     "slug": "pineapple",
@@ -1102,7 +1369,20 @@
       "Grilled pineapple",
       "Smoothie",
       "Sweet and sour stir-fry"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 50,
+        "protein": 0.5,
+        "carbs": 13.1,
+        "fat": 0.1,
+        "fibre": 1.4
+      },
+      "serving": {
+        "label": "1 cup chunks (165 g)",
+        "grams": 165
+      }
+    }
   },
   {
     "slug": "pear",
@@ -1157,7 +1437,20 @@
       "Pear and cheese salad",
       "Baked pear crumble",
       "Sliced into porridge"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 57,
+        "protein": 0.4,
+        "carbs": 15.2,
+        "fat": 0.1,
+        "fibre": 3.1
+      },
+      "serving": {
+        "label": "1 medium (178 g)",
+        "grams": 178
+      }
+    }
   },
   {
     "slug": "kiwi",
@@ -1212,7 +1505,20 @@
       "Smoothie",
       "Fruit salad",
       "Kiwi salsa"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 61,
+        "protein": 1.1,
+        "carbs": 14.7,
+        "fat": 0.5,
+        "fibre": 3
+      },
+      "serving": {
+        "label": "1 kiwi (69 g)",
+        "grams": 69
+      }
+    }
   },
   {
     "slug": "avocado",
@@ -1267,7 +1573,20 @@
       "Avocado toast",
       "Salad",
       "Smoothie"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 160,
+        "protein": 2,
+        "carbs": 8.5,
+        "fat": 14.7,
+        "fibre": 6.7
+      },
+      "serving": {
+        "label": "½ avocado (100 g)",
+        "grams": 100
+      }
+    }
   },
   {
     "slug": "blueberries",
@@ -1318,7 +1637,20 @@
       "Muffins",
       "Smoothie",
       "Blueberry compote"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 57,
+        "protein": 0.7,
+        "carbs": 14.5,
+        "fat": 0.3,
+        "fibre": 2.4
+      },
+      "serving": {
+        "label": "1 cup (148 g)",
+        "grams": 148
+      }
+    }
   },
   {
     "slug": "peach",
@@ -1373,7 +1705,20 @@
       "Peach crumble",
       "Smoothie",
       "Grilled peaches"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 39,
+        "protein": 0.9,
+        "carbs": 9.5,
+        "fat": 0.3,
+        "fibre": 1.5
+      },
+      "serving": {
+        "label": "1 medium (150 g)",
+        "grams": 150
+      }
+    }
   },
   {
     "slug": "fig",
@@ -1424,7 +1769,20 @@
       "Fig and honey toast",
       "Fig jam",
       "Fruit salad"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 74,
+        "protein": 0.8,
+        "carbs": 19.2,
+        "fat": 0.3,
+        "fibre": 2.9
+      },
+      "serving": {
+        "label": "1 medium (50 g)",
+        "grams": 50
+      }
+    }
   },
   {
     "slug": "onion",
@@ -1475,7 +1833,20 @@
       "Caramelised onions",
       "Onion pakoras",
       "Kachumber salad"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 40,
+        "protein": 1.1,
+        "carbs": 9.3,
+        "fat": 0.1,
+        "fibre": 1.7
+      },
+      "serving": {
+        "label": "1 medium (110 g)",
+        "grams": 110
+      }
+    }
   },
   {
     "slug": "garlic",
@@ -1526,7 +1897,20 @@
       "Garlic rice",
       "Roasted garlic",
       "Garlic chutney"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 149,
+        "protein": 6.4,
+        "carbs": 33.1,
+        "fat": 0.5,
+        "fibre": 2.1
+      },
+      "serving": {
+        "label": "1 clove (3 g)",
+        "grams": 3
+      }
+    }
   },
   {
     "slug": "ginger",
@@ -1577,7 +1961,20 @@
       "Ginger-garlic paste",
       "Stir-fries",
       "Ginger honey lemon drink"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 80,
+        "protein": 1.8,
+        "carbs": 17.8,
+        "fat": 0.8,
+        "fibre": 2
+      },
+      "serving": {
+        "label": "1 tbsp grated (6 g)",
+        "grams": 6
+      }
+    }
   },
   {
     "slug": "carrot",
@@ -1627,7 +2024,20 @@
       "Carrot soup",
       "Stir-fry",
       "Grated into salads"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 41,
+        "protein": 0.9,
+        "carbs": 9.6,
+        "fat": 0.2,
+        "fibre": 2.8
+      },
+      "serving": {
+        "label": "1 medium (61 g)",
+        "grams": 61
+      }
+    }
   },
   {
     "slug": "cucumber",
@@ -1677,7 +2087,20 @@
       "Kachumber salad",
       "Cucumber sandwiches",
       "Quick pickle"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 15,
+        "protein": 0.7,
+        "carbs": 3.6,
+        "fat": 0.1,
+        "fibre": 0.5
+      },
+      "serving": {
+        "label": "1 cup sliced (104 g)",
+        "grams": 104
+      }
+    }
   },
   {
     "slug": "bell-pepper",
@@ -1727,7 +2150,20 @@
       "Stuffed peppers",
       "Roasted pepper sauce",
       "Fajitas"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 31,
+        "protein": 1,
+        "carbs": 6,
+        "fat": 0.3,
+        "fibre": 2.1
+      },
+      "serving": {
+        "label": "1 medium (120 g)",
+        "grams": 120
+      }
+    }
   },
   {
     "slug": "green-chilli",
@@ -1778,7 +2214,20 @@
       "Green chutney",
       "Chilli pickle",
       "Upma and poha"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 40,
+        "protein": 2,
+        "carbs": 9.5,
+        "fat": 0.2,
+        "fibre": 1.5
+      },
+      "serving": {
+        "label": "1 chilli (45 g)",
+        "grams": 45
+      }
+    }
   },
   {
     "slug": "cauliflower",
@@ -1828,7 +2277,20 @@
       "Gobi paratha",
       "Roasted cauliflower",
       "Cauliflower soup"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 25,
+        "protein": 1.9,
+        "carbs": 5,
+        "fat": 0.3,
+        "fibre": 2
+      },
+      "serving": {
+        "label": "1 cup florets (107 g)",
+        "grams": 107
+      }
+    }
   },
   {
     "slug": "cabbage",
@@ -1878,7 +2340,20 @@
       "Coleslaw",
       "Stir-fry",
       "Soup"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 25,
+        "protein": 1.3,
+        "carbs": 5.8,
+        "fat": 0.1,
+        "fibre": 2.5
+      },
+      "serving": {
+        "label": "1 cup shredded (70 g)",
+        "grams": 70
+      }
+    }
   },
   {
     "slug": "broccoli",
@@ -1928,7 +2403,20 @@
       "Broccoli soup",
       "Roasted broccoli",
       "Pasta"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 34,
+        "protein": 2.8,
+        "carbs": 6.6,
+        "fat": 0.4,
+        "fibre": 2.6
+      },
+      "serving": {
+        "label": "1 cup florets (91 g)",
+        "grams": 91
+      }
+    }
   },
   {
     "slug": "okra",
@@ -1979,7 +2467,20 @@
       "Crispy fried okra",
       "Sambar",
       "Stir-fry"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 33,
+        "protein": 1.9,
+        "carbs": 7.5,
+        "fat": 0.2,
+        "fibre": 3.2
+      },
+      "serving": {
+        "label": "1 cup sliced (100 g)",
+        "grams": 100
+      }
+    }
   },
   {
     "slug": "eggplant",
@@ -2030,7 +2531,20 @@
       "Bagara baingan",
       "Grilled slices",
       "Ratatouille"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 25,
+        "protein": 1,
+        "carbs": 5.9,
+        "fat": 0.2,
+        "fibre": 3
+      },
+      "serving": {
+        "label": "1 cup cubed (82 g)",
+        "grams": 82
+      }
+    }
   },
   {
     "slug": "mushroom",
@@ -2080,7 +2594,20 @@
       "Soup",
       "Omelette filling",
       "Stir-fry"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 22,
+        "protein": 3.1,
+        "carbs": 3.3,
+        "fat": 0.3,
+        "fibre": 1
+      },
+      "serving": {
+        "label": "1 cup sliced (70 g)",
+        "grams": 70
+      }
+    }
   },
   {
     "slug": "green-peas",
@@ -2130,7 +2657,20 @@
       "Pulao",
       "Pea soup",
       "Aloo matar"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 81,
+        "protein": 5.4,
+        "carbs": 14.5,
+        "fat": 0.4,
+        "fibre": 5.7
+      },
+      "serving": {
+        "label": "½ cup (80 g)",
+        "grams": 80
+      }
+    }
   },
   {
     "slug": "sweet-corn",
@@ -2180,7 +2720,20 @@
       "Corn chaat",
       "Corn soup",
       "Corn pulao"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 86,
+        "protein": 3.3,
+        "carbs": 18.7,
+        "fat": 1.4,
+        "fibre": 2
+      },
+      "serving": {
+        "label": "1 ear (90 g)",
+        "grams": 90
+      }
+    }
   },
   {
     "slug": "coriander",
@@ -2231,7 +2784,20 @@
       "Garnish for curry and dal",
       "Coriander rice",
       "Salsa"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 23,
+        "protein": 2.1,
+        "carbs": 3.7,
+        "fat": 0.5,
+        "fibre": 2.8
+      },
+      "serving": {
+        "label": "¼ cup chopped (16 g)",
+        "grams": 16
+      }
+    }
   },
   {
     "slug": "mint",
@@ -2282,7 +2848,20 @@
       "Mint raita",
       "Nimbu pani",
       "Mint chai"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 70,
+        "protein": 3.8,
+        "carbs": 14.9,
+        "fat": 0.9,
+        "fibre": 8
+      },
+      "serving": {
+        "label": "¼ cup leaves (12 g)",
+        "grams": 12
+      }
+    }
   },
   {
     "slug": "zucchini",
@@ -2333,7 +2912,20 @@
       "Grated into fritters",
       "Roasted vegetables",
       "Zucchini soup"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 17,
+        "protein": 1.2,
+        "carbs": 3.1,
+        "fat": 0.3,
+        "fibre": 1
+      },
+      "serving": {
+        "label": "1 medium (196 g)",
+        "grams": 196
+      }
+    }
   },
   {
     "slug": "paneer",
@@ -2383,7 +2975,21 @@
       "Matar paneer",
       "Paneer tikka",
       "Paneer paratha"
-    ]
+    ],
+    "nutrition": {
+      "basis": "Full-fat paneer",
+      "per100g": {
+        "calories": 265,
+        "protein": 18.3,
+        "carbs": 1.2,
+        "fat": 20.8,
+        "fibre": 0
+      },
+      "serving": {
+        "label": "1 piece (50 g)",
+        "grams": 50
+      }
+    }
   },
   {
     "slug": "butter",
@@ -2434,7 +3040,20 @@
       "Baking",
       "Tadka",
       "Garlic butter"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 717,
+        "protein": 0.9,
+        "carbs": 0.1,
+        "fat": 81.1,
+        "fibre": 0
+      },
+      "serving": {
+        "label": "1 tbsp (14 g)",
+        "grams": 14
+      }
+    }
   },
   {
     "slug": "ghee",
@@ -2484,7 +3103,20 @@
       "Ghee on roti or rice",
       "Sweets and halwa",
       "Roasting spices"
-    ]
+    ],
+    "nutrition": {
+      "per100g": {
+        "calories": 876,
+        "protein": 0.3,
+        "carbs": 0,
+        "fat": 99.5,
+        "fibre": 0
+      },
+      "serving": {
+        "label": "1 tbsp (13 g)",
+        "grams": 13
+      }
+    }
   },
   {
     "slug": "wheat-flour",
@@ -2535,7 +3167,21 @@
       "Puri",
       "Halwa",
       "Baking"
-    ]
+    ],
+    "nutrition": {
+      "basis": "Dry whole-wheat flour weight",
+      "per100g": {
+        "calories": 340,
+        "protein": 13.2,
+        "carbs": 72,
+        "fat": 2.5,
+        "fibre": 10.7
+      },
+      "serving": {
+        "label": "1 roti worth (30 g)",
+        "grams": 30
+      }
+    }
   },
   {
     "slug": "lentils",
@@ -2590,6 +3236,20 @@
       "Sambar",
       "Dal paratha with leftovers",
       "Lentil soup"
-    ]
+    ],
+    "nutrition": {
+      "basis": "Cooked lentils (dal)",
+      "per100g": {
+        "calories": 116,
+        "protein": 9,
+        "carbs": 20.1,
+        "fat": 0.4,
+        "fibre": 7.9
+      },
+      "serving": {
+        "label": "1 katori cooked (150 g)",
+        "grams": 150
+      }
+    }
   }
 ]

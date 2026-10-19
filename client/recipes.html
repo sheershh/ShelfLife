@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#f5f0e6" />
     <title>Use it up | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
@@ -21,6 +22,17 @@
             <h1>Use it up</h1>
             <p>Soft, spotty or wilting doesn't have to mean the bin. Simple ways to turn food at the end of its best into something good.</p>
           </header>
+          <section class="cook-panel" id="cook-panel" aria-labelledby="cook-title" hidden>
+            <h2 id="cook-title">Cook with what you have</h2>
+            <p class="fd-muted">Pick from your saved foods. The ones closest to their limit are ticked first.</p>
+            <form id="cook-form">
+              <ul class="add-found" id="cook-foods"></ul>
+              <button type="submit" class="btn btn-primary" id="cook-button">Suggest recipes</button>
+            </form>
+            <p class="form-error" id="cook-error" role="alert" hidden></p>
+            <div id="cook-results" aria-live="polite"></div>
+          </section>
+          <h2 class="recipes-heading">Quick ideas by food</h2>
           <div id="recipe-list"><div class="skeleton guide-skeleton"></div></div>
         </div>
       </main>

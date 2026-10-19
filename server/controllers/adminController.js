@@ -12,6 +12,7 @@ import {
 import {
   countAdmins, countUsers, deleteUser, listUsers, publicUser, savedFoodTotals, setUserRole,
 } from '../store/userStore.js'
+import { deleteEntriesForUser } from '../store/mealStore.js'
 import { deleteScansForUser } from '../store/scanStore.js'
 import { AppError, isValidRole, isValidSlug, parseImageDataUrl, validateFood } from '../utils/helpers.js'
 
@@ -94,11 +95,12 @@ export async function changeRole(req, res) {
   res.json({ user: publicUser(user) })
 }
 
-// DELETE /api/admin/users/:id   (also deletes that user's scans)
+// DELETE /api/admin/users/:id   (also deletes that user's scans and nutrition diary)
 export async function removeUser(req, res) {
   if (String(req.user._id) === req.params.id) throw new AppError(400, 'You cannot delete your own account here.')
   await deleteUser(req.params.id)
   await deleteScansForUser(req.params.id)
+  await deleteEntriesForUser(req.params.id)
   res.json({ message: 'User deleted.' })
 }
 

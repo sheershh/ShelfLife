@@ -15,6 +15,23 @@ const stageSchema = new mongoose.Schema(
   { _id: false },
 )
 
+// Nutrition per 100 g (of the food as described in `basis`, raw unless said otherwise) and one typical serving.
+// These are rounded general figures, not label data. Foods added in the admin console may not have any.
+const nutritionSchema = new mongoose.Schema(
+  {
+    basis: { type: String, trim: true },
+    per100g: {
+      calories: { type: Number, min: 0, max: 900 },
+      protein: { type: Number, min: 0, max: 100 },
+      carbs: { type: Number, min: 0, max: 100 },
+      fat: { type: Number, min: 0, max: 100 },
+      fibre: { type: Number, min: 0, max: 100 },
+    },
+    serving: { label: { type: String, trim: true }, grams: { type: Number, min: 1, max: 2000 } },
+  },
+  { _id: false },
+)
+
 const foodSchema = new mongoose.Schema(
   {
     // The slug is the public id used in URLs (/food?id=banana). It never changes after creation.
@@ -39,6 +56,7 @@ const foodSchema = new mongoose.Schema(
     freshnessSigns: [String],
     spoilageSigns: [String],
     usageIdeas: [String],
+    nutrition: nutritionSchema,
   },
   { timestamps: true },
 )

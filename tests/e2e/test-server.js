@@ -23,6 +23,12 @@ const fakeAi = {
       summary: 'Very ripe. Best for banana bread today.',
     }
   },
+  async suggestRecipes() {
+    return { recipes: [{ title: 'Quick saag', minutes: 20, uses: ['Spinach'], steps: ['Wash the leaves.', 'Cook with garlic.'] }] }
+  },
+  async readReceipt() {
+    return { items: [{ text: 'BANANAS', matchedFoodId: 'banana' }, { text: 'BIN BAGS', matchedFoodId: 'none' }] }
+  },
   async chat({ message }) {
     return `Fake answer to: ${message}`
   },

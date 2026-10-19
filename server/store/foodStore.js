@@ -11,9 +11,11 @@ export { CATEGORIES } from '../models/Food.js'
 const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 // Foods come back in the order they were added (MongoDB ObjectIds increase over time).
-export async function listFoods({ search, category } = {}) {
+export async function listFoods({ search, category, storage, lasting } = {}) {
   const filter = {}
   if (category) filter.category = category
+  if (storage) filter.storageLocation = storage
+  if (lasting) filter.freshnessStatus = lasting
   const text = search ? search.trim() : ''
   if (text) filter.name = new RegExp(escapeRegex(text), 'i') // case-insensitive "contains"
 
@@ -57,7 +59,10 @@ export async function updateFood(slug, data) {
 export async function deleteFood(slug) {
   const result = await Food.deleteOne({ slug })
   if (result.deletedCount === 0) throw new AppError(404, 'Food not found.')
-  await User.updateMany({ savedFoods: slug }, { $pull: { savedFoods: slug } })
+  await User.updateMany(
+    { $or: [{ savedFoods: slug }, { 'shopping.foodId': slug }] },
+    { $pull: { savedFoods: slug, savedDetails: { foodId: slug }, shopping: { foodId: slug } } },
+  )
 }
 
 export const countFoods = () => Food.countDocuments()

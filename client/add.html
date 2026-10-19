@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Add groceries to your ShelfLife fridge from a receipt photo or a product barcode." />
+    <meta name="theme-color" content="#f5f0e6" />
+    <title>Add groceries | ShelfLife</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="page-add">
+    <div class="app">
+      <div id="navbar"></div>
+      <main class="main" id="main">
+        <div class="container">
+          <header class="page-head">
+            <h1>Add groceries</h1>
+            <p>Skip the typing. Photograph a receipt or scan a barcode and the foods land in your fridge, bought today, with the use-by clock already running.</p>
+          </header>
+
+          <div id="add-login" class="empty-state" hidden>
+            <h2>Log in to add groceries</h2>
+            <p>Your fridge is kept in your account.</p>
+            <div class="button-row">
+              <a href="/login?next=/add" class="btn btn-primary">Log in</a>
+              <a href="/signup" class="btn btn-secondary">Create account</a>
+            </div>
+          </div>
+
+          <div class="add-grid" id="add-tools">
+            <section class="add-card" aria-labelledby="receipt-title">
+              <p class="label">Option 1</p>
+              <h2 id="receipt-title">Photograph a receipt</h2>
+              <p>Works with a printed grocery receipt or a photo of your bags on the counter. ShelfLife picks out the foods it knows.</p>
+              <p class="notice" id="add-setup-notice" hidden>The receipt reader needs the AI key to be set up on the server.</p>
+              <input id="receipt-input" type="file" accept="image/*" capture="environment" class="visually-hidden" aria-label="Receipt photo" />
+              <button type="button" class="btn btn-primary" id="receipt-pick">Choose or take a photo</button>
+              <p class="form-error" id="receipt-error" role="alert" hidden></p>
+              <div id="receipt-result" aria-live="polite"></div>
+            </section>
+
+            <section class="add-card" aria-labelledby="barcode-title">
+              <p class="label">Option 2</p>
+              <h2 id="barcode-title">Scan a barcode</h2>
+              <p>Point the camera at a product's barcode, or type the number printed under it. Lookups use the open Open Food Facts database.</p>
+              <div class="barcode-camera" id="barcode-camera" hidden>
+                <video id="barcode-video" playsinline muted></video>
+                <button type="button" class="btn btn-secondary btn-sm" id="barcode-stop">Stop camera</button>
+              </div>
+              <button type="button" class="btn btn-primary" id="barcode-start" hidden>Scan with camera</button>
+              <form class="barcode-form" id="barcode-form" novalidate>
+                <div class="field">
+                  <label for="barcode-input">Barcode number</label>
+                  <input id="barcode-input" name="code" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="e.g. 8901058852042" />
+                </div>
+                <button type="submit" class="btn btn-secondary">Look up</button>
+              </form>
+              <p class="form-error" id="barcode-error" role="alert" hidden></p>
+              <div id="barcode-result" aria-live="polite"></div>
+            </section>
+          </div>
+        </div>
+      </main>
+      <div id="footer"></div>
+    </div>
+    <script type="module" src="/js/pages/add.js"></script>
+  </body>
+</html>

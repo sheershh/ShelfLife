@@ -10,6 +10,7 @@ const form = document.getElementById('login-form')
 const reasons = {
   save: 'Log in to save foods to your shelf.',
   scan: 'Log in to use the freshness scanner. It keeps a history of your scans.',
+  nutrition: 'Log in to keep your nutrition diary.',
   admin: 'Log in with an admin account to open the admin console.',
 }
 

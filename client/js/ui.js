@@ -15,6 +15,27 @@ export function escapeHtml(value) {
     .replace(/'/g, '&#39;')
 }
 
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+// Counts numbers up from 0 to their value: <span data-count="82" data-suffix="%">82%</span>.
+// The real value is already in the HTML, so nothing is lost without JavaScript or with reduced motion.
+export function animateNumbers(root = document, duration = 1100) {
+  if (reducedMotion()) return
+  for (const el of root.querySelectorAll('[data-count]')) {
+    const target = Number(el.dataset.count)
+    if (!Number.isFinite(target)) continue
+    const suffix = el.dataset.suffix || ''
+    const start = performance.now()
+    const tick = (now) => {
+      const t = Math.min(1, (now - start) / duration)
+      el.textContent = `${Math.round(target * (1 - (1 - t) ** 3)).toLocaleString()}${suffix}` // ease-out
+      if (t < 1) requestAnimationFrame(tick)
+    }
+    el.textContent = `0${suffix}`
+    requestAnimationFrame(tick)
+  }
+}
+
 export const listHtml = (items) => items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')
 
 // Our Content Security Policy blocks inline style="" attributes, so positions and widths are
@@ -152,6 +173,7 @@ function showSavedState(button, saved) {
   const name = button.dataset.foodName
   const label = saved ? `Remove ${name} from saved foods` : `Save ${name}`
   button.classList.toggle('is-saved', saved)
+  button.classList.toggle('just-saved', saved) // plays the heart pop only when the user saves it
   button.setAttribute('aria-pressed', String(saved))
   button.setAttribute('aria-label', label)
   button.title = label

@@ -1,0 +1,97 @@
+/* Motion layer: small entrances and hover responses used across the site.
+   Everything here is decoration on top of finished layouts, and base.css switches every animation and
+   transition off for people who ask their device for reduced motion. */
+
+:root { --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); }
+html { scroll-behavior: smooth; }
+
+/* ---------- Page headings arrive one after another ---------- */
+.page-head h1 { animation: fade-up 0.8s var(--ease-out) both; }
+.page-head p { animation: fade-up 0.8s var(--ease-out) 0.12s both; }
+.page-head + *, .guide-hero + * { animation: fade-up 0.8s var(--ease-out) 0.24s both; }
+
+/* ---------- Buttons: lift, press, and a light sweep on the dark ones ---------- */
+.btn { position: relative; overflow: hidden; }
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(1px) scale(0.98); }
+.btn-primary::after, .btn-on-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.22) 50%, transparent 70%);
+  translate: -120% 0;
+  transition: translate 0.7s var(--ease-out);
+  pointer-events: none;
+}
+.btn-on-dark::after { background: linear-gradient(105deg, transparent 30%, rgb(244 193 61 / 0.3) 50%, transparent 70%); }
+.btn-primary:hover::after, .btn-on-dark:hover::after { translate: 120% 0; }
+
+/* ---------- Header ---------- */
+.brand .brand-mark { transition: rotate 0.6s var(--ease-spring); }
+.brand:hover .brand-mark { rotate: 90deg; }
+.nav-scan-dot { animation: blink 1.6s ease-in-out infinite; }
+
+/* ---------- Food guide ---------- */
+.food-list .food-row { animation: fade-up 0.55s var(--ease-out) both; animation-delay: calc(min(var(--i, 0), 14) * 32ms); }
+.food-row { transition: background-color var(--dur-fast), translate var(--dur-med) var(--ease-out); }
+.food-row:hover { translate: 4px 0; }
+.cat { transition: transform var(--dur-fast) var(--ease-out), background-color var(--dur-fast), color var(--dur-fast), border-color var(--dur-fast); }
+.cat:hover { transform: translateY(-2px); }
+.cat[aria-pressed='true'] { animation: pop 0.4s var(--ease-spring); }
+.save-btn.is-saved.just-saved svg { animation: heart-pop 0.5s var(--ease-spring); }
+@keyframes heart-pop { 0% { scale: 1; } 35% { scale: 1.5; } 100% { scale: 1; } }
+.guide-hero-row img { animation: float 5s ease-in-out infinite; }
+.guide-hero-row img:nth-child(2) { animation-delay: -1s; }
+.guide-hero-row img:nth-child(3) { animation-delay: -2s; }
+.guide-hero-row img:nth-child(4) { animation-delay: -3s; }
+.guide-hero-row img:nth-child(5) { animation-delay: -4s; }
+
+/* ---------- Recipes, add groceries, insights, shopping ---------- */
+.add-card, .insight, .cook-panel, .recipe, .empty-state { transition: translate var(--dur-med) var(--ease-out), box-shadow var(--dur-med); }
+.add-card, .insight { animation: fade-up 0.7s var(--ease-out) both; }
+.add-card:nth-child(2), .insight:nth-child(2) { animation-delay: 0.12s; }
+.add-card:hover, .insight:hover { translate: 0 -4px; box-shadow: 0 22px 30px -24px rgb(17 19 16 / 0.45); }
+.cook-panel { animation: fade-up 0.7s var(--ease-out) both; }
+.cook-recipe { animation: fade-up 0.6s var(--ease-out) both; }
+.cook-recipe:nth-child(2) { animation-delay: 0.12s; }
+.cook-recipe:nth-child(3) { animation-delay: 0.24s; }
+.recipes .recipe { animation: fade-up 0.6s var(--ease-out) both; }
+.recipes .recipe:nth-child(2) { animation-delay: 0.08s; }
+.recipes .recipe:nth-child(3) { animation-delay: 0.16s; }
+.recipes .recipe:nth-child(4) { animation-delay: 0.24s; }
+.recipe-photo { transition: transform var(--dur-med) var(--ease-spring); }
+.recipe:hover .recipe-photo { transform: rotate(-4deg) scale(1.06); }
+.shop-item { animation: fade-up 0.4s var(--ease-out) both; transition: background-color var(--dur-fast); }
+.shop-item:hover { background: #f7f2e8; }
+.shop-check:active { scale: 0.85; }
+.add-found li { animation: fade-up 0.4s var(--ease-out) both; }
+.add-found li:nth-child(2) { animation-delay: 60ms; }
+.add-found li:nth-child(3) { animation-delay: 120ms; }
+.add-found li:nth-child(4) { animation-delay: 180ms; }
+.add-done { animation: pop 0.5s var(--ease-spring) both; }
+.soon-list li { animation: fade-up 0.5s var(--ease-out) both; }
+.soon-list li:nth-child(2) { animation-delay: 60ms; }
+.soon-list li:nth-child(3) { animation-delay: 120ms; }
+.soon-list li:nth-child(4) { animation-delay: 180ms; }
+.soon-list li:nth-child(5) { animation-delay: 240ms; }
+.insight .meter span { animation: meter-fill 1.2s var(--ease-out) 0.3s both; }
+.tab { transition: color var(--dur-fast), border-color var(--dur-med) var(--ease-out); }
+.tab-panel:not([hidden]) > .container { animation: fade-up 0.5s var(--ease-out) both; }
+.expiry { animation: pop 0.45s var(--ease-spring) both; }
+
+/* ---------- Fridge ---------- */
+.fridge-chip { animation: pop 0.5s var(--ease-spring) both; animation-delay: calc(1.5s + var(--i, 0) * 45ms); }
+.fridge-chip[data-state='today'], .fridge-chip[data-state='expired'] { animation: pop 0.5s var(--ease-spring) both, chip-pulse 2.2s ease-in-out 2.5s infinite; animation-delay: calc(1.5s + var(--i, 0) * 45ms), 2.5s; }
+@keyframes chip-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgb(236 123 44 / 0); } 50% { box-shadow: 0 0 0 5px rgb(236 123 44 / 0.35); } }
+.use-soon { animation: fade-up 0.7s var(--ease-out) both; }
+.use-soon-item { transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast); }
+.use-soon-item:hover { transform: translateY(-2px); }
+
+/* ---------- Dialogs and toasts feel springy ---------- */
+.toast { animation-timing-function: var(--ease-spring); }
+.fd-section { animation: fade-up 0.5s var(--ease-out) both; }
+.fd-section:nth-of-type(2) { animation-delay: 60ms; }
+.fd-section:nth-of-type(3) { animation-delay: 120ms; }
+.fd-section:nth-of-type(4) { animation-delay: 180ms; }
+
+/* The footer wordmark uses the shared .reveal class (layout.js), so it rises as it scrolls into view. */

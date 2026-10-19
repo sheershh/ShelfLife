@@ -34,9 +34,9 @@ export function createApp({ ai = gemini, limits } = {}) {
     }),
   )
 
-  // Photo uploads need a bigger body limit, but only on these two routes.
+  // Photo uploads need a bigger body limit, but only on these routes.
   // Every other request is limited to 10 KB.
-  app.use(['/api/scans', '/api/admin/images'], express.json({ limit: '4mb' }))
+  app.use(['/api/scans', '/api/receipts', '/api/admin/images'], express.json({ limit: '4mb' }))
   app.use(express.json({ limit: '10kb' }))
   app.use(cookieParser())
 

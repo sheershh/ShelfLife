@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#f5f0e6" />
     <title>Food guide | ShelfLife</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..900&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet" />
@@ -41,6 +42,36 @@
               <input id="food-search" type="search" placeholder="Search foods, e.g. mango…" autocomplete="off" />
             </div>
             <div class="cats" id="category-filter" role="group" aria-label="Filter by category"></div>
+          </div>
+
+          <div class="guide-refine" role="group" aria-label="Refine the list">
+            <div class="field">
+              <label for="storage-filter">Best kept</label>
+              <select id="storage-filter">
+                <option value="">Anywhere</option>
+                <option>Room Temperature</option>
+                <option>Refrigerator</option>
+                <option>Pantry</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="lasting-filter">Keeps for</label>
+              <select id="lasting-filter">
+                <option value="">Any time</option>
+                <option>Highly Perishable</option>
+                <option>Moderately Perishable</option>
+                <option>Longer Lasting</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sort-by">Sort by</label>
+              <select id="sort-by">
+                <option value="">Guide order</option>
+                <option value="name">Name, A to Z</option>
+                <option value="shortest">Shortest shelf life first</option>
+                <option value="longest">Longest shelf life first</option>
+              </select>
+            </div>
           </div>
 
           <div class="guide-key" aria-label="How to read the list">

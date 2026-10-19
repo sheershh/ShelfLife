@@ -187,7 +187,7 @@ Base address `http://localhost:3000`. JSON in and out. Errors: `{ "message", "er
 | Method | Route | Access | Purpose | Success |
 | --- | --- | --- | --- | --- |
 | GET | `/api/health` | Public | Server up? Is the AI configured? | `{ ok, ai }` |
-| GET | `/api/foods?search=&category=` | Public | List / search / filter foods | `{ count, foods }` |
+| GET | `/api/foods?search=&category=&storage=&lasting=&sort=` | Public | List / search / filter foods; `sort` is `name`, `shortest` or `longest` | `{ count, foods }` |
 | GET | `/api/foods/:id` | Public | One food by slug | `{ food }` |
 | GET | `/api/meta` | Public | Categories and recipe ideas | `{ categories, recipes }` |
 | POST | `/api/auth/register` | Public, rate-limited | Create account + log in | 201 `{ user }` + cookie |
@@ -197,7 +197,20 @@ Base address `http://localhost:3000`. JSON in and out. Errors: `{ "message", "er
 | GET | `/api/saved` | User | Saved foods | `{ count, foods }` |
 | POST | `/api/saved/:id` | User | Save (repeat is harmless) | `{ message, savedIds }` |
 | DELETE | `/api/saved/:id` | User | Unsave | `{ message, savedIds }` |
-| POST | `/api/scans` | User, rate-limited | Analyse a photo `{ image, thumbnail? }` | 201 `{ scan, food }`, or 200 `{ scan: null, message }` if not food |
+| GET | `/api/nutrition/day?date=` | User | A day's entries, totals and goals | `{ date, goals, customGoals, entries, totals }` |
+| GET | `/api/nutrition/week?end=` | User | The 7 days ending on a date, with averages | `{ goals, days, averages }` |
+| POST | `/api/nutrition/entries` | User | Log `{ date, meal, foodId, grams }` or a custom `{ date, meal, name, calories, carbs, fat, protein }` | 201 `{ entry }` |
+| DELETE | `/api/nutrition/entries/:id` | User | Remove one of my entries | `{ message }` |
+| PUT | `/api/nutrition/goals` | User | `{ calories, carbs, fat, protein }` | `{ goals }` |
+| PATCH | `/api/saved/:id` | User | Start/restart the use-by clock `{ boughtOn: "YYYY-MM-DD", storage? }` | `{ food }` (with `tracking`) |
+| POST | `/api/saved/:id/finish` | User | `{ outcome: "used" \| "wasted" }`: take off the shelf and log it | `{ message, savedIds }` |
+| POST | `/api/saved/bulk` | User | `{ foodIds }`: save as bought today (receipt, barcode) | `{ message, savedIds }` |
+| GET | `/api/insights` | User | Used / wasted in 30 days, foods to use first | `{ used, wasted, usedShare, mostWasted, useSoon }` |
+| GET / POST / DELETE | `/api/shopping`, `/api/shopping/:itemId` | User | Shopping list; `POST /:itemId/bought` moves a guide food to the shelves | `{ items }` |
+| POST | `/api/recipes` | User, rate-limited | `{ foodIds? }`: recipe ideas, soonest-to-expire first | `{ source, recipes }` |
+| POST | `/api/receipts` | User, rate-limited | `{ image }`: foods found on a receipt (saves nothing) | `{ found, unmatched }` |
+| GET | `/api/barcode/:code` | User | Open Food Facts lookup matched to a guide food | `{ found, product, food }` |
+| POST | `/api/scans` | User, rate-limited | Analyse photos `{ images: [up to 3] \| image, thumbnail? }` | 201 `{ scan, food }`, or 200 `{ scan: null, message }` if not food |
 | GET | `/api/scans` | User | My last 30 scans | `{ count, scans }` |
 | DELETE | `/api/scans` | User | Clear my scan history | `{ message }` |
 | POST | `/api/assistant` | User, rate-limited | Ask `{ message, history?, scanId? }` | `{ reply }` |

@@ -1,6 +1,6 @@
 // Data access for user accounts and their saved foods (MongoDB "users" collection).
 import mongoose from 'mongoose'
-import { User } from '../models/User.js'
+import { FOOD_LOG_LIMIT, User } from '../models/User.js'
 import { AppError } from '../utils/helpers.js'
 
 export { publicUser } from '../models/User.js'
@@ -40,8 +40,63 @@ export async function addSavedFood(userId, slug) {
 }
 
 export async function removeSavedFood(userId, slug) {
-  const user = await User.findByIdAndUpdate(userId, { $pull: { savedFoods: slug } }, { returnDocument: 'after' })
+  const user = await User.findByIdAndUpdate(
+    userId,
+    { $pull: { savedFoods: slug, savedDetails: { foodId: slug } } },
+    { returnDocument: 'after' },
+  )
   return user.savedFoods
+}
+
+// Saves several foods at once (receipt or barcode), each with today as the purchase date.
+// A food that is already tracked keeps its existing date.
+export async function addBoughtFoods(userId, entries) {
+  const user = await User.findById(userId)
+  for (const { foodId, storage } of entries) {
+    if (!user.savedFoods.includes(foodId)) user.savedFoods.push(foodId)
+    if (storage && !user.savedDetails.some((detail) => detail.foodId === foodId)) {
+      user.savedDetails.push({ foodId, boughtOn: new Date(), storage })
+    }
+  }
+  await user.save()
+  return user.savedFoods
+}
+
+// Records when a saved food was bought and where it is kept (one entry per food).
+export async function setSavedDetail(userId, detail) {
+  await User.updateOne({ _id: userId }, { $pull: { savedDetails: { foodId: detail.foodId } } })
+  await User.updateOne({ _id: userId }, { $push: { savedDetails: detail } })
+}
+
+// "I used it" / "I threw it away": takes the food off the shelf and keeps a note for the stats.
+// $slice keeps only the newest entries so the log cannot grow without limit.
+export async function finishSavedFood(userId, food, outcome) {
+  const entry = { foodId: food.id, name: food.name, outcome, at: new Date() }
+  const user = await User.findByIdAndUpdate(
+    userId,
+    {
+      $pull: { savedFoods: food.id, savedDetails: { foodId: food.id } },
+      $push: { foodLog: { $each: [entry], $slice: -FOOD_LOG_LIMIT } },
+    },
+    { returnDocument: 'after' },
+  )
+  return user.savedFoods
+}
+
+// ----- Shopping list -----
+
+export async function addShoppingItem(userId, item) {
+  const user = await User.findByIdAndUpdate(userId, { $push: { shopping: item } }, { returnDocument: 'after', runValidators: true })
+  return user.shopping
+}
+
+export async function removeShoppingItem(userId, itemId) {
+  const user = await User.findByIdAndUpdate(userId, { $pull: { shopping: { _id: itemId } } }, { returnDocument: 'after' })
+  return user.shopping
+}
+
+export async function clearShopping(userId) {
+  await User.updateOne({ _id: userId }, { $set: { shopping: [] } })
 }
 
 // ----- Admin -----

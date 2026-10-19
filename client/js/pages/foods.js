@@ -10,6 +10,12 @@ const categoryFilter = document.getElementById('category-filter')
 const resultCount = document.getElementById('result-count')
 const resultCountVisible = document.getElementById('result-count-visible')
 const results = document.getElementById('food-results')
+// The three dropdowns under the search box; the key is the API query parameter each one sets.
+const refine = {
+  storage: document.getElementById('storage-filter'),
+  lasting: document.getElementById('lasting-filter'),
+  sort: document.getElementById('sort-by'),
+}
 
 let categories = [ALL]
 let countByCategory = {} // e.g. { Fruits: 18 }, from one request for all foods
@@ -41,12 +47,14 @@ async function loadFoods() {
   const params = new URLSearchParams()
   if (searchText.trim()) params.set('search', searchText.trim())
   if (selectedCategory !== ALL) params.set('category', selectedCategory)
+  for (const [name, select] of Object.entries(refine)) if (select.value) params.set(name, select.value)
 
   try {
     const { foods } = await api.get(`/api/foods?${params}`)
     if (requestNumber !== latestRequest) return // a newer search has already started
 
-    if (!searchText.trim() && selectedCategory === ALL) totalFoods = foods.length
+    const refined = Object.values(refine).some((select) => select.value && select !== refine.sort)
+    if (!searchText.trim() && selectedCategory === ALL && !refined) totalFoods = foods.length
     const text = `Showing ${foods.length} of ${totalFoods || foods.length} foods`
     resultCount.textContent = text
     resultCountVisible.textContent = foods.length > 0 ? text : ''
@@ -55,6 +63,8 @@ async function loadFoods() {
       ? foodListHtml(foods)
       : emptyStateHtml('No foods match', 'Try another name, or clear the filters to see everything in the guide.',
           '<button type="button" class="btn btn-secondary" data-clear-filters>Clear search and filters</button>')
+    // Rows arrive one after another (the delay comes from --i, set here because CSP blocks inline styles).
+    results.querySelectorAll('.food-row').forEach((row, index) => row.style.setProperty('--i', index))
   } catch (error) {
     if (requestNumber !== latestRequest) return
     resultCount.textContent = ''
@@ -68,6 +78,7 @@ function resetFilters() {
   searchText = ''
   selectedCategory = ALL
   searchInput.value = ''
+  for (const select of Object.values(refine)) select.value = ''
   renderCategoryButtons()
   loadFoods()
   searchInput.focus()
@@ -95,6 +106,8 @@ searchInput.addEventListener('input', () => {
   clearTimeout(searchTimer)
   searchTimer = setTimeout(loadFoods, 250) // wait briefly so we do not call the API on every keystroke
 })
+
+for (const select of Object.values(refine)) select.addEventListener('change', loadFoods)
 
 categoryFilter.addEventListener('click', (event) => {
   const button = event.target.closest('[data-category]')

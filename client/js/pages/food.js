@@ -4,6 +4,7 @@ import { api, ApiError } from '../api.js'
 import { shelfLifeDisclaimer, shelfLifeLabels } from '../constants.js'
 import { icon } from '../icons.js'
 import { initLayout } from '../layout.js'
+import { nutritionFactsHtml } from '../nutrition-ui.js'
 import { session } from '../session.js'
 import {
   emptyStateHtml, escapeHtml, handleSaveButtons, lastingHtml, listHtml, saveButtonHtml, storageHtml,
@@ -64,6 +65,8 @@ function detailsHtml(food) {
       <h2 id="shelf-heading">How long it keeps</h2>
       ${shelfTableHtml(food)}
     </section>
+
+    ${nutritionFactsHtml(food)}
 
     <section class="detail-section" aria-labelledby="stages-heading">
       <h2 id="stages-heading">Freshness stages</h2>

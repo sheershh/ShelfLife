@@ -7,6 +7,7 @@ import { AppError, parseImageDataUrl } from '../utils/helpers.js'
 
 const MAX_IMAGE_BYTES = 2.5 * 1024 * 1024 // the browser shrinks photos first, so real uploads are ~150 KB
 const MAX_THUMBNAIL_BYTES = 40 * 1024
+const MAX_PHOTOS = 3 // several angles of the same item
 const MAX_MESSAGE = 500
 const MAX_HISTORY_TURNS = 10
 
@@ -42,15 +43,22 @@ export function normaliseVerdict(raw, catalog, matchedCategory) {
   return verdict
 }
 
-// POST /api/scans   body: { image: "data:image/jpeg;base64,...", thumbnail: "data:image/jpeg;base64,..." }
+// POST /api/scans   body: { image | images: ["data:image/jpeg;base64,..." (up to 3 angles)], thumbnail }
 export async function createScanFromPhoto(req, res) {
-  const image = parseImageDataUrl(req.body?.image, { maxBytes: MAX_IMAGE_BYTES })
+  const sent = Array.isArray(req.body?.images) ? req.body.images : [req.body?.image]
+  if (sent.length === 0 || sent.length > MAX_PHOTOS) {
+    throw new AppError(400, `Send between 1 and ${MAX_PHOTOS} photos.`, { images: `Send between 1 and ${MAX_PHOTOS} photos.` })
+  }
+  const images = sent.map((dataUrl) => {
+    const { mimeType, data } = parseImageDataUrl(dataUrl, { maxBytes: MAX_IMAGE_BYTES })
+    return { mimeType, data }
+  })
   const thumbnail = req.body?.thumbnail
     ? parseImageDataUrl(req.body.thumbnail, { maxBytes: MAX_THUMBNAIL_BYTES, field: 'thumbnail' })
     : null
 
   const catalog = await foodCatalog()
-  const raw = await req.app.locals.ai.analyseImage({ mimeType: image.mimeType, data: image.data }, catalog)
+  const raw = await req.app.locals.ai.analyseImage(images, catalog)
 
   if (raw.isFood !== true) {
     return res.json({

@@ -1,7 +1,8 @@
 // End-to-end checks of the main user journeys in a real browser.
 import { expect, test } from '@playwright/test'
+import { fileURLToPath } from 'node:url'
 
-const photo = new URL('../../client/images/banana.jpg', import.meta.url).pathname
+const photo = fileURLToPath(new URL('../../client/images/banana.jpg', import.meta.url))
 
 async function logIn(page, who) {
   await page.goto('/login')

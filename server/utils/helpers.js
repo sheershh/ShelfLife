@@ -44,13 +44,24 @@ export function validateLogin({ email, password } = {}) {
   return errors
 }
 
-export function validateFoodQuery({ search, category } = {}) {
+export const FOOD_SORTS = ['name', 'shortest', 'longest']
+
+export function validateFoodQuery({ search, category, storage, lasting, sort } = {}) {
   const errors = {}
   if (search !== undefined && (typeof search !== 'string' || search.length > 50)) {
     errors.search = 'Search must be text of 50 characters or fewer.'
   }
   if (category !== undefined && !CATEGORIES.includes(category)) {
     errors.category = `Category must be one of: ${CATEGORIES.join(', ')}.`
+  }
+  if (storage !== undefined && !STORAGE_LOCATIONS.includes(storage)) {
+    errors.storage = `Storage must be one of: ${STORAGE_LOCATIONS.join(', ')}.`
+  }
+  if (lasting !== undefined && !FRESHNESS_STATUSES.includes(lasting)) {
+    errors.lasting = `Keeps-for must be one of: ${FRESHNESS_STATUSES.join(', ')}.`
+  }
+  if (sort !== undefined && !FOOD_SORTS.includes(sort)) {
+    errors.sort = `Sort must be one of: ${FOOD_SORTS.join(', ')}.`
   }
   return errors
 }

@@ -16,6 +16,16 @@ export const fakeAi = {
     this.calls.push({ type: 'image', image, catalog })
     return this.nextVerdict
   },
+  nextRecipes: { recipes: [{ title: 'Saag', minutes: 25, uses: ['Spinach'], steps: ['Wash.', 'Cook.'] }] },
+  nextReceipt: { items: [{ text: 'BANANAS 1KG', matchedFoodId: 'banana' }, { text: 'DETERGENT', matchedFoodId: 'none' }] },
+  async suggestRecipes(foods) {
+    this.calls.push({ type: 'recipes', foods })
+    return this.nextRecipes
+  },
+  async readReceipt(image, catalog) {
+    this.calls.push({ type: 'receipt', image, catalog })
+    return this.nextReceipt
+  },
   async chat(input) {
     this.calls.push({ type: 'chat', ...input })
     return `fake reply (${input.history.length} earlier turns)`
@@ -24,10 +34,12 @@ export const fakeAi = {
 
 export async function startServer({ limits = { auth: 1000, ai: 1000 } } = {}) {
   await connectDb() // no URI -> in-memory MongoDB, seeded with the 12 foods
-  const server = createApp({ ai: fakeAi, limits }).listen(0)
+  const app = createApp({ ai: fakeAi, limits })
+  const server = app.listen(0)
   await new Promise((resolve) => server.once('listening', resolve))
   const baseUrl = `http://127.0.0.1:${server.address().port}`
   return {
+    app,
     baseUrl,
     async stop() {
       server.close()
@@ -39,6 +51,7 @@ export async function startServer({ limits = { auth: 1000, ai: 1000 } } = {}) {
 export async function resetUsers() {
   await mongoose.connection.collection('users').deleteMany({})
   await mongoose.connection.collection('scans').deleteMany({})
+  await mongoose.connection.collection('mealentries').deleteMany({})
 }
 
 // Each client keeps its own cookie, like a separate browser.

@@ -8,6 +8,7 @@ import { escapeHtml } from './ui.js'
 const links = [
   { href: '/scan', label: 'Scanner', match: ['/scan'], dot: true },
   { href: '/foods', label: 'Food guide', match: ['/foods', '/food'] },
+  { href: '/nutrition', label: 'Nutrition', match: ['/nutrition'] },
   { href: '/recipes', label: 'Use it up', match: ['/recipes'] },
   { href: '/about', label: 'About', match: ['/about'] },
 ]
@@ -60,8 +61,10 @@ const footerHtml = `
         <ul class="footer-links">
           <li><a href="/scan">Freshness scanner</a></li>
           <li><a href="/foods">Food guide</a></li>
+          <li><a href="/nutrition">Nutrition diary</a></li>
           <li><a href="/recipes">Use it up</a></li>
           <li><a href="/saved">Your saved foods</a></li>
+          <li><a href="/add">Add groceries</a></li>
         </ul>
       </div>
       <div>
@@ -71,7 +74,7 @@ const footerHtml = `
         </ul>
       </div>
     </div>
-    <p class="footer-wordmark" aria-hidden="true" translate="no">ShelfLife<span>.</span></p>
+    <p class="footer-wordmark reveal" aria-hidden="true" translate="no">ShelfLife<span>.</span></p>
     <div class="container footer-bottom">
       <p>Shelf-life figures are general estimates. The scanner judges visible quality, not food safety. When in doubt, throw it out.</p>
     </div>
@@ -101,6 +104,12 @@ export function observeReveals(root = document) {
     if (revealObserver) revealObserver.observe(el)
     else el.classList.add('is-visible')
   }
+}
+
+// The service worker makes ShelfLife installable and keeps the food guide readable offline.
+// It is optional: a browser without one, or one that refuses it, just uses the site as normal.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}))
 }
 
 // Call once at the top of every page script. Loads the session, then draws header and footer.

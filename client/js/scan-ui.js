@@ -2,6 +2,7 @@
 // Everything shown comes from the scan the server returned; nothing is filled in when a value is missing.
 
 import { icon } from './icons.js'
+import { fmt, scale } from './nutrition-ui.js'
 import {
   escapeHtml, listHtml, RECOMMENDATION_LABELS, RIPENESS_LABELS, recommendationTag, scaleHtml, storageHtml,
 } from './ui.js'
@@ -17,7 +18,23 @@ export function scoreColor(score) {
 const confidenceText = {
   high: 'High confidence',
   medium: 'Medium confidence',
-  low: 'Low confidence: try a closer, brighter photo for a better reading',
+  low: 'Low confidence',
+}
+const confidenceLevel = { low: 1, medium: 2, high: 3 }
+
+// Three pips plus words, and a next step when the reading is not firm. `photos` is how many angles were sent.
+function confidenceHtml(confidence, photos = 1) {
+  const level = confidenceLevel[confidence] || 0
+  const advice = level === 3 ? ''
+    : photos < 3
+      ? 'Add a second or third photo from other sides, in brighter light, for a firmer reading.'
+      : 'Try a closer, brighter photo for a firmer reading.'
+  return `
+    <p class="confidence" data-level="${level}">
+      <span class="confidence-pips" aria-hidden="true"><span></span><span></span><span></span></span>
+      ${escapeHtml(confidenceText[confidence] || 'Confidence not given')}
+    </p>
+    ${advice ? `<p class="confidence-advice">${advice}</p>` : ''}`
 }
 
 // What the recommendation means in practice, shown under the call.
@@ -35,9 +52,18 @@ export function mouldHtml(mould) {
     : 'None seen'
 }
 
+// "About 105 kcal in a medium banana" with a link to log it. Empty if the food has no nutrition record.
+function nutritionLineHtml(food) {
+  const n = food.nutrition
+  if (!n?.per100g || !n.serving?.grams) return ''
+  const v = scale(n.per100g, n.serving.grams)
+  return `<p class="nutri-line">About <strong>${fmt(v.calories)} kcal</strong> per ${escapeHtml(n.serving.label)}: carbs ${fmt(v.carbs, 1)} g, fat ${fmt(v.fat, 1)} g, protein ${fmt(v.protein, 1)} g.
+    <a class="text-link" href="/nutrition?add=${encodeURIComponent(food.id)}">Log it in your diary</a></p>`
+}
+
 // The main result card shown in the log after a photo is analysed.
 // `food` is the matching ShelfLife record (grounding), or null if the food isn't in the guide.
-export function verdictHtml(scan, food) {
+export function verdictHtml(scan, food, { photos = 1 } = {}) {
   const score = scan.freshnessScore ?? 0
 
   const guide = food ? `
@@ -45,6 +71,7 @@ export function verdictHtml(scan, food) {
       <h4>From the ShelfLife guide</h4>
       <p class="verdict-guide-store">Best kept: ${storageHtml(food.storageLocation)} <span class="num">${escapeHtml(food.shelfLifePreview)}</span></p>
       <p>${escapeHtml(food.storageMethod)}</p>
+      ${nutritionLineHtml(food)}
       <a class="text-link" href="/food?id=${encodeURIComponent(food.id)}">Full guide for ${escapeHtml(food.name.toLowerCase())}</a>
     </section>` : `
     <section class="verdict-block verdict-guide">
@@ -53,16 +80,17 @@ export function verdictHtml(scan, food) {
     </section>`
 
   return `
-    <article class="verdict" aria-label="Scan result for ${escapeHtml(scan.item)}" data-ui>
+    <article class="verdict" data-rec="${escapeHtml(scan.recommendation)}" aria-label="Scan result for ${escapeHtml(scan.item)}" data-ui>
       <header class="verdict-head">
-        <p class="label">Reading &nbsp;·&nbsp; ${escapeHtml(confidenceText[scan.confidence] || 'Confidence not given')}</p>
+        <p class="label">Reading${photos > 1 ? ` &nbsp;·&nbsp; ${photos} photos` : ''}</p>
         <h3>${escapeHtml(scan.item)}</h3>
         ${recommendationTag(scan.recommendation)}
+        ${confidenceHtml(scan.confidence, photos)}
       </header>
 
       <div class="verdict-measure">
         <div class="verdict-score">
-          <span class="verdict-score-num num">${score}</span>
+          <span class="verdict-score-num num" data-count="${score}">${score}</span>
           <span class="verdict-score-unit">/ 100<br>freshness</span>
           <span class="meter" data-value="${score}" data-color="${scoreColor(score)}"><span></span></span>
         </div>

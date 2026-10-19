@@ -1,0 +1,149 @@
+/* Kitchen features: use-by countdown, shopping list, insights, add groceries, cook-with-what-you-have,
+   guide refinements and the scanner confidence meter. Colours are the same tokens as everywhere else;
+   the ripeness-scale colours mean "freshness" here too (green fresh, amber soon, brown past its best). */
+
+/* ---------- Use-by tag ---------- */
+.expiry {
+  display: inline-block;
+  padding: 2px 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 650;
+  white-space: nowrap;
+  background: var(--ivory-2);
+  color: var(--text-soft);
+}
+.expiry-fresh { background: #dcebd5; color: var(--r-unripe-text); }
+.expiry-soon { background: #f7e7b4; color: var(--r-peak-text); }
+.expiry-today { background: #f6d3a6; color: var(--r-over-text); }
+.expiry-expired { background: #ecd3c1; color: var(--r-spoiled-text); }
+
+/* A small always-visible label on fridge items that have a countdown (the full tag is hover-only) */
+.fridge-item { position: relative; }
+.fridge-chip {
+  position: absolute;
+  top: 0;
+  right: -6px;
+  z-index: 2;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--ink);
+  background: #dcebd5;
+  color: var(--r-unripe-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.fridge-chip[data-state='soon'] { background: #f7e7b4; color: var(--r-peak-text); }
+.fridge-chip[data-state='today'] { background: #f6d3a6; color: var(--r-over-text); }
+.fridge-chip[data-state='expired'] { background: #ecd3c1; color: var(--r-spoiled-text); }
+
+/* ---------- "Use these up first" strip above the fridge ---------- */
+.use-soon {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  margin-bottom: var(--space-5);
+  padding-block: var(--space-4);
+  border-block: 1px solid var(--rule-dark);
+  color: var(--on-dark);
+}
+.use-soon[hidden] { display: none; }
+.use-soon-title { margin: 0; font-family: var(--font-display); font-stretch: var(--display-stretch); font-weight: 800; }
+.use-soon-list { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.use-soon-item {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  min-height: 40px; padding: 0 0.9rem;
+  border: 1.5px solid var(--rule-dark); border-radius: var(--radius-pill);
+  background: transparent; color: var(--on-dark); font-weight: 600; cursor: pointer;
+}
+.use-soon-item:hover { border-color: var(--on-dark-soft); }
+
+/* ---------- Use-by clock in the fridge details ---------- */
+.fd-clock-line { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.fd-clock-form { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-3); }
+.fd-clock-form .field { min-width: 150px; flex: 1; }
+
+/* ---------- Tab panels ---------- */
+.kitchen-panel { display: grid; gap: var(--space-5); padding-block: var(--space-6) var(--space-7); }
+/* The shopping list reads better as a narrow column; the container itself keeps the page's alignment */
+.kitchen-panel > .shop-add, .kitchen-panel > .shop-list, .kitchen-panel > .form-error, .kitchen-panel > .empty-state { max-width: 720px; }
+.kitchen-panel > .btn { justify-self: start; }
+
+/* ---------- Shopping list ---------- */
+.shop-add { display: flex; gap: var(--space-3); }
+.shop-add input { flex: 1; min-width: 0; }
+.shop-list { display: grid; margin: 0; padding: 0; list-style: none; border-top: 3px solid var(--ink); background: var(--paper); }
+.shop-item { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--rule); }
+.shop-name { flex: 1; font-weight: 600; }
+.shop-guide { margin-left: var(--space-2); font-size: var(--text-xs); font-weight: 600; color: var(--text-faint); }
+.shop-check {
+  flex: none; width: 28px; height: 28px; border: 2px solid var(--rule-strong); border-radius: 50%;
+  background: transparent; cursor: pointer; transition: background-color var(--dur-fast), border-color var(--dur-fast);
+}
+.shop-check:hover, .shop-check:focus-visible { border-color: var(--botanical); background: #dcebd5; }
+
+/* ---------- Insights ---------- */
+.insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); }
+.insight { display: grid; gap: var(--space-3); align-content: start; padding: var(--space-5); background: var(--paper); border-top: 3px solid var(--ink); }
+.insight h2 { margin: 0; font-size: var(--text-lg); }
+.insight-big { margin: 0; font-size: var(--text-lg); }
+.insight-big .num { font-family: var(--font-display); font-stretch: var(--display-stretch); font-size: var(--text-xl); font-weight: 800; }
+.insight-note { margin: 0; font-size: var(--text-sm); color: var(--text-soft); }
+.soon-list { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.soon-list li { display: flex; align-items: center; gap: var(--space-3); }
+.soon-list img { border-radius: var(--radius-sm); background: var(--ivory-2); object-fit: cover; }
+.soon-list a { font-weight: 650; }
+
+/* ---------- Add groceries ---------- */
+.add-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-6); padding-bottom: var(--space-8); }
+.add-grid[hidden], .empty-state[hidden] { display: none; }
+.add-card { display: grid; gap: var(--space-4); align-content: start; padding: var(--space-6); background: var(--paper); border-top: 3px solid var(--ink); }
+.add-card h2 { margin: 0; }
+.add-card > p { margin: 0; color: var(--text-soft); }
+.add-found { display: grid; gap: var(--space-2); margin: 0 0 var(--space-4); padding: 0; list-style: none; }
+.add-found label { display: flex; align-items: center; gap: var(--space-3); min-height: 44px; cursor: pointer; }
+.add-found input { width: 20px; height: 20px; accent-color: var(--botanical); }
+.add-found-title, .add-product { margin: 0 0 var(--space-3); font-weight: 600; }
+.add-done { margin: 0 0 var(--space-3); font-weight: 650; color: var(--r-unripe-text); }
+.barcode-camera { display: grid; gap: var(--space-3); }
+.barcode-camera[hidden] { display: none; }
+.barcode-camera video { width: 100%; max-height: 260px; object-fit: cover; background: var(--ink); }
+.barcode-form { display: flex; align-items: end; gap: var(--space-3); }
+.barcode-form .field { flex: 1; }
+
+/* ---------- Cook with what you have ---------- */
+.cook-panel { display: grid; gap: var(--space-4); max-width: 760px; margin-bottom: var(--space-7); padding: var(--space-6); background: var(--paper); border-top: 3px solid var(--tomato); }
+.cook-panel[hidden] { display: none; }
+.cook-panel h2 { margin: 0; }
+.cook-panel p { margin: 0; }
+.cook-recipe { padding-top: var(--space-4); border-top: 1px solid var(--rule); }
+.cook-recipe h3 { margin: 0 0 var(--space-2); }
+.cook-steps { margin: var(--space-2) 0 0; padding-left: 1.3rem; color: var(--text-soft); }
+.cook-steps li { margin-bottom: var(--space-1); }
+.recipes-heading { margin: 0 0 var(--space-4); font-size: var(--text-lg); }
+
+/* ---------- Food guide: dropdown refinements ---------- */
+.guide-refine { display: grid; grid-template-columns: repeat(3, minmax(0, 220px)); gap: var(--space-4); margin-bottom: var(--space-5); }
+
+/* ---------- Scanner: confidence meter and several photos ---------- */
+.confidence { display: flex; align-items: center; gap: var(--space-2); margin: var(--space-2) 0 0; font-size: var(--text-xs); font-weight: 650; color: var(--text-soft); }
+.confidence-pips { display: inline-flex; gap: 3px; }
+.confidence-pips span { width: 14px; height: 6px; border-radius: 3px; background: var(--rule-strong); }
+.confidence[data-level='1'] .confidence-pips span:nth-child(-n + 1) { background: var(--r-over); }
+.confidence[data-level='2'] .confidence-pips span:nth-child(-n + 2) { background: var(--r-peak); }
+.confidence[data-level='3'] .confidence-pips span { background: var(--r-unripe); }
+.confidence-advice { margin: var(--space-1) 0 0; font-size: var(--text-xs); color: var(--text-soft); }
+.msg-user .msg-body:has(.msg-photo) { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: flex-end; }
+
+@media (max-width: 720px) {
+  .tabs { gap: var(--space-4); }
+  .guide-refine { grid-template-columns: 1fr; }
+  .shop-add, .barcode-form { flex-direction: column; align-items: stretch; }
+  .add-card, .cook-panel { padding: var(--space-5); }
+}

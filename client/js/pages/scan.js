@@ -15,7 +15,7 @@ import { preparePhoto } from '../image.js'
 import { initLayout } from '../layout.js'
 import { RECOMMENDATION_LABELS, verdictHtml } from '../scan-ui.js'
 import { session } from '../session.js'
-import { applyDataStyles, escapeHtml } from '../ui.js'
+import { animateNumbers, applyDataStyles, escapeHtml } from '../ui.js'
 
 const log = document.getElementById('chat-log')
 const chat = document.getElementById('chat')
@@ -27,6 +27,7 @@ const composer = document.getElementById('composer')
 const input = document.getElementById('composer-input')
 const sendButton = document.getElementById('composer-send')
 const suggestions = document.getElementById('suggestions')
+const ticker = document.getElementById('stage-ticker')
 
 const STARTER_QUESTIONS = [
   'How do I keep spinach fresh for longer?',
@@ -39,7 +40,8 @@ const AFTER_SCAN_QUESTIONS = ['Can I still cook with it?', 'How should I store i
 const history = []
 let currentScanId = null
 let busy = false
-let lastPhoto = null // kept so "Try again" can resend the same photo
+let lastPhotos = [] // kept so "Try again" can resend the same photos
+const MAX_PHOTOS = 3 // angles of the same item per scan
 
 // ---------- The instrument stage ----------
 
@@ -47,6 +49,32 @@ let lastPhoto = null // kept so "Try again" can resend the same photo
 function setStage(state, statusText) {
   stage.dataset.state = state
   stageStatus.textContent = statusText
+  if (state === 'analysing') startTicker()
+  else stopTicker()
+}
+
+// While a photo is being read, short phrases fade through on the photo itself. They are decoration
+// (aria-hidden): the calm status line below is what screen readers announce.
+const TICKER_MESSAGES = ['Checking the colour…', 'Looking for mould…', 'Judging ripeness…', 'Matching it to the guide…']
+let tickerTimer = null
+
+function startTicker() {
+  stopTicker()
+  let index = 0
+  ticker.textContent = TICKER_MESSAGES[0]
+  tickerTimer = setInterval(() => {
+    ticker.classList.add('is-swapping')
+    setTimeout(() => {
+      index = (index + 1) % TICKER_MESSAGES.length
+      ticker.textContent = TICKER_MESSAGES[index]
+      ticker.classList.remove('is-swapping')
+    }, 300)
+  }, 1900)
+}
+
+function stopTicker() {
+  clearInterval(tickerTimer)
+  tickerTimer = null
 }
 
 // ---------- Drawing messages ----------
@@ -90,15 +118,17 @@ function errorText(error) {
 
 // ---------- Photos ----------
 
-async function handlePhoto(file) {
-  if (busy || !file) return
+// One to three photos of the same item, read together as one scan.
+async function handlePhotos(fileList) {
+  const files = [...fileList].filter((file) => file.type.startsWith('image/'))
+  if (busy || files.length === 0) return
   setBusy(true)
   suggestions.innerHTML = ''
-  setStage('preparing', 'Preparing photo…')
+  setStage('preparing', files.length > 1 ? 'Preparing photos…' : 'Preparing photo…')
 
-  lastPhoto = null
+  lastPhotos = []
   try {
-    lastPhoto = await preparePhoto(file)
+    lastPhotos = await Promise.all(files.slice(0, MAX_PHOTOS).map(preparePhoto))
   } catch (error) {
     // The file could not be read as a photo: back to the start, with the reason in the log.
     setStage('idle', 'Ready for a photo')
@@ -106,8 +136,14 @@ async function handlePhoto(file) {
     setBusy(false)
     return
   }
-  stagePhoto.src = lastPhoto.previewUrl
-  addMessage('user', `<figure class="msg-photo"><img src="${lastPhoto.previewUrl}" alt="Your photo"></figure>`)
+  if (files.length > MAX_PHOTOS) addMessage('assistant', `<p>Only the first ${MAX_PHOTOS} photos are used.</p>`)
+  stagePhoto.src = lastPhotos[0].previewUrl
+  // Restart the "photo develops" wipe for every new photo.
+  stagePhoto.classList.remove('is-new')
+  void stagePhoto.offsetWidth
+  stagePhoto.classList.add('is-new')
+  addMessage('user', lastPhotos.map((photo, index) =>
+    `<figure class="msg-photo"><img src="${photo.previewUrl}" alt="Your photo${lastPhotos.length > 1 ? ` ${index + 1}` : ''}"></figure>`).join(''))
   await sendPhoto()
 }
 
@@ -117,7 +153,10 @@ async function sendPhoto() {
   const thinking = addMessage('assistant', '<p class="msg-thinking"><span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>Reading the photo…</p>')
 
   try {
-    const { scan, food, message } = await api.post('/api/scans', { image: lastPhoto.image, thumbnail: lastPhoto.thumbnail })
+    const { scan, food, message } = await api.post('/api/scans', {
+      images: lastPhotos.map((photo) => photo.image),
+      thumbnail: lastPhotos[0].thumbnail,
+    })
     thinking.remove()
     if (!scan) {
       // Not food: nothing is saved, and the server says why.
@@ -129,8 +168,9 @@ async function sendPhoto() {
     history.length = 0 // a new photo starts a new topic
     history.push({ role: 'assistant', text: `Scan result: ${scan.item}, ${scan.ripeness}, recommendation ${scan.recommendation}. ${scan.summary || ''}` })
     setStage('done', `Read complete: ${scan.item}, ${RECOMMENDATION_LABELS[scan.recommendation] || scan.recommendation}`)
-    const card = addMessage('assistant', verdictHtml(scan, food), 'msg-verdict')
+    const card = addMessage('assistant', verdictHtml(scan, food, { photos: lastPhotos.length }), 'msg-verdict')
     applyDataStyles(card)
+    setTimeout(() => animateNumbers(card, 1300), 450) // the score counts up as the card builds in
     showSuggestions(AFTER_SCAN_QUESTIONS)
   } catch (error) {
     thinking.remove()
@@ -173,12 +213,12 @@ function setupInputs() {
   }
   for (const fileInput of [document.getElementById('file-input'), document.getElementById('camera-input')]) {
     fileInput.addEventListener('change', () => {
-      handlePhoto(fileInput.files[0])
+      handlePhotos([...fileInput.files]) // copy first: clearing the input empties its list
       fileInput.value = '' // allow choosing the same file again
     })
   }
   document.getElementById('stage-retry').addEventListener('click', () => {
-    if (!busy && lastPhoto) sendPhoto()
+    if (!busy && lastPhotos.length) sendPhoto()
   })
 
   // Drag and drop onto the instrument or the conversation.
@@ -193,14 +233,14 @@ function setupInputs() {
     zone.addEventListener('drop', (event) => {
       event.preventDefault()
       stage.classList.remove('is-dragging')
-      handlePhoto(event.dataTransfer.files[0])
+      handlePhotos([...event.dataTransfer.files])
     })
   }
 
   // Pasting an image (e.g. a screenshot) also works.
   document.addEventListener('paste', (event) => {
     const file = [...(event.clipboardData?.files || [])].find((item) => item.type.startsWith('image/'))
-    if (file) handlePhoto(file)
+    if (file) handlePhotos([file])
   })
 
   composer.addEventListener('submit', (event) => {

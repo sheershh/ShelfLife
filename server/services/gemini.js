@@ -116,7 +116,7 @@ function verdictSchema(foodIds) {
 
 function analysisInstructions(catalog) {
   const list = catalog.map((food) => `${food.slug} (${food.name}, ${food.category})`).join('; ')
-  return `You are the ShelfLife freshness inspector. You receive one photo of food and judge its visible quality.
+  return `You are the ShelfLife freshness inspector. You receive one photo of food (or up to three photos of the same item from different sides) and judge its visible quality.
 
 Rules:
 - Only describe what you can actually see. Do not guess about smell, taste or the inside of the food.
@@ -127,19 +127,21 @@ Rules:
 - mould.detected is true only for visible fuzzy growth or white, green, blue, grey or black mould patches.
 - recommendation: eat (good now), use-soon (within a day or two), cook-today (best cooked or blended today),
   discard (rotten or mouldy). Visible mould on soft fruit, vegetables, bread or dairy always means discard.
-- confidence: lower it for blurry, dark, or partial photos.
+- confidence: lower it for blurry, dark, or partial photos. More than one angle of the same item raises it.
 - You judge quality only, never safety. Do not say the food is "safe to eat".`
 }
 
-// image: { mimeType: 'image/jpeg', data: '<base64>' }, catalog: [{ slug, name, category }]
-export async function analyseImage(image, catalog) {
+// images: one photo or up to three of the same item, each { mimeType: 'image/jpeg', data: '<base64>' }.
+// catalog: [{ slug, name, category }]
+export async function analyseImage(images, catalog) {
+  const photos = Array.isArray(images) ? images : [images]
   const text = await generate({
     systemInstruction: { parts: [{ text: analysisInstructions(catalog) }] },
     contents: [{
       role: 'user',
       parts: [
-        { inlineData: { mimeType: image.mimeType, data: image.data } },
-        { text: 'Inspect this food and return the verdict.' },
+        ...photos.map((photo) => ({ inlineData: { mimeType: photo.mimeType, data: photo.data } })),
+        { text: photos.length > 1 ? 'These photos show the same item from different sides. Judge the worst visible side.' : 'Inspect this food and return the verdict.' },
       ],
     }],
     generationConfig: {
@@ -185,4 +187,97 @@ export async function chat({ history, message, context }) {
     generationConfig: { temperature: 0.5, maxOutputTokens: 600 },
   })
   return text.trim()
+}
+
+// ---------- 3. Recipe ideas ----------
+
+// foods: [{ name, daysLeft }] where daysLeft is null when unknown. Returns { recipes: [...] }.
+export async function suggestRecipes(foods) {
+  const list = foods.map((food) => (food.daysLeft == null ? food.name : `${food.name} (${food.daysLeft} days left)`)).join(', ')
+  const text = await generate({
+    systemInstruction: {
+      parts: [{ text: `You are the ShelfLife kitchen assistant. Suggest simple home recipes that use up the foods the
+user has, putting the ones with the fewest days left first. Everyday ingredients only, Indian and international
+home cooking both welcome. Each recipe: a short title, 3 to 6 short steps, and the foods from the list it uses.
+Give 3 recipes. Only use foods from the list as the main ingredients; plain pantry items (oil, salt, spices,
+water) may be assumed. Never suggest eating food that is described as expired.` }],
+    },
+    contents: [{ role: 'user', parts: [{ text: `My foods: ${list}` }] }],
+    generationConfig: {
+      temperature: 0.7,
+      responseMimeType: 'application/json',
+      responseSchema: {
+        type: 'OBJECT',
+        properties: {
+          recipes: {
+            type: 'ARRAY',
+            items: {
+              type: 'OBJECT',
+              properties: {
+                title: { type: 'STRING' },
+                minutes: { type: 'INTEGER', description: 'Total time in minutes.' },
+                uses: { type: 'ARRAY', items: { type: 'STRING' }, description: 'Foods from the list used.' },
+                steps: { type: 'ARRAY', items: { type: 'STRING' } },
+              },
+              required: ['title', 'minutes', 'uses', 'steps'],
+            },
+          },
+        },
+        required: ['recipes'],
+      },
+    },
+  })
+  try {
+    return JSON.parse(text)
+  } catch {
+    throw new AppError(502, 'The AI answer could not be read. Please try again.')
+  }
+}
+
+// ---------- 4. Receipt reading ----------
+
+// Returns { items: [{ text, matchedFoodId }] } for the grocery lines on a receipt photo.
+export async function readReceipt(image, catalog) {
+  const list = catalog.map((food) => `${food.slug} (${food.name})`).join('; ')
+  const text = await generate({
+    systemInstruction: {
+      parts: [{ text: `You read grocery receipts and shopping photos. List each food product you can see. For each,
+give the text as written (text) and, if it is one of these ShelfLife foods, its id, otherwise "none": ${list}.
+Skip non-food lines (bags, tax, totals, cleaning products). If the photo is not a receipt or groceries,
+return an empty list.` }],
+    },
+    contents: [{
+      role: 'user',
+      parts: [
+        { inlineData: { mimeType: image.mimeType, data: image.data } },
+        { text: 'List the foods on this receipt.' },
+      ],
+    }],
+    generationConfig: {
+      temperature: 0.1,
+      responseMimeType: 'application/json',
+      responseSchema: {
+        type: 'OBJECT',
+        properties: {
+          items: {
+            type: 'ARRAY',
+            items: {
+              type: 'OBJECT',
+              properties: {
+                text: { type: 'STRING' },
+                matchedFoodId: { type: 'STRING', enum: [...catalog.map((food) => food.slug), 'none'] },
+              },
+              required: ['text', 'matchedFoodId'],
+            },
+          },
+        },
+        required: ['items'],
+      },
+    },
+  })
+  try {
+    return JSON.parse(text)
+  } catch {
+    throw new AppError(502, 'The AI answer could not be read. Please try again.')
+  }
 }

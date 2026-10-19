@@ -40,7 +40,7 @@ export async function removeSaved(foodId) {
   setSavedIds(data.savedIds)
 }
 
-function setSavedIds(ids) {
+export function setSavedIds(ids) {
   session.savedIds = new Set(ids)
   document.dispatchEvent(new CustomEvent('saved-changed'))
 }

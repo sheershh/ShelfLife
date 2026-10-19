@@ -5,6 +5,14 @@ Know what's still good. ShelfLife is a food freshness web app:
 - **Freshness scanner.** Upload or take a photo of fruit or vegetables. ShelfLife returns a ripeness reading, a mould check, a freshness score and one clear recommendation, grounded in its own food guide. You can then ask follow-up questions in a chat.
 - **Food guide.** Shelf life by storage condition, storage tips, freshness stages and spoilage signs for 50 everyday foods (fruits, vegetables, dairy, pantry staples, including Indian kitchen staples such as paneer, okra, ghee and atta).
 - **Accounts.** Save foods and see them on the shelves of an interactive fridge, and keep a history of scans.
+- **Use-by clock.** Tell ShelfLife when you bought a saved food and where you keep it. It counts down the days from the guide's shelf-life figure (the low end of the range), tags the fridge shelves and warns about food to use first.
+- **Used / thrown away, insights and shopping list.** Mark a food as used or thrown away to see your last 30 days. A shopping list moves guide foods onto your shelves, bought today, when ticked off.
+- **Add groceries.** Photograph a receipt (AI) or scan a barcode (browser `BarcodeDetector` plus Open Food Facts, with a typed fallback) to fill the fridge.
+- **Recipes for what you have.** AI recipe ideas that use the foods closest to their limit (falls back to the guide's ideas without an API key).
+- **Nutrition diary.** Log foods by meal (grams, with quick serving buttons, or a custom entry) and track calories, carbs, fat and protein against daily goals. See where your calories come from, the last 7 days, and log a food straight from the food page, a scan or your fridge. All 50 guide foods carry general per-100 g nutrition figures (rounded USDA and Indian food-composition values: estimates, not label data).
+- **Guide filters.** Search plus category, best-kept location, keeps-for and sort by shelf life.
+- **Scanner with up to 3 photos** of one item and a confidence meter that suggests what to do when the reading is not firm.
+- **Installable (PWA).** Web app manifest and a service worker; the food guide stays readable offline. Personal data is never cached.
 - **Admin console.** Add, edit and delete foods (with photo upload), manage users and roles, and see scanner activity.
 
 | Layer | Technology |

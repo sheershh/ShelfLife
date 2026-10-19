@@ -2,7 +2,10 @@ import { Router } from 'express'
 import * as admin from '../controllers/adminController.js'
 import { login, logout, me, register } from '../controllers/authController.js'
 import { getFood, getMeta, listFoods } from '../controllers/foodController.js'
-import { addSaved, listSaved, removeSaved } from '../controllers/savedController.js'
+import * as nutrition from '../controllers/nutritionController.js'
+import { addBought, barcode, readReceipt, suggestRecipes } from '../controllers/kitchenController.js'
+import { addSaved, finishSaved, getInsights, listSaved, removeSaved, updateSaved } from '../controllers/savedController.js'
+import * as shopping from '../controllers/shoppingController.js'
 import { askAssistant, clearMyScans, createScanFromPhoto, listMyScans } from '../controllers/scanController.js'
 import { optionalAuth, requireAdmin, requireAuth } from '../middleware/auth.js'
 import { rateLimit } from '../middleware/rateLimit.js'
@@ -33,14 +36,37 @@ export function createRouter(limits = {}) {
 
   // Saved foods (login required)
   router.get('/saved', requireAuth, listSaved)
+  router.post('/saved/bulk', requireAuth, addBought) // must come before /saved/:id
   router.post('/saved/:id', requireAuth, addSaved)
+  router.patch('/saved/:id', requireAuth, updateSaved)
+  router.post('/saved/:id/finish', requireAuth, finishSaved)
   router.delete('/saved/:id', requireAuth, removeSaved)
+  router.get('/insights', requireAuth, getInsights)
+
+  // Shopping list (login required)
+  router.get('/shopping', requireAuth, shopping.listShopping)
+  router.post('/shopping', requireAuth, shopping.addShopping)
+  router.post('/shopping/:itemId/bought', requireAuth, shopping.boughtShopping)
+  router.delete('/shopping/:itemId', requireAuth, shopping.removeShopping)
+  router.delete('/shopping', requireAuth, shopping.clearShoppingList)
+
+  // Nutrition diary (login required)
+  router.get('/nutrition/day', requireAuth, nutrition.getDay)
+  router.get('/nutrition/week', requireAuth, nutrition.getWeek)
+  router.post('/nutrition/entries', requireAuth, nutrition.addEntry)
+  router.delete('/nutrition/entries/:id', requireAuth, nutrition.removeEntry)
+  router.put('/nutrition/goals', requireAuth, nutrition.updateGoals)
+
+  // Barcode lookup (login required; it calls an outside service)
+  router.get('/barcode/:code', requireAuth, barcode)
 
   // AI freshness scanner and assistant (login required, rate limited per user)
   router.post('/scans', requireAuth, aiLimit, createScanFromPhoto)
   router.get('/scans', requireAuth, listMyScans)
   router.delete('/scans', requireAuth, clearMyScans)
   router.post('/assistant', requireAuth, aiLimit, askAssistant)
+  router.post('/recipes', requireAuth, aiLimit, suggestRecipes)
+  router.post('/receipts', requireAuth, aiLimit, readReceipt)
 
   // Admin console (login + admin role required for everything below)
   router.use('/admin', requireAuth, requireAdmin)
